@@ -14,7 +14,7 @@ public class Note {
     // The frequency of the note, in Hz
     private double frequency;
 
-    // The duration that the note must last for, in seconds
+    // The duration that the note must last for when played, in seconds
     private double duration;
 
     // Getter and setters to expose these properties publicly and make them readwrite
@@ -42,4 +42,56 @@ public class Note {
         this.duration = duration;
     }
 
+    // Overriding toString to make Note objects make sense when printed to the console.
+    @Override
+    public String toString() {
+        return "Note{" +
+                "name='" + name + '\'' +
+                ", frequency=" + frequency +
+                ", duration=" + duration +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+
+        if (!(object instanceof Note)) {
+            return false;
+        }
+
+        // Cast the object to a Note instance
+        Note note = (Note) object;
+
+        if (this.frequency == note.frequency && this.duration == note.duration) {
+            // Compare names too...
+            if (this.name != null && note.name != null) {
+                if (this.name.equals(note.name)) {
+                    return true;
+                }
+            } else {
+                // names are both null but everything else is equal; so the notes are...
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 0;
+
+        if (name != null) {
+            result = 31 * name.hashCode();
+        }
+
+        result = (int)(31 * frequency) + result;
+        result = (int)(31 * duration) + result;
+
+        return result;
+    }
 }
