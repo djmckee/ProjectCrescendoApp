@@ -33,4 +33,8 @@ public class Tutorial {
         this.instructions = instructions;
     }
 
+    @Override
+    public String toString() {
+        return "Tutorial '" + title + "'";
+    }
 }
