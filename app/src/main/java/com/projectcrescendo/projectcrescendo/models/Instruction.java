@@ -6,7 +6,8 @@ package com.projectcrescendo.projectcrescendo.models;
  * Created by Dylan McKee on 16/11/15.
  */
 public class Instruction {
-    private String text;
+    // The instruction text is only set once upon construction, so can be made final.
+    final private String text;
 
     public Instruction(String instructionText) {
         text = instructionText;
@@ -16,14 +17,11 @@ public class Instruction {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
     @Override
     public String toString() {
         return "Instruction{" +
                 "text='" + text + '\'' +
                 '}';
     }
+
 }
