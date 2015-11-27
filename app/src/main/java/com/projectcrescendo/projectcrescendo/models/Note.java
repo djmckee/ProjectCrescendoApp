@@ -10,7 +10,10 @@ public class Note implements NoteInterface {
     private Accidental accidental;
     private Intonation intonation;
     private Dynamic dynamic;
+
+    // The length of the note, in seconds.
     private double length;
+
 
     public Note(String pitch) {
         // Use the pitch value that we've been passed...
