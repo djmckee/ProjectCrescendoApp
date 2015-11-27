@@ -1,97 +1,92 @@
 package com.projectcrescendo.projectcrescendo.models;
 
 /**
- * The note class is a class to model a musical note. It contains all the data about the note -
- * and the data held by this class can be changed by the user in the app.
+ * The note class is a class to model a musical note. It implements NoteInterface.
  * Created by Dylan McKee on 16/11/15.
  */
-public class Note {
-    // The name of the note
-    private String name;
+public class Note implements NoteInterface {
+    // Internal placeholder vars
+    private String pitch;
+    private Accidental accidental;
+    private Intonation intonation;
+    private Dynamic dynamic;
+    private double length;
 
-    // TODO: Sort out note icons...
+    public Note(String pitch) {
+        // Use the pitch value that we've been passed...
+        setPitch(pitch);
 
-    // The frequency of the note, in Hz
-    private double frequency;
-
-    // The duration that the note must last for when played, in seconds
-    private double duration;
-
-    // Getter and setters to expose these properties publicly and make them readwrite
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getFrequency() {
-        return frequency;
-    }
-
-    public void setFrequency(double frequency) {
-        this.frequency = frequency;
-    }
-
-    public double getDuration() {
-        return duration;
-    }
-
-    public void setDuration(double duration) {
-        this.duration = duration;
-    }
-
-    // Overriding toString to make Note objects make sense when printed to the console.
-    @Override
-    public String toString() {
-        return "Note{" +
-                "name='" + name + '\'' +
-                ", frequency=" + frequency +
-                ", duration=" + duration +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
-
-        if (!(object instanceof Note)) {
-            return false;
-        }
-
-        // Cast the object to a Note instance
-        Note note = (Note) object;
-
-        if (this.frequency == note.frequency && this.duration == note.duration) {
-            // Compare names too...
-            if (this.name != null && note.name != null) {
-                if (this.name.equals(note.name)) {
-                    return true;
-                }
-            } else {
-                // names are both null but everything else is equal; so the notes are...
-                return true;
-            }
-        }
-
-        return false;
+        // Set up default values.
+        accidental = Accidental.Natural;
+        intonation = Intonation.None;
+        dynamic = Dynamic.MezzoForte;
 
     }
 
     @Override
-    public int hashCode() {
-        int result = 0;
+    public void setPitch(String p) {
+        pitch = p;
+    }
 
-        if (name != null) {
-            result = 31 * name.hashCode();
-        }
+    @Override
+    public String getPitch() {
+        return pitch;
+    }
 
-        result = (int)(31 * frequency) + result;
-        result = (int)(31 * duration) + result;
+    @Override
+    public void addAccidental(Accidental a) {
+        accidental = a;
+    }
 
-        return result;
+    @Override
+    public Accidental getAccidental() {
+        return accidental;
+    }
+
+    @Override
+    public void removeAccidental() {
+        accidental = Accidental.Natural;
+    }
+
+    @Override
+    public void addIntonation(Intonation i) {
+        intonation = i;
+
+    }
+
+    @Override
+    public Intonation getIntonation() {
+        return intonation;
+    }
+
+    @Override
+    public void removeIntonation() {
+        intonation = Intonation.None;
+    }
+
+    @Override
+    public void setDynamic(Dynamic d) {
+        dynamic = d;
+    }
+
+    @Override
+    public Dynamic getDynamic() {
+        return dynamic;
+    }
+
+    @Override
+    public void play() {
+
+    }
+
+    @Override
+    public void delete() {
+
+    }
+
+    @Override
+    public void setLength(double l) {
+        length = l;
+
     }
 }
