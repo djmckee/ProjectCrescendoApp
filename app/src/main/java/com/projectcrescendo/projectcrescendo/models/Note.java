@@ -1,95 +1,44 @@
 package com.projectcrescendo.projectcrescendo.models;
 
+
 /**
- * The note class is a class to model a musical note. It implements NoteInterface.
- * Created by Dylan McKee on 16/11/15.
+ * The note class is a class to model a musical note. It contains all the data about the note -
+ * and the data held by this class can be changed by the user in the app.
+ * Originally created by Charlie Marcus, added to the app by Dylan McKee on 16/11/15.
  */
-public class Note implements NoteInterface {
-    // Internal placeholder vars
-    private String pitch;
-    private Accidental accidental;
-    private Intonation intonation;
-    private Dynamic dynamic;
+public interface Note {
 
-    // The length of the note, in seconds.
-    private double length;
+    // Pitch of the note in the form A0, F4 etc...
+    // Could be represented as int (only three option) or enum?
+    // How loud the note is (again could be enum or int)
+    // Accent, Staccato or not (again could enum or int);
+    // How long the note should last (relative to the bar?) - (1.0 = a bar)
+    // Pitch should be passed in constructor, if no dynamic is given one should be assumed (mf).
 
+    public void setPitch(String p);
 
-    public Note(String pitch) {
-        // Use the pitch value that we've been passed...
-        setPitch(pitch);
+    public String getPitch();
 
-        // Set up default values.
-        accidental = Accidental.Natural;
-        intonation = Intonation.None;
-        dynamic = Dynamic.MezzoForte;
+    public void addAccidental(Accidental a);
 
-    }
+    public Accidental getAccidental();
 
-    @Override
-    public void setPitch(String p) {
-        pitch = p;
-    }
+    public void removeAccidental();
 
-    @Override
-    public String getPitch() {
-        return pitch;
-    }
+    public void addIntonation(Intonation i);
 
-    @Override
-    public void addAccidental(Accidental a) {
-        accidental = a;
-    }
+    public Intonation getIntonation();
 
-    @Override
-    public Accidental getAccidental() {
-        return accidental;
-    }
+    public void removeIntonation();
 
-    @Override
-    public void removeAccidental() {
-        accidental = Accidental.Natural;
-    }
+    public void setDynamic(Dynamic d);
 
-    @Override
-    public void addIntonation(Intonation i) {
-        intonation = i;
+    public Dynamic getDynamic ();
 
-    }
+    public void play();
 
-    @Override
-    public Intonation getIntonation() {
-        return intonation;
-    }
+    public void delete();
 
-    @Override
-    public void removeIntonation() {
-        intonation = Intonation.None;
-    }
+    public void setLength(double l);
 
-    @Override
-    public void setDynamic(Dynamic d) {
-        dynamic = d;
-    }
-
-    @Override
-    public Dynamic getDynamic() {
-        return dynamic;
-    }
-
-    @Override
-    public void play() {
-
-    }
-
-    @Override
-    public void delete() {
-
-    }
-
-    @Override
-    public void setLength(double l) {
-        length = l;
-
-    }
 }
