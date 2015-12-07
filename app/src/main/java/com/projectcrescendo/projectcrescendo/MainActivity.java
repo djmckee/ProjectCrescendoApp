@@ -5,18 +5,15 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.widget.Button;
+import android.content.Intent;
+
+
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -31,6 +28,8 @@ public class MainActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
 
+    Button startTutorials;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +43,12 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+        startTutorials = (Button) findViewById(R.id.startTutorialsButton);
+        startTutorials.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                startActivity(new Intent(MainActivity.this, TutorialActivity.class));
+            }
+        });
     }
 
     @Override
@@ -114,6 +119,8 @@ public class MainActivity extends ActionBarActivity
             ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
+
+
     }
 
 }
