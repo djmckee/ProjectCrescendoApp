@@ -13,8 +13,6 @@ import org.json.*;
 /**
  * The TutorialManager is a model manager that instantiates Tutorial instances from a JSON file
  * located in the app's resources bundle, and has an array of Tutorial objects.
- * The tutorials only need to be instantiated once per use of the app, so this class is a singleton
- * to reduce memory footprint.
  *
  * Created by Dylan McKee on 10/12/15.
  */
