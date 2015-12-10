@@ -33,12 +33,15 @@ public class TutorialManager {
      */
     public TutorialManager(Context context) {
         // Instantiate the Tutorials from tutorials.json
-        // TODO: Parse tutorials.json into this array!!!!
-        JSONArray array = new JSONArray();
+        String tutorialFileString = FileHandler.stringFromFile(context, TUTORIALS_FILE);
 
-        // Loop through the array, creating a Tutorial instance for each entry...
-        for (int i = 0; i < array.length(); i++) {
-            try {
+
+        try {
+            // Parse tutorials.json into this array!!!!
+            JSONArray array = new JSONArray(tutorialFileString);
+
+            // Loop through the array, creating a Tutorial instance for each entry...
+            for (int i = 0; i < array.length(); i++) {
                 JSONObject object = array.getJSONObject(i);
 
                 // Create tutorial...
@@ -56,12 +59,11 @@ public class TutorialManager {
                     tutorial.addInstruction(instruction);
 
                 }
-
-            } catch (JSONException e) {
-                // Object was malformed!
             }
-        }
 
+        } catch (JSONException e) {
+
+        }
 
 
     }
