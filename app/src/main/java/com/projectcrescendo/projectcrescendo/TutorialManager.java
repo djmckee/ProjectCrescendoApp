@@ -52,13 +52,20 @@ public class TutorialManager {
                 JSONArray instructions = object.getJSONArray("instructions");
 
                 for (int j = 0; j < instructions.length(); j++) {
+                    // Create the instruction object...
                     JSONObject instructionObject = instructions.getJSONObject(j);
                     String instructionText = instructionObject.getString("text");
                     Instruction instruction = new Instruction(instructionText);
 
+                    // And add it to the tutorial's instruction list...
                     tutorial.addInstruction(instruction);
 
                 }
+
+                // Then add the tutorial to the list...
+                tutorialsList.add(tutorial);
+
+
             }
 
         } catch (JSONException e) {
