@@ -35,7 +35,6 @@ public class TutorialManager {
         // Instantiate the Tutorials from tutorials.json
         String tutorialFileString = FileHandler.stringFromFile(context, TUTORIALS_FILE);
 
-
         try {
             // Parse tutorials.json into this array!!!!
             JSONArray array = new JSONArray(tutorialFileString);
@@ -45,7 +44,7 @@ public class TutorialManager {
                 JSONObject object = array.getJSONObject(i);
 
                 // Create tutorial...
-                String tutorialTitle = object.getString("name");
+                String tutorialTitle = object.getString("title");
                 Tutorial tutorial = new Tutorial(tutorialTitle);
 
                 // Get instructions too...
@@ -72,8 +71,29 @@ public class TutorialManager {
 
         }
 
-
     }
 
+
+    /**
+     * A getter method to return the list of tutorials
+     * @return the list of tutorials.
+     */
+    public List<Tutorial> getTutorialsList() {
+        return tutorialsList;
+    }
+
+    /**
+     * Returns the specified tutorial.
+     *
+     * @return the tutorial.
+     */
+    public Tutorial getTutorial(int tutorialIndex) {
+        try {
+            return tutorialsList.get(tutorialIndex);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
+
+    }
 
 }
