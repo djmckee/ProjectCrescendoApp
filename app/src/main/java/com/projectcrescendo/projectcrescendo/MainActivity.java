@@ -35,6 +35,8 @@ public class MainActivity extends ActionBarActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // hello world.
+
         startTutorials = (Button) findViewById(R.id.startTutorialsButton);
         startTutorials.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
