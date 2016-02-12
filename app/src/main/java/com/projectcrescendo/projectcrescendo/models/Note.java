@@ -17,6 +17,8 @@ public interface Note {
 
     public void setPitch(String p);
 
+
+
     public String getPitch();
 
     public void addAccidental(Accidental a);
