@@ -40,18 +40,22 @@ public class TutorialManager {
         // Are there tutorials?
         if (tutorialsQueryCursor != null) {
             if (tutorialsQueryCursor.moveToFirst()) {
-                // I looked up the use of 'getColumnIndex' at http://examples.javacodegeeks.com/android/core/database/android-cursor-example/
-                String title = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex("title"));
-                String instructionalText = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex("text"));
+                // I looked up the use of 'moveToNext' and 'getColumnIndex' at http://examples.javacodegeeks.com/android/core/database/android-cursor-example/
+                do {
+                    String title = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex("title"));
+                    String instructionalText = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex("text"));
 
-                Tutorial savedTutorial = new Tutorial(title, instructionalText);
+                    Tutorial savedTutorial = new Tutorial(title, instructionalText);
 
-                tutorialsList.add(savedTutorial);
+                    tutorialsList.add(savedTutorial);
+
+                } while (tutorialsQueryCursor.moveToNext());
 
             }
         }
 
         databaseInstance.close();
+
 
 
 
