@@ -24,15 +24,10 @@ public class TutorialManager {
 
 
     /**
-     * A database manager instance so that this class can access stored data bundled with the app.
-     */
-    private final DatabaseManager databaseManager;
-
-    /**
      * A public constructor to instantiate the tutorials from the database.
      */
     public TutorialManager(Context context) {
-        databaseManager = new DatabaseManager(context);
+        final DatabaseManager databaseManager = new DatabaseManager(context);
         SQLiteDatabase databaseInstance = databaseManager.getReadableDatabase();
 
         Cursor tutorialsQueryCursor = databaseInstance.rawQuery("SELECT * FROM tutorials", null);
@@ -56,8 +51,7 @@ public class TutorialManager {
 
         databaseInstance.close();
 
-
-
+        databaseManager.close();
 
     }
 

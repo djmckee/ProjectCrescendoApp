@@ -19,10 +19,9 @@ import android.content.Intent;
 public class MainActivity extends ActionBarActivity  {
 
     /**
-     * The tutorial manager instance, final and only created once in this class to reduce memory
-     * footprint.
+     * The tutorial manager instance.
      */
-    private final TutorialManager tutorialManager = new TutorialManager(this);
+    private TutorialManager tutorialManager;
 
     Button startTutorials;
 
@@ -34,6 +33,10 @@ public class MainActivity extends ActionBarActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        tutorialManager = new TutorialManager(this);
+
+        Log.d("Debug", "tutorials: " + tutorialManager.getTutorialsList());
 
         // hello world.
 
