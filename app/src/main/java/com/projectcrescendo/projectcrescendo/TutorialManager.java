@@ -18,20 +18,18 @@ import org.json.*;
  */
 public class TutorialManager {
 
-
     /**
      * The list of tutorials.
      */
     private final List<Tutorial> tutorialsList = new ArrayList<Tutorial>();
 
     /**
-     * A public constructor to instantiate the tutorials from the JSON file containing them.
+     * A public constructor to instantiate the tutorials from the database.
      */
     public TutorialManager(Context context) {
 
 
     }
-
 
     /**
      * A getter method to return the list of tutorials

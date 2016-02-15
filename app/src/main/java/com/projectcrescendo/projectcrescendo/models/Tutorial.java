@@ -12,11 +12,12 @@ public class Tutorial {
     // The Tutorial title is only set once upon construction of the class, so can be made final.
     final private String title;
 
-    // The List is only instantiated once, and can have Instruction instances added to it using the relevant method.
-    final private List<Instruction> instructions = new ArrayList<Instruction>();
+    // The tutorial instruction text
+    private String instruction;
 
-    public Tutorial(String title) {
+    public Tutorial(String title, String instruction) {
         this.title = title;
+        this.instruction = instruction;
 
     }
 
@@ -24,18 +25,13 @@ public class Tutorial {
         return title;
     }
 
-    public List<Instruction> getInstructions() {
-        // Defensive copying; return a copy of the instructions list...
-        return new ArrayList<Instruction>(instructions);
-    }
-
-    public void addInstruction(Instruction instruction) {
-        // Add the instruction we've been passed into the list
-        instructions.add(instruction);
+    public String getInstruction() {
+        return instruction;
     }
 
     @Override
     public String toString() {
         return "Tutorial '" + title + "'";
     }
+
 }
