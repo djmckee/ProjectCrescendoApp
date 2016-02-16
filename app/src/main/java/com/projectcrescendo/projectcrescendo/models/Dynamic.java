@@ -5,13 +5,23 @@ package com.projectcrescendo.projectcrescendo.models;
  * Created by Dylan McKee on 27/11/15.
  */
 public enum Dynamic {
-    MezzoForte,
     Forte,
     Piano,
+    MezzoForte,
     MezzoPiano,
     Pianissimo,
     Fortissimo,
     Crescendo,
-    Decrescendo
+    Decrescendo;
 
+    /**
+     * A helper method to return the Dynamic associated with the integer passed into it
+     * (association done by database primary key).
+     */
+    public static Dynamic getDynamicWithID(int dynamicId) {
+        // I looked up int to enum casting in Java at https://stackoverflow.com/questions/5878952/cast-int-to-enum-in-java
+        return Dynamic.values()[dynamicId];
+
+    }
 }
+
