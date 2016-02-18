@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.Button;
 import android.content.Intent;
 
+import com.projectcrescendo.projectcrescendo.models.Intonation;
 
 
 public class MainActivity extends ActionBarActivity  {
@@ -37,6 +38,10 @@ public class MainActivity extends ActionBarActivity  {
         tutorialManager = new TutorialManager(this);
 
         Log.d("Debug", "tutorials: " + tutorialManager.getTutorialsList());
+
+        NoteManager noteManager = new NoteManager(this);
+        Log.d("Debug", "note names: " + noteManager.getNoteNames());
+
 
         // hello world.
 

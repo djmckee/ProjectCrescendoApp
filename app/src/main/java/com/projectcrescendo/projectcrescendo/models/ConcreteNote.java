@@ -79,13 +79,9 @@ public class ConcreteNote implements Note {
 
     @Override
     public void play() {
-
+        // TODO: Play the note!
     }
 
-    @Override
-    public void delete() {
-
-    }
 
     @Override
     public void setLength(double l) {

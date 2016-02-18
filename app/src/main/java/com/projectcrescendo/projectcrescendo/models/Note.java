@@ -37,8 +37,6 @@ public interface Note {
 
     public void play();
 
-    public void delete();
-
     public void setLength(double l);
 
 }
