@@ -35,8 +35,9 @@ public interface Note {
 
     public Dynamic getDynamic ();
 
-    public void play();
-
     public void setLength(double l);
+
+    public double getLength ();
+
 
 }

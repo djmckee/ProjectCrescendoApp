@@ -78,14 +78,14 @@ public class ConcreteNote implements Note {
     }
 
     @Override
-    public void play() {
-        // TODO: Play the note!
-    }
-
-
-    @Override
     public void setLength(double l) {
         length = l;
 
     }
+
+    @Override
+    public double getLength() {
+        return this.length;
+    }
+
 }
