@@ -14,7 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.Button;
 import android.content.Intent;
 
-import com.projectcrescendo.projectcrescendo.models.Intonation;
+
 
 
 public class MainActivity extends ActionBarActivity  {
