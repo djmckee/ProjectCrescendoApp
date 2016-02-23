@@ -32,6 +32,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="35dp"
             android:id="@+id/startTutorialsButton"/>
+
     </FrameLayout>
 
 
