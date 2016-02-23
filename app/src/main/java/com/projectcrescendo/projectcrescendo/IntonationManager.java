@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  A class to instantiate intonation names from the SQL Database.
+ * A class to instantiate intonation names from the SQL Database.
  * Created by Dylan McKee on 23/02/16.
  */
 public class IntonationManager {

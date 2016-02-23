@@ -54,8 +54,6 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
     private AddNoteFragmentListener addNoteFragmentListener;
 
-    private FragmentManager presentationFragmentManager;
-
     // A class-wide note placeholder
     Note noteToAdd = null;
 
@@ -111,7 +109,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         SelectIntonationFragment selectIntonationFragment = new SelectIntonationFragment();
 
         // TODO: Fix!
-        //selectIntonationFragment.show(presentationFragmentManager, "Select Intonation");
+        //selectIntonationFragment.show(getParentFragment(), "Select Intonation");
 
     }
 
@@ -126,6 +124,11 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
             noteTitleList.add(title);
 
+        }
+
+        // If there's less than 5 notes in the bar; add the option to add a note too...
+        if (notesForCurrentBar.size() < 5) {
+            noteTitleList.add("Add new note +");
         }
 
         listViewAdapter = new ArrayAdapter<String>(this.getActivity(), R.layout.note_list_row, noteTitleList);
@@ -265,7 +268,13 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
 
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //
+        // If it's the Add New Note button, add new note
+        if (notesForCurrentBar.size() < 5) {
+            if (position == (notesForCurrentBar.size() - 1)) {
+
+            }
+        }
+
     }
 
     /**
@@ -291,14 +300,6 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         this.addNoteFragmentListener = addNoteFragmentListener;
     }
 
-
-    public FragmentManager getPresentationFragmentManager() {
-        return presentationFragmentManager;
-    }
-
-    public void setPresentationFragmentManager(FragmentManager presentationFragmentManager) {
-        this.presentationFragmentManager = presentationFragmentManager;
-    }
 
 
 }
