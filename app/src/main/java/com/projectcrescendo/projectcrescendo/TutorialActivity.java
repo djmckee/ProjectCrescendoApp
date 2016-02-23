@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.app.Activity;
