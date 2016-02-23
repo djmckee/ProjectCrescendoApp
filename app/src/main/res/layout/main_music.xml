@@ -4,12 +4,23 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <GridView
-        android:layout_height="wrap_content"
-        android:id="@+id/gridView1"
+    <FrameLayout
+        android:id="@+id/grid"
         android:layout_width="match_parent"
-        android:numColumns="auto_fit"
-        android:horizontalSpacing="10dp"
-        android:verticalSpacing="10dp">
-    </GridView>
+        android:layout_height="match_parent"
+        android:background="@drawable/grid_page">
+
+        <GridView
+            android:layout_height="300dp"
+            android:id="@+id/gridView1"
+            android:layout_width="550dp"
+            android:numColumns="auto_fit"
+            android:horizontalSpacing="10dp"
+            android:verticalSpacing="30dp"
+            android:gravity="end"
+            android:layout_gravity="right|center_vertical">
+        </GridView>
+
+    </FrameLayout>
+
 </LinearLayout>
