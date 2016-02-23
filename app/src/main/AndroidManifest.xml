@@ -25,11 +25,6 @@
             android:label="@string/title_activity_tutorial"
             android:screenOrientation="landscape"></activity>
         <activity
-            android:name=".GridActivity"
-            android:configChanges="orientation"
-            android:label="Grid activity"
-            android:screenOrientation="landscape"></activity>
-        <activity
             android:name=".PlaybackActivity"
             android:label="@string/title_activity_playback"></activity>
     </application>

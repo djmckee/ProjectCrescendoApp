@@ -49,9 +49,10 @@ public class MainActivity extends ActionBarActivity  {
             public void onClick(View v){
                 //startActivity(new Intent(MainActivity.this, TutorialActivity.class));
                 Log.d("MainActivity", "starting activity...");
-                startActivity(new Intent(MainActivity.this, GridActivity.class));
+                startActivity(new Intent(MainActivity.this, TutorialActivity.class));
             }
         });
+
 
     }
 
