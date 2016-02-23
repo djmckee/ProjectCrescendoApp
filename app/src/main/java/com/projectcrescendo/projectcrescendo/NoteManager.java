@@ -23,20 +23,20 @@ public class NoteManager {
     public List<String> getNoteNames() {
         SQLiteDatabase databaseInstance = databaseManager.getReadableDatabase();
 
-        Cursor tutorialsQueryCursor = databaseInstance.rawQuery("SELECT * FROM note_names", null);
+        Cursor noteNameQueryCursor = databaseInstance.rawQuery("SELECT * FROM note_names", null);
 
         List<String> noteNames = new ArrayList<String>();
 
         // Are there tutorials?
-        if (tutorialsQueryCursor != null) {
-            if (tutorialsQueryCursor.moveToFirst()) {
+        if (noteNameQueryCursor != null) {
+            if (noteNameQueryCursor.moveToFirst()) {
                 // I looked up the use of 'moveToNext' and 'getColumnIndex' at http://examples.javacodegeeks.com/android/core/database/android-cursor-example/
                 do {
-                    String noteName = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex("name"));
+                    String noteName = noteNameQueryCursor.getString(noteNameQueryCursor.getColumnIndex("name"));
 
                     noteNames.add(noteName);
 
-                } while (tutorialsQueryCursor.moveToNext());
+                } while (noteNameQueryCursor.moveToNext());
 
             }
         }

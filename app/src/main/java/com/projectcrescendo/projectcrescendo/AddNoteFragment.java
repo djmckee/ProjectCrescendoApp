@@ -91,6 +91,20 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
             }
         });
 
+
+        /*
+                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Present the add note fragment...
+                AddNoteFragment addNoteFragment = new AddNoteFragment();
+
+                addNoteFragment.show(getSupportFragmentManager(), "Add Note");
+
+            }
+        });
+         */
+
     }
 
 
