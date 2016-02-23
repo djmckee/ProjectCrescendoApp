@@ -40,6 +40,8 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
 
         // addNoteFragment.setAddNoteFragmentListener(this);
 
+        addNoteFragment.setPresentationFragmentManager(getSupportFragmentManager());
+
         addNoteFragment.show(getSupportFragmentManager(), "Add Note");
 
     }

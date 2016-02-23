@@ -54,6 +54,8 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
     private AddNoteFragmentListener addNoteFragmentListener;
 
+    private FragmentManager presentationFragmentManager;
+
     // A class-wide note placeholder
     Note noteToAdd = null;
 
@@ -100,21 +102,6 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         });
 
 
-        /*
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Present the add note fragment...
-                AddNoteFragment addNoteFragment = new AddNoteFragment();
-
-                addNoteFragment.addNoteFragmentListener = this;
-
-                addNoteFragment.show(getSupportFragmentManager(), "Add Note");
-
-            }
-        });
-         */
-
     }
 
 
@@ -124,7 +111,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         SelectIntonationFragment selectIntonationFragment = new SelectIntonationFragment();
 
         // TODO: Fix!
-        //selectIntonationFragment.show(getActivity().getSupportFragmentManager(), "Select Intonation");
+        //selectIntonationFragment.show(presentationFragmentManager, "Select Intonation");
 
     }
 
@@ -302,6 +289,15 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
     public void setAddNoteFragmentListener(AddNoteFragmentListener addNoteFragmentListener) {
         this.addNoteFragmentListener = addNoteFragmentListener;
+    }
+
+
+    public FragmentManager getPresentationFragmentManager() {
+        return presentationFragmentManager;
+    }
+
+    public void setPresentationFragmentManager(FragmentManager presentationFragmentManager) {
+        this.presentationFragmentManager = presentationFragmentManager;
     }
 
 
