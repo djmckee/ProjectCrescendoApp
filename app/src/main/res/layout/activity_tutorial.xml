@@ -10,6 +10,14 @@
     tools:context="com.projectcrescendo.projectcrescendo.TutorialActivity">
 
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/instruction"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="left|top"
+        android:layout_margin="16dp"
+        android:src="@drawable/how_to_use"
+        android:tint="@color/white" />
 
     <GridView
         android:layout_width="match_parent"

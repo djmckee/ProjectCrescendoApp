@@ -1,6 +1,8 @@
 package com.projectcrescendo.projectcrescendo;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
 
@@ -29,6 +31,15 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
         adapter.setAdapterListener(this);
 
         gridView.setAdapter(adapter);
+
+        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.instruction);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("TutorialActivity", "starting activity...");
+                startActivity(new Intent(TutorialActivity.this, Instructions.class));
+            }
+        });
 
     }
 

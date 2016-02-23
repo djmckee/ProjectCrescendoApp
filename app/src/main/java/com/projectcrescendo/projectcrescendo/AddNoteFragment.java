@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,6 +100,11 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
             }
         });
 
+        if (notesForCurrentBar == null) {
+            notesForCurrentBar = new ArrayList<Note>();
+        }
+
+        refreshNotesList();
 
     }
 
@@ -109,7 +115,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         SelectIntonationFragment selectIntonationFragment = new SelectIntonationFragment();
 
         // TODO: Fix!
-        //selectIntonationFragment.show(getParentFragment(), "Select Intonation");
+        selectIntonationFragment.show(getActivity().getFragmentManager(), "Add intonation");
 
     }
 
@@ -159,6 +165,9 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
                 // Get user input string
                 String textInput = inputTextView.getText().toString();
 
+                // The database stores only uppercase note names; do a quick conversion...
+                textInput = textInput.toUpperCase();
+
                 // Perform some input validation on the entered note...
                 boolean isValid = false;
 
@@ -196,6 +205,14 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
                             try {
                                 // Valid; continue.
                                 length = Double.parseDouble(lengthInputValue);
+
+                                noteToAdd.setLength(length);
+
+                                // Validate length...
+                                if (length < 0.5 || length > maxTime) {
+                                    noteToAdd = null;
+                                }
+
                             } catch(NumberFormatException nfe) {
                                // Invalid; show error and give up...
                                 new AlertDialog.Builder(getActivity())
@@ -270,8 +287,9 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // If it's the Add New Note button, add new note
         if (notesForCurrentBar.size() < 5) {
-            if (position == (notesForCurrentBar.size() - 1)) {
-
+            if (position == (notesForCurrentBar.size() - 1) || (notesForCurrentBar.size() == 0 && position == 0)) {
+                // Add new note
+                addNewNote();
             }
         }
 
