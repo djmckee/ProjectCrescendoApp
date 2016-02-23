@@ -36,6 +36,7 @@ public class TutorialActivity extends ActionBarActivity {
         int count = 10;
         linearLayout.addView(tableLayout(count));
         setContentView(linearLayout);
+
     }
     private TableLayout tableLayout(int count) {
         TableLayout tableLayout = new TableLayout(this);
