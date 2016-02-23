@@ -28,6 +28,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+interface AddNoteFragmentListener {
+    void addNoteFragmentAddedNote(AddNoteFragment addNoteFragment, Note note);
+
+}
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,6 +51,8 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
     private ArrayAdapter<String> listViewAdapter;
 
     private Button intonationButton;
+
+    private AddNoteFragmentListener addNoteFragmentListener;
 
     // A class-wide note placeholder
     Note noteToAdd = null;
@@ -79,6 +85,8 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
         listView = (ListView) this.getView().findViewById(R.id.noteListView);
 
         listView.setOnItemClickListener(this);
@@ -93,11 +101,13 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
 
         /*
-                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Present the add note fragment...
                 AddNoteFragment addNoteFragment = new AddNoteFragment();
+
+                addNoteFragment.addNoteFragmentListener = this;
 
                 addNoteFragment.show(getSupportFragmentManager(), "Add Note");
 
@@ -114,7 +124,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         SelectIntonationFragment selectIntonationFragment = new SelectIntonationFragment();
 
         // TODO: Fix!
-        //selectIntonationFragment.show(getFragmentManager(), "Select Intonation");
+        //selectIntonationFragment.show(getActivity().getSupportFragmentManager(), "Select Intonation");
 
     }
 
@@ -213,6 +223,11 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
                                 // there's a note to add; add it and refresh...
                                 notesForCurrentBar.add(noteToAdd);
 
+                                // Tell the listener...
+                                if (addNoteFragmentListener != null) {
+                                    addNoteFragmentListener.addNoteFragmentAddedNote(AddNoteFragment.this, noteToAdd);
+                                }
+
                                 refreshNotesList();
 
                             }
@@ -280,4 +295,14 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    public AddNoteFragmentListener getAddNoteFragmentListener() {
+        return addNoteFragmentListener;
+    }
+
+    public void setAddNoteFragmentListener(AddNoteFragmentListener addNoteFragmentListener) {
+        this.addNoteFragmentListener = addNoteFragmentListener;
+    }
+
+
 }

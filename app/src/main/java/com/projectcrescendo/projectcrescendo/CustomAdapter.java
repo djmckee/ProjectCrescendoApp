@@ -14,10 +14,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.app.Activity;
 
+interface CustomAdapterListener {
+    void onItemTapListener(int itemPosition);
+}
+
 public class CustomAdapter extends BaseAdapter{
 
     String [] result;
     Context context;
+
+    CustomAdapterListener adapterListener;
+
     private static LayoutInflater inflater=null;
     public CustomAdapter(Activity mainActivity, String[] prgmNameList) {
         // TODO Auto-generated constructor stub
@@ -66,11 +73,24 @@ public class CustomAdapter extends BaseAdapter{
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Toast.makeText(context, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
+                // Toast.makeText(context, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
+
+                if (adapterListener != null) {
+                    adapterListener.onItemTapListener(position);
+                }
+
             }
         });
 
         return rowView;
+    }
+
+    public CustomAdapterListener getAdapterListener() {
+        return adapterListener;
+    }
+
+    public void setAdapterListener(CustomAdapterListener adapterListener) {
+        this.adapterListener = adapterListener;
     }
 
 }
