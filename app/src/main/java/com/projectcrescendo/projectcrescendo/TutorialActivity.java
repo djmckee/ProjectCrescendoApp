@@ -33,9 +33,10 @@ public class TutorialActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View v) {
+                //startActivity(new Intent(MainActivity.this, TutorialActivity.class));
                 Log.d("TutorialActivity", "starting activity...");
                 startActivity(new Intent(TutorialActivity.this, Instructions.class));
             }
