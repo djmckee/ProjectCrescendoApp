@@ -1,6 +1,7 @@
 package com.projectcrescendo.projectcrescendo;
 
 import android.app.Activity;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -23,7 +24,6 @@ public class MainActivity extends ActionBarActivity  {
      */
     private TutorialManager tutorialManager;
 
-    Button startTutorials;
 
     /**
      * This method is ran on creation of the view. UI and listeners to be set-up here.
@@ -44,7 +44,7 @@ public class MainActivity extends ActionBarActivity  {
 
         // hello world.
 
-        startTutorials = (Button) findViewById(R.id.startTutorialsButton);
+        FloatingActionButton startTutorials = (FloatingActionButton) findViewById(R.id.startTutorialsButton);
         startTutorials.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 //startActivity(new Intent(MainActivity.this, TutorialActivity.class));
