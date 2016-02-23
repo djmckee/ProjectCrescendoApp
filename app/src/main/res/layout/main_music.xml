@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <FrameLayout
         android:id="@+id/grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/grid_page">
+        android:background="@color/black">
 
         <GridView
-            android:layout_height="300dp"
+            android:layout_height="280dp"
             android:id="@+id/gridView1"
-            android:layout_width="550dp"
+            android:layout_width="530dp"
             android:numColumns="auto_fit"
             android:horizontalSpacing="10dp"
             android:verticalSpacing="30dp"
@@ -21,6 +24,17 @@
             android:layout_gravity="right|center_vertical">
         </GridView>
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="left|top"
+            android:layout_margin="16dp"
+            android:src="@drawable/how_to_use"
+            android:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            app:backgroundTint="@color/white"/>
+
     </FrameLayout>
 
-</LinearLayout>
+</android.support.v4.widget.DrawerLayout>

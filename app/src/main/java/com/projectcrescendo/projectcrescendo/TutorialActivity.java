@@ -1,11 +1,12 @@
 package com.projectcrescendo.projectcrescendo;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
-import android.widget.AdapterView;
+import android.util.Log;
 import android.widget.GridView;
 import android.app.Activity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,16 @@ public class TutorialActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("TutorialActivity", "starting activity...");
+                startActivity(new Intent(TutorialActivity.this, Instructions.class));
+            }
+        });
+
         LinearLayout linearLayout = new LinearLayout(this);
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(FILL_PARENT, WRAP_CONTENT);
         linearLayout.setLayoutParams(params);
@@ -36,6 +48,8 @@ public class TutorialActivity extends ActionBarActivity {
         int count = 10;
         linearLayout.addView(tableLayout(count));
         setContentView(linearLayout);
+
+
     }
     private TableLayout tableLayout(int count) {
         TableLayout tableLayout = new TableLayout(this);
