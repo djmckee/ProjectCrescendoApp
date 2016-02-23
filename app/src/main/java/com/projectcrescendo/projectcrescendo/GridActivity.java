@@ -1,10 +1,12 @@
 package com.projectcrescendo.projectcrescendo;
 
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
 import java.util.ArrayList;
 
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
@@ -37,6 +39,16 @@ public class GridActivity extends ActionBarActivity {
 
         // Implement On Item click listener
 
+        gridView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Present the add note fragment...
+                AddNoteFragment addNoteFragment = new AddNoteFragment();
+
+                addNoteFragment.show(getSupportFragmentManager(), "Add Note");
+
+            }
+        });
 
     }
 
