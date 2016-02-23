@@ -4,8 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.projectcrescendo.projectcrescendo.models.Tutorial;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +23,7 @@ public class NoteManager {
     public List<String> getNoteNames() {
         SQLiteDatabase databaseInstance = databaseManager.getReadableDatabase();
 
-        Cursor tutorialsQueryCursor = databaseInstance.rawQuery("SELECT * FROM notes", null);
+        Cursor tutorialsQueryCursor = databaseInstance.rawQuery("SELECT * FROM note_names", null);
 
         List<String> noteNames = new ArrayList<String>();
 

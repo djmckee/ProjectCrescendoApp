@@ -15,7 +15,7 @@ import android.widget.AdapterView.OnItemClickListener;
  * Created by Jordan on 06/02/2016.
  class to create grid holders for boxes.
  **/
-public class GridHolder extends ActionBarActivity {
+public class GridActivity extends ActionBarActivity {
 
     private GridviewAdapter mAdapter;
     private GridView gridView;

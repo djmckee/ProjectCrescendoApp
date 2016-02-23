@@ -16,7 +16,6 @@ import android.content.Intent;
 
 
 
-
 public class MainActivity extends ActionBarActivity  {
 
     /**
@@ -48,7 +47,9 @@ public class MainActivity extends ActionBarActivity  {
         startTutorials = (Button) findViewById(R.id.startTutorialsButton);
         startTutorials.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                startActivity(new Intent(MainActivity.this, TutorialActivity.class));
+                //startActivity(new Intent(MainActivity.this, TutorialActivity.class));
+                Log.d("MainActivity", "starting activity...");
+                startActivity(new Intent(MainActivity.this, GridActivity.class));
             }
         });
 
