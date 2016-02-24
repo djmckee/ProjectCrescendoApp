@@ -82,14 +82,24 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/startTutorialsButton"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginBottom="70dp"
-            android:src="@drawable/start"
+            android:layout_marginBottom="50dp"
+            android:src="@drawable/sonata_concept"
             android:elevation="6dp"
             app:pressedTranslationZ="12dp"
-            app:backgroundTint="@color/teal"/>
+            app:backgroundTint="@color/black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tab The Button To Start"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:id="@+id/textView3"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="30dp"/>
 
         <!-- <Button
                          android:layout_width="wrap_content"
