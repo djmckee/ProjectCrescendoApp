@@ -92,12 +92,12 @@
             app:backgroundTint="@color/black"/>
 
         <TextView
+            android:id="@+id/tab_to_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tab The Button To Start"
             android:textStyle="bold"
             android:textSize="18dp"
-            android:id="@+id/textView3"
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginBottom="30dp"/>
 
