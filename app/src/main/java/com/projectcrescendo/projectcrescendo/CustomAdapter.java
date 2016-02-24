@@ -4,6 +4,7 @@ package com.projectcrescendo.projectcrescendo;
  * Created by Alexander on 23/02/2016.
  */
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,8 +82,9 @@ public class CustomAdapter extends BaseAdapter{
 
         tv=(TextView) rowView.findViewById(R.id.textView1);
 
-
         tv.setText(result[position]);
+
+        // TODO: Set background colour here!
 
 
         rowView.setOnClickListener(new OnClickListener() {
