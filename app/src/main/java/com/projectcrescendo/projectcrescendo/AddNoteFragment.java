@@ -117,8 +117,14 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
         SelectIntonationFragment selectIntonationFragment = new SelectIntonationFragment();
 
+        selectIntonationFragment.setListener(this);
+
         selectIntonationFragment.show(getActivity().getFragmentManager(), "Add intonation");
 
+    }
+
+    void refreshIntonation() {
+        intonationButton.setText("Intonation: " + currentIntonation);
     }
 
     void refreshNotesList() {
@@ -343,7 +349,9 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
     @Override
     public void intonationSelectedFromFragment(SelectIntonationFragment fragment, Intonation newIntonation) {
         Log.d("intonation selected", "intonation selected: " + newIntonation);
-        
+        currentIntonation = newIntonation;
+        refreshIntonation();
+
     }
 
 

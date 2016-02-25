@@ -32,6 +32,7 @@ interface SelectIntonationFragmentCallbackListener {
 public class SelectIntonationFragment extends DialogFragment implements
         OnItemClickListener {
 
+
     private ListView intonationSelectionList;
 
     private SelectIntonationFragmentCallbackListener listener;
@@ -75,11 +76,22 @@ public class SelectIntonationFragment extends DialogFragment implements
 
         // Tell the AddNoteFragment about it!
         Intonation newIntonation = Intonation.getIntonationWithID(position);
-        listener.intonationSelectedFromFragment(this, newIntonation);
+
+        if (listener != null) {
+            listener.intonationSelectedFromFragment(this, newIntonation);
+        }
 
         // TODO: fix go back
         //getFragmentManager().popBackStack();
 
+    }
+
+    public SelectIntonationFragmentCallbackListener getListener() {
+        return listener;
+    }
+
+    public void setListener(SelectIntonationFragmentCallbackListener listener) {
+        this.listener = listener;
     }
 
 

@@ -21,7 +21,7 @@ public class ConcreteNote implements Note {
 
         // Set up default values.
         accidental = Accidental.Natural;
-        intonation = Intonation.None;
+        intonation = Intonation.Accent;
         dynamic = Dynamic.MezzoForte;
 
     }
@@ -64,7 +64,7 @@ public class ConcreteNote implements Note {
 
     @Override
     public void removeIntonation() {
-        intonation = Intonation.None;
+        intonation = Intonation.Accent;
     }
 
     @Override
