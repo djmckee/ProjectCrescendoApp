@@ -47,4 +47,15 @@ public class Bar {
         this.timeSignatureNumerator = timeSignatureNumerator;
     }
 
+    public List<Note> getAllNotesOnBar() {
+        List<Note> notes = new ArrayList<Note>();
+
+        for (Beat beat : beats) {
+            notes.addAll(beat.getNotes());
+        }
+
+        return notes;
+
+    }
+
 }
