@@ -57,6 +57,7 @@ public class MainActivity extends ActionBarActivity  {
         });
     }
 
+    // Ambrose: got code from http://stackoverflow.com/questions/9294112/how-to-make-the-textview-blinking for the blink function
     private void blink(){
         final Handler handler = new Handler();
         new Thread(new Runnable() {
