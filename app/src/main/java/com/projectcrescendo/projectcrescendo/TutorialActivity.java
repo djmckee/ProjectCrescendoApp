@@ -10,11 +10,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+
+import com.projectcrescendo.projectcrescendo.models.Note;
+
 import java.util.ArrayList;
 
 
 // got code from http://prasans.info/2011/03/add-edittexts-dynamically-and-retrieve-values-android/
-public class TutorialActivity extends ActionBarActivity implements CustomAdapterListener  {
+public class TutorialActivity extends ActionBarActivity implements CustomAdapterListener, AddNoteFragmentListener  {
 
     GridView gridView;
     Context context;
@@ -40,12 +43,23 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
         // Present the add note fragment...
         AddNoteFragment addNoteFragment = new AddNoteFragment();
 
-        // addNoteFragment.setAddNoteFragmentListener(this);
+        addNoteFragment.setAddNoteFragmentListener(this);
 
         addNoteFragment.show(getSupportFragmentManager(), "Add Note");
 
     }
 
 
+    @Override
+    public void addNoteFragmentAddedNote(AddNoteFragment addNoteFragment, Note note) {
+        // TODO: add the note to the composition
+
+    }
+
+    @Override
+    public void addNoteFragmentDeletedNote(AddNoteFragment addNoteFragment, Note note) {
+        // TODO: delete the note from the composition
+
+    }
 
 }

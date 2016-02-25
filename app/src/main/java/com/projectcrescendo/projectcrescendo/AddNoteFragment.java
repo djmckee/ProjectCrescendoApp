@@ -10,6 +10,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import java.util.List;
 
 interface AddNoteFragmentListener {
     void addNoteFragmentAddedNote(AddNoteFragment addNoteFragment, Note note);
+    void addNoteFragmentDeletedNote(AddNoteFragment addNoteFragment, Note note);
 
 }
 
@@ -42,7 +44,7 @@ interface AddNoteFragmentListener {
  * Use the {@link AddNoteFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddNoteFragment extends DialogFragment implements AdapterView.OnItemClickListener {
+public class AddNoteFragment extends DialogFragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, SelectIntonationFragmentCallbackListener {
     private Intonation currentIntonation;
     private List<Note> notesForCurrentBar;
 
@@ -91,6 +93,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         listView = (ListView) this.getView().findViewById(R.id.noteListView);
 
         listView.setOnItemClickListener(this);
+        listView.setOnItemLongClickListener(this);
 
         intonationButton = (Button) this.getView().findViewById(R.id.intonationSelectionButton);
         intonationButton.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +117,6 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
         SelectIntonationFragment selectIntonationFragment = new SelectIntonationFragment();
 
-        // TODO: Fix!
         selectIntonationFragment.show(getActivity().getFragmentManager(), "Add intonation");
 
     }
@@ -126,7 +128,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
         // Add note names to the list...
         for (Note note : notesForCurrentBar) {
-            String title = String.format("%s - %f s.", note.getPitch(), note.getLength());
+            String title = String.format("%s - length: %.2f", note.getPitch(), note.getLength());
 
             noteTitleList.add(title);
 
@@ -230,10 +232,14 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
                                 // there's a note to add; add it and refresh...
                                 notesForCurrentBar.add(noteToAdd);
 
+                                Log.d("AddNote", ("Added note " + noteToAdd));
+
                                 // Tell the listener...
                                 if (addNoteFragmentListener != null) {
                                     addNoteFragmentListener.addNoteFragmentAddedNote(AddNoteFragment.this, noteToAdd);
                                 }
+
+
 
                                 refreshNotesList();
 
@@ -250,7 +256,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
                         }
                     });
 
-
+                    lengthInputDialog.show();
 
 
                 } else {
@@ -287,13 +293,59 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // If it's the Add New Note button, add new note
         if (notesForCurrentBar.size() < 5) {
-            if (position == (notesForCurrentBar.size() - 1) || (notesForCurrentBar.size() == 0 && position == 0)) {
+            if (position == notesForCurrentBar.size() || (notesForCurrentBar.size() == 0 && position == 0)) {
                 // Add new note
                 addNewNote();
             }
         }
 
     }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        // If it's the add note button, return false - otherwise - delete the note.
+        if (notesForCurrentBar.size() < 5) {
+            if (position == notesForCurrentBar.size() || (notesForCurrentBar.size() == 0 && position == 0)) {
+                // Add new note button, just return false
+                return false;
+            }
+        }
+
+        final Note selectedNote = notesForCurrentBar.get(position);
+
+        AlertDialog.Builder lengthInputDialog = new AlertDialog.Builder(getActivity());
+        lengthInputDialog.setTitle("Are you sure you want to delete note '" + selectedNote.getPitch() + "'?");
+
+        lengthInputDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int buttonId) {
+                // Delete note.
+                notesForCurrentBar.remove(selectedNote);
+
+                // Tell the listener...
+                if (addNoteFragmentListener != null) {
+                    addNoteFragmentListener.addNoteFragmentDeletedNote(AddNoteFragment.this, selectedNote);
+                }
+
+                refreshNotesList();
+
+            }
+        });
+
+        lengthInputDialog.setNegativeButton("Cancel", null);
+
+        lengthInputDialog.show();
+
+
+        return true;
+    }
+
+    @Override
+    public void intonationSelectedFromFragment(SelectIntonationFragment fragment, Intonation newIntonation) {
+        Log.d("intonation selected", "intonation selected: " + newIntonation);
+        
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this

@@ -88,4 +88,9 @@ public class ConcreteNote implements Note {
         return this.length;
     }
 
+    @Override
+    public String toString() {
+        return "Note - name: " + getPitch() + " length: " + getLength();
+    }
+
 }

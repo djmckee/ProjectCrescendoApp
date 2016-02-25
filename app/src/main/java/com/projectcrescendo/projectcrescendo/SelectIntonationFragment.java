@@ -77,8 +77,8 @@ public class SelectIntonationFragment extends DialogFragment implements
         Intonation newIntonation = Intonation.getIntonationWithID(position);
         listener.intonationSelectedFromFragment(this, newIntonation);
 
-        // Close current fragment (as per https://stackoverflow.com/questions/5901298/how-to-get-a-fragment-to-remove-itself-i-e-its-equivalent-of-finish)
-        getActivity().getFragmentManager().popBackStack();
+        // TODO: fix go back
+        //getFragmentManager().popBackStack();
 
     }
 
