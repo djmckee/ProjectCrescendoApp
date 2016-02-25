@@ -33,7 +33,7 @@ import java.util.List;
 interface AddNoteFragmentListener {
     void addNoteFragmentAddedNote(AddNoteFragment addNoteFragment, Note note);
     void addNoteFragmentDeletedNote(AddNoteFragment addNoteFragment, Note note);
-
+    void addNoteFragmentIntonationSelected(AddNoteFragment addNoteFragment, Intonation newIntonation);
 }
 
 /**
@@ -351,6 +351,10 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         Log.d("intonation selected", "intonation selected: " + newIntonation);
         currentIntonation = newIntonation;
         refreshIntonation();
+
+        if (addNoteFragmentListener != null) {
+            addNoteFragmentListener.addNoteFragmentIntonationSelected(this, currentIntonation);
+        }
 
     }
 

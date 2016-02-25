@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.projectcrescendo.projectcrescendo.models.Intonation;
 import com.projectcrescendo.projectcrescendo.models.Note;
 
 import java.util.ArrayList;
@@ -86,6 +87,12 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
     @Override
     public void addNoteFragmentDeletedNote(AddNoteFragment addNoteFragment, Note note) {
         // TODO: delete the note from the composition
+
+    }
+
+    @Override
+    public void addNoteFragmentIntonationSelected(AddNoteFragment addNoteFragment, Intonation newIntonation) {
+        // TODO: change intonation for the current beat
 
     }
 
