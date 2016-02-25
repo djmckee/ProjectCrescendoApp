@@ -1,15 +1,11 @@
 package com.projectcrescendo.projectcrescendo;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.database.DataSetObserver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 
@@ -27,7 +22,6 @@ import com.projectcrescendo.projectcrescendo.models.Intonation;
 import com.projectcrescendo.projectcrescendo.models.Note;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 interface AddNoteFragmentListener {
@@ -45,6 +39,7 @@ interface AddNoteFragmentListener {
  * create an instance of this fragment.
  */
 public class AddNoteFragment extends DialogFragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, SelectIntonationFragmentCallbackListener {
+
     private Intonation currentIntonation;
     private List<Note> notesForCurrentBar;
 
@@ -99,7 +94,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         intonationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setIntonation();
+                selectIntonation();
             }
         });
 
@@ -109,10 +104,12 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
         refreshNotesList();
 
+        refreshIntonation();
+
     }
 
 
-    void setIntonation() {
+    void selectIntonation() {
         // Present a modal that allows the user to select intonation...
 
         SelectIntonationFragment selectIntonationFragment = new SelectIntonationFragment();
@@ -134,6 +131,8 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
         // Add note names to the list...
         for (Note note : notesForCurrentBar) {
+            Log.d("AddNoteFragment", "note = " + note.toString());
+
             String title = String.format("%s - length: %.2f", note.getPitch(), note.getLength());
 
             noteTitleList.add(title);
@@ -236,8 +235,6 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
                             if (noteToAdd != null) {
                                 // there's a note to add; add it and refresh...
-                                notesForCurrentBar.add(noteToAdd);
-
                                 Log.d("AddNote", ("Added note " + noteToAdd));
 
                                 // Tell the listener...
@@ -325,9 +322,6 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         lengthInputDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int buttonId) {
-                // Delete note.
-                notesForCurrentBar.remove(selectedNote);
-
                 // Tell the listener...
                 if (addNoteFragmentListener != null) {
                     addNoteFragmentListener.addNoteFragmentDeletedNote(AddNoteFragment.this, selectedNote);
@@ -382,6 +376,20 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         this.addNoteFragmentListener = addNoteFragmentListener;
     }
 
+    public Intonation getCurrentIntonation() {
+        return currentIntonation;
+    }
 
+    public void setCurrentIntonation(Intonation currentIntonation) {
+        this.currentIntonation = currentIntonation;
+    }
+
+    public List<Note> getNotesForCurrentBar() {
+        return notesForCurrentBar;
+    }
+
+    public void setNotesForCurrentBar(List<Note> notesForCurrentBar) {
+        this.notesForCurrentBar = notesForCurrentBar;
+    }
 
 }

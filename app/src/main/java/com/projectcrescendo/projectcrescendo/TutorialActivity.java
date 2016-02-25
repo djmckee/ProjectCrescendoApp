@@ -1,13 +1,16 @@
 package com.projectcrescendo.projectcrescendo;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.projectcrescendo.projectcrescendo.models.Beat;
 import com.projectcrescendo.projectcrescendo.models.Intonation;
 import com.projectcrescendo.projectcrescendo.models.Note;
+import com.projectcrescendo.projectcrescendo.models.Stave;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,58 +19,51 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 
-public class TutorialActivity extends ActionBarActivity implements CustomAdapterListener, AddNoteFragmentListener  {
+public class TutorialActivity extends ActionBarActivity implements CustomAdapterListener, AddNoteFragmentListener, AdapterView.OnItemSelectedListener {
 
-    GridView gridView;
-    Context context;
-    ArrayList prgmName;
-    public static String [] prgmNameList={"c","a","b","f","e","b","c","a"};
+    /**
+     * The Stave for this composition.
+     */
+    private Stave stave;
+
+    /**
+     * A conveneince placeholder; holds the current beat being edited whilst adding/removing notes, changing Intonation, etc.
+     */
+    private Beat currentBeat;
+
+    private GridView gridView;
 
     Spinner timeSignatureR1;
     Spinner timeSignatureR2;
     Spinner timeSignatureL1;
     Spinner timeSignatureL2;
 
+    private List<String> timeSignatureList = new ArrayList<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
+
+        stave = new Stave();
+
         gridView = (GridView) findViewById(R.id.gridView1);
-        CustomAdapter adapter = new CustomAdapter(this, prgmNameList);
-        adapter.setAdapterListener(this);
+        refreshGrid();
 
-        gridView.setAdapter(adapter);
-        addItemsOnSpinner();
 
-    }
-
-    public void onItemTapListener(int position) {
-        Log.d("TutorialActivity", "onItemClicked");
-
-        // Present the add note fragment...
-        AddNoteFragment addNoteFragment = new AddNoteFragment();
-
-        addNoteFragment.setAddNoteFragmentListener(this);
-
-        addNoteFragment.show(getSupportFragmentManager(), "Add Note");
-
-    }
-
-    public void addItemsOnSpinner() {
-
+        // Set up spinner...
         // Ambrose: got code from http://prasans.info/2011/03/add-edittexts-dynamically-and-retrieve-values-android/ for the Spinner UI
         timeSignatureR1 = (Spinner) findViewById(R.id.right_hand_time_signature_1);
         timeSignatureR2 = (Spinner) findViewById(R.id.right_hand_time_signature_2);
         timeSignatureL1 = (Spinner) findViewById(R.id.left_hand_time_signature_1);
         timeSignatureL2 = (Spinner) findViewById(R.id.left_hand_time_signature_2);
 
-        List<String> list = new ArrayList<String>();
-        list.add("2");
-        list.add("3");
-        list.add("4");
+        timeSignatureList.add("2");
+        timeSignatureList.add("3");
+        timeSignatureList.add("4");
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, timeSignatureList);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -76,25 +72,128 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
         timeSignatureL1.setAdapter(dataAdapter);
         timeSignatureL2.setAdapter(dataAdapter);
 
+        timeSignatureR1.setOnItemSelectedListener(this);
+        timeSignatureR2.setOnItemSelectedListener(this);
+        timeSignatureL1.setOnItemSelectedListener(this);
+        timeSignatureL2.setOnItemSelectedListener(this);
+
     }
 
+    public void refreshGrid() {
+        // Create a string array from the current stave's bars and beats...
+        List<String> notesAsStringList = new ArrayList<String>();
+
+
+        // Add for lower stave
+        for (Beat beat : stave.getLowerBar().getBeats()) {
+            String notesForBeat = beat.gridStringRepresentation();
+            notesAsStringList.add(notesForBeat);
+        }
+
+
+        // Add for upper stave
+        for (Beat beat : stave.getUpperBar().getBeats()) {
+            String notesForBeat = beat.gridStringRepresentation();
+            notesAsStringList.add(notesForBeat);
+        }
+
+        // Convert to primitive String array
+        String[] noteNamesArray = new String[notesAsStringList.size()];
+        notesAsStringList.toArray(noteNamesArray);
+
+        // Hand to adapter; refresh grid.
+        CustomAdapter adapter = new CustomAdapter(this, noteNamesArray);
+        adapter.setAdapterListener(this);
+
+        gridView.setAdapter(adapter);
+
+    }
+
+    /**
+     * This method is called when a grid item is tapped; the index of the tapped grid item is passed
+     * into it as a parameter.
+     * @param position the index of the grid item that was clicked.
+     */
+    public void onItemTapListener(int position) {
+        Log.d("TutorialActivity", "onItemClicked");
+
+        // Work out what beat is being edited...
+        int maxBarLength = Stave.BEATS_PER_BAR;
+
+        Log.d("TutorialActivity", "position tapped: " + position);
+        Log.d("TutorialActivity", "maxBarLength: " + maxBarLength);
+
+        if (position > (maxBarLength - 1)) {
+            // upper bar, take away max bar length to get true position
+            Log.d("TutorialActivity", "upper bar");
+
+            int truePosition = position - maxBarLength;
+            currentBeat = stave.getUpperBar().getBeats().get(truePosition);
+
+        } else {
+            // lower bar
+            Log.d("TutorialActivity", "lower bar");
+
+            currentBeat = stave.getLowerBar().getBeats().get(position);
+
+        }
+
+
+
+        // Present the add note fragment...
+        AddNoteFragment addNoteFragment = new AddNoteFragment();
+
+        // set note fragment up for current bar
+        addNoteFragment.setCurrentIntonation(currentBeat.getIntonation());
+        addNoteFragment.setNotesForCurrentBar(currentBeat.getNotes());
+
+        addNoteFragment.setAddNoteFragmentListener(this);
+
+        addNoteFragment.show(getSupportFragmentManager(), "Add Note");
+
+
+
+    }
 
     @Override
     public void addNoteFragmentAddedNote(AddNoteFragment addNoteFragment, Note note) {
-        // TODO: add the note to the composition
+        // Add the note to the current beat...
+        currentBeat.getNotes().add(note);
+
+        // Refresh grid to reflect changes in UI
+        refreshGrid();
 
     }
 
     @Override
     public void addNoteFragmentDeletedNote(AddNoteFragment addNoteFragment, Note note) {
-        // TODO: delete the note from the composition
+        // Delete the note from the current beat...
+        currentBeat.getNotes().remove(note);
+
+        // Refresh grid to reflect changes in UI
+        refreshGrid();
 
     }
 
     @Override
     public void addNoteFragmentIntonationSelected(AddNoteFragment addNoteFragment, Intonation newIntonation) {
-        // TODO: change intonation for the current beat
+        // Set intonation on the current beat
+        currentBeat.setIntonation(newIntonation);
 
     }
 
+    // TODO: Fix this!!!! (´･_･`)
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Log.d("time sig", "time signature selected: " + timeSignatureList.get(position));
+        Log.d("time sig", "selector view = : " + view);
+
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        Log.d("time sig", "no time signature selected");
+
+    }
 }
