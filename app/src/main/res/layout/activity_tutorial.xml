@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.projectcrescendo.projectcrescendo.TutorialActivity">
+    tools:context="com.projectcrescendo.projectcrescendo.TutorialActivity"
+    android:background="@drawable/grid_page">
     <!-- android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -20,18 +21,44 @@
         android:src="@drawable/how_to_use"
         android:elevation="6dp"
         app:pressedTranslationZ="12dp"
-        app:backgroundTint="@color/white"/>
+        app:backgroundTint="@color/teal"/>
 
     <GridView
-        android:layout_width="520dp"
+        android:layout_width="490dp"
         android:layout_height="260dp"
         android:gravity="right|center_horizontal"
         android:id="@+id/gridView1"
         android:numColumns="4"
-        android:layout_below="@+id/fab"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/fab" />
+        android:layout_below="@+id/instruction"
+        android:layout_alignParentEnd="true" />
 
+    <Spinner
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/right_hand_time_signature_1"
+        android:layout_alignTop="@+id/gridView1"
+        android:layout_toStartOf="@+id/gridView1"/>
+
+    <Spinner
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/right_hand_time_signature_2"
+        android:layout_below="@+id/right_hand_time_signature_1"
+        android:layout_alignStart="@+id/right_hand_time_signature_1" />
+
+    <Spinner
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/left_hand_time_signature_1"
+        android:layout_above="@+id/left_hand_time_signature_2"
+        android:layout_alignStart="@+id/right_hand_time_signature_2" />
+
+    <Spinner
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/left_hand_time_signature_2"
+        android:layout_alignBottom="@+id/gridView1"
+        android:layout_alignStart="@+id/left_hand_time_signature_1" />
 
 
 </RelativeLayout>

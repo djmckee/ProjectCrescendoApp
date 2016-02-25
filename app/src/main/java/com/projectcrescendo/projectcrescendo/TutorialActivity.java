@@ -14,6 +14,11 @@ import android.widget.GridView;
 import com.projectcrescendo.projectcrescendo.models.Note;
 
 import java.util.ArrayList;
+import java.util.List;
+import android.app.Activity;
+import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 
 // got code from http://prasans.info/2011/03/add-edittexts-dynamically-and-retrieve-values-android/
@@ -23,6 +28,8 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
     Context context;
     ArrayList prgmName;
     public static String [] prgmNameList={"c","a","b","f","e","b","c","a"};
+
+    Spinner time_signature_r1, time_signature_r2, time_signature_l1, time_signature_l2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +41,7 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
         adapter.setAdapterListener(this);
 
         gridView.setAdapter(adapter);
+        addItemsOnSpinner();
 
     }
 
@@ -47,6 +55,25 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
 
         addNoteFragment.show(getSupportFragmentManager(), "Add Note");
 
+    }
+
+    public void addItemsOnSpinner() {
+
+        time_signature_r1 = (Spinner) findViewById(R.id.right_hand_time_signature_1);
+        time_signature_r2 = (Spinner) findViewById(R.id.right_hand_time_signature_2);
+        time_signature_l1 = (Spinner) findViewById(R.id.left_hand_time_signature_1);
+        time_signature_l2 = (Spinner) findViewById(R.id.left_hand_time_signature_2);
+        List<String> list = new ArrayList<String>();
+        list.add("2");
+        list.add("3");
+        list.add("4");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        time_signature_r1.setAdapter(dataAdapter);
+        time_signature_r2.setAdapter(dataAdapter);
+        time_signature_l1.setAdapter(dataAdapter);
+        time_signature_l2.setAdapter(dataAdapter);
     }
 
 
