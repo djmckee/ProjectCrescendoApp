@@ -1,9 +1,6 @@
 package com.projectcrescendo.projectcrescendo;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
@@ -41,6 +38,9 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
     Spinner timeSignatureL1;
     Spinner timeSignatureL2;
 
+    List<Integer> timeSignatureNumerators;
+    List<Integer> timeSignatureDenominators;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -63,18 +63,18 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
 
         TimeSignatureManager timeSignatureManager = new TimeSignatureManager(this);
 
-        List<Integer> timeSignatureNumeratorIntegers = timeSignatureManager.getTimeSignatureNumerators();
-        List<Integer> timeSignatureDenominatorIntegers = timeSignatureManager.getTimeSignatureDenominator();
+        timeSignatureNumerators = timeSignatureManager.getTimeSignatureNumerators();
+        timeSignatureDenominators = timeSignatureManager.getTimeSignatureDenominator();
 
         List<String> timeSignatureNumeratorStrings = new ArrayList<String>();
         List<String> timeSignatureDenominatorStrings = new ArrayList<String>();
 
-        for (int numerator : timeSignatureNumeratorIntegers) {
+        for (int numerator : timeSignatureNumerators) {
             String stringValue = String.format("%d", numerator);
             timeSignatureNumeratorStrings.add(stringValue);
         }
 
-        for (int denominator : timeSignatureDenominatorIntegers) {
+        for (int denominator : timeSignatureDenominators) {
             String stringValue = String.format("%d", denominator);
             timeSignatureDenominatorStrings.add(stringValue);
         }
