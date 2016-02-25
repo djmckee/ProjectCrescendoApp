@@ -22,18 +22,13 @@ import android.widget.Spinner;
 public class TutorialActivity extends ActionBarActivity implements CustomAdapterListener, AddNoteFragmentListener, AdapterView.OnItemSelectedListener {
 
     /**
-     * The Top Stave for this composition.
+     * The Stave for this composition.
      */
-    private Stave topStave;
-
-    /**
-     * The Bottom Stave for this composition.
-     */
-    private Stave bottomStave;
+    private Stave stave;
 
 
     /**
-     * A conveneince placeholder; holds the current beat being edited whilst adding/removing notes, changing Intonation, etc.
+     * A convenience placeholder; holds the current beat being edited whilst adding/removing notes, changing Intonation, etc.
      */
     private Beat currentBeat;
 
@@ -53,8 +48,7 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
 
-        topStave = new Stave();
-        bottomStave = new Stave();
+        stave = new Stave();
 
 
         gridView = (GridView) findViewById(R.id.gridView1);
@@ -108,16 +102,14 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
         // Create a string array from the current stave's bars and beats...
         List<String> notesAsStringList = new ArrayList<String>();
 
-
         // Add for lower stave
-        for (Beat beat : bottomStave.getBar().getBeats()) {
+        for (Beat beat : stave.getLowerBar().getBeats()) {
             String notesForBeat = beat.gridStringRepresentation();
             notesAsStringList.add(notesForBeat);
         }
 
-
         // Add for upper stave
-        for (Beat beat : topStave.getBar().getBeats()) {
+        for (Beat beat : stave.getUpperBar().getBeats()) {
             String notesForBeat = beat.gridStringRepresentation();
             notesAsStringList.add(notesForBeat);
         }
@@ -153,17 +145,15 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
             Log.d("TutorialActivity", "upper bar");
 
             int truePosition = position - maxBarLength;
-            currentBeat = topStave.getBar().getBeats().get(truePosition);
+            currentBeat = stave.getUpperBar().getBeats().get(truePosition);
 
         } else {
             // lower bar
             Log.d("TutorialActivity", "lower bar");
 
-            currentBeat = bottomStave.getBar().getBeats().get(position);
+            currentBeat = stave.getLowerBar().getBeats().get(position);
 
         }
-
-
 
         // Present the add note fragment...
         AddNoteFragment addNoteFragment = new AddNoteFragment();
@@ -175,8 +165,6 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
         addNoteFragment.setAddNoteFragmentListener(this);
 
         addNoteFragment.show(getSupportFragmentManager(), "Add Note");
-
-
 
     }
 
@@ -211,7 +199,6 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Log.d("time sig", "selector view = : " + view);
-
 
     }
 

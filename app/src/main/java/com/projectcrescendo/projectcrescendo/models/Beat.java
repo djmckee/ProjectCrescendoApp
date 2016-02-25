@@ -13,6 +13,7 @@ public class Beat {
      * A list consisting of between 0 and 5 notes that belong in this beat.
      */
     private List<Note> notes = new ArrayList<Note>();
+    // TODO: Constrain notes list to holding between 0-5 notes no matter what.
 
     /**
      * The intonation of the current beat.
