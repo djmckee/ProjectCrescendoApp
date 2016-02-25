@@ -5,19 +5,14 @@ package com.projectcrescendo.projectcrescendo.models;
  * Created by Dylan McKee on 25/02/16.
  */
 public class Stave {
-    public static int BEATS_PER_STAVE = 8;
-    public static int BEATS_PER_BAR = BEATS_PER_STAVE / 2;
+    public static int BEATS_PER_STAVE = 4;
 
-    private Bar upperBar = new Bar(BEATS_PER_BAR);
-    private Bar lowerBar = new Bar(BEATS_PER_BAR);
+    private Bar bar = new Bar(BEATS_PER_STAVE);
 
 
-    public Bar getUpperBar() {
-        return upperBar;
+    public Bar getBar() {
+        return bar;
     }
 
-    public Bar getLowerBar() {
-        return lowerBar;
-    }
 
 }

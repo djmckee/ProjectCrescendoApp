@@ -22,9 +22,15 @@ import android.widget.Spinner;
 public class TutorialActivity extends ActionBarActivity implements CustomAdapterListener, AddNoteFragmentListener, AdapterView.OnItemSelectedListener {
 
     /**
-     * The Stave for this composition.
+     * The Top Stave for this composition.
      */
-    private Stave stave;
+    private Stave topStave;
+
+    /**
+     * The Bottom Stave for this composition.
+     */
+    private Stave bottomStave;
+
 
     /**
      * A conveneince placeholder; holds the current beat being edited whilst adding/removing notes, changing Intonation, etc.
@@ -47,7 +53,8 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
 
-        stave = new Stave();
+        topStave = new Stave();
+        bottomStave = new Stave();
 
 
         gridView = (GridView) findViewById(R.id.gridView1);
@@ -103,14 +110,14 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
 
 
         // Add for lower stave
-        for (Beat beat : stave.getLowerBar().getBeats()) {
+        for (Beat beat : bottomStave.getBar().getBeats()) {
             String notesForBeat = beat.gridStringRepresentation();
             notesAsStringList.add(notesForBeat);
         }
 
 
         // Add for upper stave
-        for (Beat beat : stave.getUpperBar().getBeats()) {
+        for (Beat beat : topStave.getBar().getBeats()) {
             String notesForBeat = beat.gridStringRepresentation();
             notesAsStringList.add(notesForBeat);
         }
@@ -136,7 +143,7 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
         Log.d("TutorialActivity", "onItemClicked");
 
         // Work out what beat is being edited...
-        int maxBarLength = Stave.BEATS_PER_BAR;
+        int maxBarLength = Stave.BEATS_PER_STAVE;
 
         Log.d("TutorialActivity", "position tapped: " + position);
         Log.d("TutorialActivity", "maxBarLength: " + maxBarLength);
@@ -146,13 +153,13 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
             Log.d("TutorialActivity", "upper bar");
 
             int truePosition = position - maxBarLength;
-            currentBeat = stave.getUpperBar().getBeats().get(truePosition);
+            currentBeat = topStave.getBar().getBeats().get(truePosition);
 
         } else {
             // lower bar
             Log.d("TutorialActivity", "lower bar");
 
-            currentBeat = stave.getLowerBar().getBeats().get(position);
+            currentBeat = bottomStave.getBar().getBeats().get(position);
 
         }
 
