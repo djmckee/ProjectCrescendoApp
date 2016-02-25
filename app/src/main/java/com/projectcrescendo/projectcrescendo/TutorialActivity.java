@@ -41,8 +41,6 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
     Spinner timeSignatureL1;
     Spinner timeSignatureL2;
 
-    private List<String> timeSignatureList = new ArrayList<String>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -63,18 +61,34 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
         timeSignatureL1 = (Spinner) findViewById(R.id.left_hand_time_signature_1);
         timeSignatureL2 = (Spinner) findViewById(R.id.left_hand_time_signature_2);
 
-        timeSignatureList.add("2");
-        timeSignatureList.add("3");
-        timeSignatureList.add("4");
+        TimeSignatureManager timeSignatureManager = new TimeSignatureManager(this);
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, timeSignatureList);
+        List<Integer> timeSignatureNumeratorIntegers = timeSignatureManager.getTimeSignatureNumerators();
+        List<Integer> timeSignatureDenominatorIntegers = timeSignatureManager.getTimeSignatureDenominator();
 
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        List<String> timeSignatureNumeratorStrings = new ArrayList<String>();
+        List<String> timeSignatureDenominatorStrings = new ArrayList<String>();
 
-        timeSignatureR1.setAdapter(dataAdapter);
-        timeSignatureR2.setAdapter(dataAdapter);
-        timeSignatureL1.setAdapter(dataAdapter);
-        timeSignatureL2.setAdapter(dataAdapter);
+        for (int numerator : timeSignatureNumeratorIntegers) {
+            String stringValue = String.format("%d", numerator);
+            timeSignatureNumeratorStrings.add(stringValue);
+        }
+
+        for (int denominator : timeSignatureDenominatorIntegers) {
+            String stringValue = String.format("%d", denominator);
+            timeSignatureDenominatorStrings.add(stringValue);
+        }
+
+        ArrayAdapter<String> topTimeSignatureAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, timeSignatureNumeratorStrings);
+        ArrayAdapter<String> lowerTimeSignatureAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, timeSignatureDenominatorStrings);
+
+        topTimeSignatureAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        lowerTimeSignatureAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        timeSignatureR1.setAdapter(topTimeSignatureAdapter);
+        timeSignatureR2.setAdapter(lowerTimeSignatureAdapter);
+        timeSignatureL1.setAdapter(topTimeSignatureAdapter);
+        timeSignatureL2.setAdapter(lowerTimeSignatureAdapter);
 
         timeSignatureR1.setOnItemSelectedListener(this);
         timeSignatureR2.setOnItemSelectedListener(this);
@@ -189,7 +203,6 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
     // TODO: Fix this!!!! (´･_･`)
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Log.d("time sig", "time signature selected: " + timeSignatureList.get(position));
         Log.d("time sig", "selector view = : " + view);
 
 
