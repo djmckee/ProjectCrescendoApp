@@ -17,7 +17,7 @@ public class Beat {
     /**
      * The intonation of the current beat.
      */
-    private Intonation intonation;
+    private Intonation intonation = Intonation.Accent;
 
     public List<Note> getNotes() {
         return notes;
