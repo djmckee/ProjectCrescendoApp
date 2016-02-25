@@ -95,7 +95,7 @@
             android:id="@+id/tab_to_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tab The Button To Start"
+            android:text="Tap the ♬ to start"
             android:textStyle="bold"
             android:textSize="18dp"
             android:layout_gravity="center_horizontal|bottom"

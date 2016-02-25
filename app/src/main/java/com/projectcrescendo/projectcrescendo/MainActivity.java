@@ -11,6 +11,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.TextView;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
@@ -35,7 +37,6 @@ public class MainActivity extends ActionBarActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        blink();
 
         tutorialManager = new TutorialManager(this);
 
@@ -45,8 +46,6 @@ public class MainActivity extends ActionBarActivity  {
         Log.d("Debug", "note names: " + noteManager.getNoteNames());
 
 
-        // hello world.
-
         FloatingActionButton startTutorials = (FloatingActionButton) findViewById(R.id.startTutorialsButton);
         startTutorials.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -55,29 +54,15 @@ public class MainActivity extends ActionBarActivity  {
                 startActivity(new Intent(MainActivity.this, TutorialActivity.class));
             }
         });
+
+        // View animation code from https://stackoverflow.com/questions/16800716/android-fade-view-in-and-out
+        TextView txt = (TextView) findViewById(R.id.tab_to_start);
+        AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
+        anim.setDuration(2000);
+        anim.setRepeatCount(999999999);
+        anim.setRepeatMode(Animation.REVERSE);
+        txt.startAnimation(anim);
+
     }
 
-    // Ambrose: got code from http://stackoverflow.com/questions/9294112/how-to-make-the-textview-blinking for the blink function
-    private void blink(){
-        final Handler handler = new Handler();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int timeToBlink = 700;    //in milissegunds
-                try{Thread.sleep(timeToBlink);}catch (Exception e) {}
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        TextView txt = (TextView) findViewById(R.id.tab_to_start);
-                        if(txt.getVisibility() == View.VISIBLE){
-                            txt.setVisibility(View.INVISIBLE);
-                        }else{
-                            txt.setVisibility(View.VISIBLE);
-                        }
-                        blink();
-                    }
-                });
-            }
-        }).start();
-    }
 }
