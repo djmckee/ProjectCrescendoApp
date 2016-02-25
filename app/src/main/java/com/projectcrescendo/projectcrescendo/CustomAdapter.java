@@ -72,20 +72,15 @@ public class CustomAdapter extends BaseAdapter{
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
 
-        View cellView;
-        TextView noteCellTextView;
-        cellView = inflater.inflate(R.layout.note_grid_cell, null);
+        View cellView = inflater.inflate(R.layout.note_grid_cell, null);
+        TextView noteCellTextView = (TextView) cellView.findViewById(R.id.textView1);
 
         // Setting height to 50% of screen, as per https://stackoverflow.com/questions/2963152/android-how-to-resize-a-custom-view-programmatically
         int cellHeight = (int)(screenWidth / 2);
         int cellWidth = (int)(screenHeight / 4);
 
         cellView.setLayoutParams(new LinearLayout.LayoutParams(cellWidth, cellHeight));
-
-
-        noteCellTextView = (TextView) cellView.findViewById(R.id.textView1);
 
         noteCellTextView.setText(result[position]);
 
@@ -125,9 +120,7 @@ public class CustomAdapter extends BaseAdapter{
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                // Toast.makeText(context, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
-
+                // Inform the listener that the cell's been tapped
                 if (adapterListener != null) {
                     adapterListener.onItemTapListener(position);
                 }
