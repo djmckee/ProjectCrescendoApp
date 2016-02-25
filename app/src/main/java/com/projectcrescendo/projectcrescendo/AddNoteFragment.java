@@ -228,7 +228,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
                                // Invalid; show error and give up...
                                 new AlertDialog.Builder(getActivity())
                                         .setTitle("Invalid note length!")
-                                        .setMessage("Not a valid note name - please try again...")
+                                        .setMessage("Not a valid note length - please try again, entering a value between 0.5 and " + maxTime)
                                         .setPositiveButton("Okay", null)
                                         .setIcon(android.R.drawable.ic_dialog_alert)
                                         .show();
