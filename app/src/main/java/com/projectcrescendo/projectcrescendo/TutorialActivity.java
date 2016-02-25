@@ -1,6 +1,9 @@
 package com.projectcrescendo.projectcrescendo;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
@@ -47,6 +50,7 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
         setContentView(R.layout.activity_tutorial);
 
         stave = new Stave();
+
 
         gridView = (GridView) findViewById(R.id.gridView1);
         refreshGrid();
