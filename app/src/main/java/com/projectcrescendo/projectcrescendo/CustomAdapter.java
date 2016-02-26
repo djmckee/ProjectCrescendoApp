@@ -11,12 +11,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.app.Activity;
-
-import com.projectcrescendo.projectcrescendo.models.Stave;
 
 interface CustomAdapterListener {
     void onItemTapListener(int itemPosition);
@@ -27,7 +24,7 @@ public class CustomAdapter extends BaseAdapter{
     private static int GRID_VIEW_MARGIN_TOP = 100;
     private static int GRID_VIEW_MARGIN_SIDES = 350;
 
-    String [] result;
+    String[] arrayOfGridItems;
     Context context;
 
     CustomAdapterListener adapterListener;
@@ -36,20 +33,19 @@ public class CustomAdapter extends BaseAdapter{
     double screenHeight;
 
     private static LayoutInflater inflater=null;
-    public CustomAdapter(Activity mainActivity, String[] prgmNameList) {
+    public CustomAdapter(Activity presentedActivity, String[] arrayOfGridItems) {
         // TODO Auto-generated constructor stub
-        result=prgmNameList;
-        context=mainActivity;
+        this.arrayOfGridItems = arrayOfGridItems;
+        context = presentedActivity;
 
-        inflater = ( LayoutInflater )context.
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 
         // Getting screen size as per https://stackoverflow.com/questions/6520718/how-to-get-screen-width-and-height
         Point displaySize = new Point();
-        mainActivity.getWindowManager().getDefaultDisplay().getRealSize(displaySize);
-        screenHeight = (int)(displaySize.x) - GRID_VIEW_MARGIN_TOP;
-        screenWidth = (int)(displaySize.y) - GRID_VIEW_MARGIN_SIDES;
+        presentedActivity.getWindowManager().getDefaultDisplay().getRealSize(displaySize);
+        screenHeight = (displaySize.x) - GRID_VIEW_MARGIN_TOP;
+        screenWidth = (displaySize.y) - GRID_VIEW_MARGIN_SIDES;
 
         Log.d("GridView", "screenWidth: " + screenWidth);
         Log.d("GridView", "screenHeight: " + screenHeight);
@@ -60,7 +56,7 @@ public class CustomAdapter extends BaseAdapter{
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
-        return result.length;
+        return arrayOfGridItems.length;
     }
 
     @Override
@@ -88,7 +84,7 @@ public class CustomAdapter extends BaseAdapter{
 
         cellView.setLayoutParams(new LinearLayout.LayoutParams(cellWidth, cellHeight));
 
-        noteCellTextView.setText(result[position]);
+        noteCellTextView.setText(arrayOfGridItems[position]);
 
         // Set background colour for the cell depending upon its position
         switch (position) {
