@@ -5,11 +5,13 @@ package com.projectcrescendo.projectcrescendo;
  */
 import android.content.Context;
 import android.graphics.Point;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.app.Activity;
@@ -22,8 +24,8 @@ interface CustomAdapterListener {
 
 public class CustomAdapter extends BaseAdapter{
 
-    private static int GRID_VIEW_MARGIN_TOP = 30;
-    private static int GRID_VIEW_MARGIN_SIDES = 20;
+    private static int GRID_VIEW_MARGIN_TOP = 100;
+    private static int GRID_VIEW_MARGIN_SIDES = 350;
 
     String [] result;
     Context context;
@@ -48,6 +50,10 @@ public class CustomAdapter extends BaseAdapter{
         mainActivity.getWindowManager().getDefaultDisplay().getRealSize(displaySize);
         screenHeight = (int)(displaySize.x) - GRID_VIEW_MARGIN_TOP;
         screenWidth = (int)(displaySize.y) - GRID_VIEW_MARGIN_SIDES;
+
+        Log.d("GridView", "screenWidth: " + screenWidth);
+        Log.d("GridView", "screenHeight: " + screenHeight);
+
 
     }
 

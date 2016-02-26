@@ -52,6 +52,7 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
 
 
         gridView = (GridView) findViewById(R.id.gridView1);
+
         refreshGrid();
 
 
@@ -99,6 +100,8 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
     }
 
     public void refreshGrid() {
+
+
         // Create a string array from the current stave's bars and beats...
         List<String> notesAsStringList = new ArrayList<String>();
 
