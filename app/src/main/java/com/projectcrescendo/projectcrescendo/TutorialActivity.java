@@ -19,7 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 
-public class TutorialActivity extends ActionBarActivity implements CustomAdapterListener, AddNoteFragmentListener, AdapterView.OnItemSelectedListener {
+public class TutorialActivity extends ActionBarActivity implements CustomAdapterListener, AddNoteFragmentListener {
 
     /**
      * The Stave for this composition.
@@ -92,10 +92,65 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
         timeSignatureL1.setAdapter(topTimeSignatureAdapter);
         timeSignatureL2.setAdapter(lowerTimeSignatureAdapter);
 
-        timeSignatureR1.setOnItemSelectedListener(this);
-        timeSignatureR2.setOnItemSelectedListener(this);
-        timeSignatureL1.setOnItemSelectedListener(this);
-        timeSignatureL2.setOnItemSelectedListener(this);
+
+
+        timeSignatureR1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("spinner 1", "item selected!!!");
+                int newSignature = timeSignatureNumerators.get(position);
+                stave.setTimeSignatureNumerator(newSignature);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Log.d("spinner 1", "no item selected!!!");
+
+            }
+        });
+        timeSignatureR2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("spinner 2", "item selected!!!");
+                int newSignature = timeSignatureDenominators.get(position);
+                stave.setTimeSignatureDenominator(newSignature);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Log.d("spinner 2", "no item selected!!!");
+
+            }
+        });
+        timeSignatureL1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("spinner 3", "item selected!!!");
+                int newSignature = timeSignatureNumerators.get(position);
+                stave.setTimeSignatureNumerator(newSignature);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Log.d("spinner 3", "no item selected!!!");
+
+            }
+        });
+        timeSignatureL2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("spinner 4", "item selected!!!");
+                int newSignature = timeSignatureDenominators.get(position);
+                stave.setTimeSignatureDenominator(newSignature);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Log.d("spinner 4", "no item selected!!!");
+
+            }
+        });
+
 
     }
 
@@ -198,16 +253,4 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
 
     }
 
-    // TODO: Fix this!!!! (´･_･`)
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Log.d("time sig", "selector view = : " + view);
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        Log.d("time sig", "no time signature selected");
-
-    }
 }
