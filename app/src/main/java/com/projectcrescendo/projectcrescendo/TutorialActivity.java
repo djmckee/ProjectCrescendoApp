@@ -19,7 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 
-public class TutorialActivity extends ActionBarActivity implements CustomAdapterListener, AddNoteFragmentListener {
+public class TutorialActivity extends ActionBarActivity implements NoteGridViewAdapterListener, AddNoteFragmentListener {
 
     /**
      * The Stave for this composition.
@@ -92,8 +92,6 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
         timeSignatureL1.setAdapter(topTimeSignatureAdapter);
         timeSignatureL2.setAdapter(lowerTimeSignatureAdapter);
 
-
-
         timeSignatureR1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -108,6 +106,7 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
 
             }
         });
+
         timeSignatureR2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -122,6 +121,7 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
 
             }
         });
+
         timeSignatureL1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -136,6 +136,7 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
 
             }
         });
+
         timeSignatureL2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -177,7 +178,7 @@ public class TutorialActivity extends ActionBarActivity implements CustomAdapter
         notesAsStringList.toArray(noteNamesArray);
 
         // Hand to adapter; refresh grid.
-        CustomAdapter adapter = new CustomAdapter(this, noteNamesArray);
+        NoteGridViewAdapter adapter = new NoteGridViewAdapter(this, noteNamesArray);
         adapter.setAdapterListener(this);
 
         gridView.setAdapter(adapter);

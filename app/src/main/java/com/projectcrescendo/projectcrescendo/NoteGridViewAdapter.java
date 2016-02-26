@@ -15,11 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.app.Activity;
 
-interface CustomAdapterListener {
+interface NoteGridViewAdapterListener {
     void onItemTapListener(int itemPosition);
 }
 
-public class CustomAdapter extends BaseAdapter{
+public class NoteGridViewAdapter extends BaseAdapter{
 
     private static int GRID_VIEW_MARGIN_TOP = 100;
     private static int GRID_VIEW_MARGIN_SIDES = 350;
@@ -27,13 +27,13 @@ public class CustomAdapter extends BaseAdapter{
     String[] arrayOfGridItems;
     Context context;
 
-    CustomAdapterListener adapterListener;
+    NoteGridViewAdapterListener adapterListener;
 
     double screenWidth;
     double screenHeight;
 
     private static LayoutInflater inflater=null;
-    public CustomAdapter(Activity presentedActivity, String[] arrayOfGridItems) {
+    public NoteGridViewAdapter(Activity presentedActivity, String[] arrayOfGridItems) {
         // TODO Auto-generated constructor stub
         this.arrayOfGridItems = arrayOfGridItems;
         context = presentedActivity;
@@ -44,6 +44,8 @@ public class CustomAdapter extends BaseAdapter{
         // Getting screen size as per https://stackoverflow.com/questions/6520718/how-to-get-screen-width-and-height
         Point displaySize = new Point();
         presentedActivity.getWindowManager().getDefaultDisplay().getRealSize(displaySize);
+
+        // TODO: Fix the height here...
         screenHeight = (displaySize.x) - GRID_VIEW_MARGIN_TOP;
         screenWidth = (displaySize.y) - GRID_VIEW_MARGIN_SIDES;
 
@@ -78,6 +80,7 @@ public class CustomAdapter extends BaseAdapter{
         View cellView = inflater.inflate(R.layout.note_grid_cell, null);
         TextView noteCellTextView = (TextView) cellView.findViewById(R.id.textView1);
 
+        // TODO: Fix the height here...
         // Setting height to 50% of screen, as per https://stackoverflow.com/questions/2963152/android-how-to-resize-a-custom-view-programmatically
         int cellHeight = (int)(screenWidth / 2);
         int cellWidth = (int)(screenHeight / 4);
@@ -133,11 +136,11 @@ public class CustomAdapter extends BaseAdapter{
         return cellView;
     }
 
-    public CustomAdapterListener getAdapterListener() {
+    public NoteGridViewAdapterListener getAdapterListener() {
         return adapterListener;
     }
 
-    public void setAdapterListener(CustomAdapterListener adapterListener) {
+    public void setAdapterListener(NoteGridViewAdapterListener adapterListener) {
         this.adapterListener = adapterListener;
     }
 
