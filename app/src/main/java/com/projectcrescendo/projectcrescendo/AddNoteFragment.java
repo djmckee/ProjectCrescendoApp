@@ -194,7 +194,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
                 boolean isValid = false;
 
                 for (String noteName : validNoteNames) {
-                    if (noteName.equals(textInput)) {
+                    if (noteName.toUpperCase().equals(textInput)) {
                         // Input is valid!
                         isValid = true;
                     }
