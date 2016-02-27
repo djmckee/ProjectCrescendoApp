@@ -8,6 +8,8 @@ package com.projectcrescendo.projectcrescendo.models;
  */
 public interface Note {
 
+    public static double[] VALID_NOTE_LENGTHS = {0.5, 1.0, 2.0, 3.0, 4.0};
+
     // Pitch of the note in the form A0, F4 etc...
     // Could be represented as int (only three option) or enum?
     // How loud the note is (again could be enum or int)
