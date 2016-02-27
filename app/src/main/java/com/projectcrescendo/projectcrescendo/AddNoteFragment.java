@@ -194,76 +194,28 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
                     noteToAdd = new ConcreteNote(textInput);
 
                     // Now, ask for note length...
-                    // TODO: Get time signature
-                    AlertDialog.Builder lengthInputDialog = new AlertDialog.Builder(getActivity());
-                    lengthInputDialog.setTitle("Enter length");
-                    final int maxTime = 4;
-                    String message = "Enter the note length (between 0.5 to " + maxTime + ")";
-                    lengthInputDialog.setMessage(message);
+                    SelectNoteLengthFragment selectNoteLengthFragment = new SelectNoteLengthFragment();
 
-                    final EditText lengthInputTextView = new EditText(getActivity());
-                    lengthInputDialog.setView(lengthInputTextView);
-
-                    lengthInputDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                    selectNoteLengthFragment.setListener(new SelectNoteLengthFragmentCallbackListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int buttonId) {
-                            // Validate the length input...
-                            String lengthInputValue = lengthInputTextView.getText().toString();
+                        public void noteLengthSelectedFromFragment(SelectNoteLengthFragment fragment, double length) {
+                            noteToAdd.setLength(length);
 
-                            double length = 0.5;
+                            // there's a note to add; add it and refresh...
+                            Log.d("AddNote", ("Added note " + noteToAdd));
 
-                            // Attempt to parse to a double...
-                            try {
-                                // Valid; continue.
-                                length = Double.parseDouble(lengthInputValue);
-
-                                noteToAdd.setLength(length);
-
-                                // Validate length...
-                                if (length < 0.5 || length > maxTime) {
-                                    noteToAdd = null;
-                                }
-
-                            } catch(NumberFormatException nfe) {
-                               // Invalid; show error and give up...
-                                new AlertDialog.Builder(getActivity())
-                                        .setTitle("Invalid note length!")
-                                        .setMessage("Not a valid note length - please try again, entering a value between 0.5 and " + maxTime)
-                                        .setPositiveButton("Okay", null)
-                                        .setIcon(android.R.drawable.ic_dialog_alert)
-                                        .show();
-
-                                // Reset placeholder
-                                noteToAdd = null;
+                            // Tell the listener...
+                            if (addNoteFragmentListener != null) {
+                                addNoteFragmentListener.addNoteFragmentAddedNote(AddNoteFragment.this, noteToAdd);
                             }
 
-                            if (noteToAdd != null) {
-                                // there's a note to add; add it and refresh...
-                                Log.d("AddNote", ("Added note " + noteToAdd));
-
-                                // Tell the listener...
-                                if (addNoteFragmentListener != null) {
-                                    addNoteFragmentListener.addNoteFragmentAddedNote(AddNoteFragment.this, noteToAdd);
-                                }
-
-
-
-                                refreshNotesList();
-
-                            }
+                            refreshNotesList();
 
                         }
                     });
 
-                    lengthInputDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int buttonId) {
-                            // Reset note placeholder; the user's given up...
-                            noteToAdd = null;
-                        }
-                    });
+                    selectNoteLengthFragment.show(getActivity().getFragmentManager(), "Select note length");
 
-                    lengthInputDialog.show();
 
 
                 } else {

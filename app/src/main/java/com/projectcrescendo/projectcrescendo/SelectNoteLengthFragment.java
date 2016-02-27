@@ -55,7 +55,7 @@ public class SelectNoteLengthFragment extends DialogFragment implements
         double[] possibleLengths = Note.VALID_NOTE_LENGTHS;
 
         for (double length : possibleLengths) {
-            String lengthString = String.format("%1.0f", length);
+            String lengthString = String.format("%.1f", length);
             lengthStrings.add(lengthString);
         }
 
