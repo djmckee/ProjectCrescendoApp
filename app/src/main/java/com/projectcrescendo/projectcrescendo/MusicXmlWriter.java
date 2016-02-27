@@ -23,9 +23,9 @@ public class MusicXmlWriter {
         musicXMLString += "<score-partwise version=\"3.0\">\n";
         musicXMLString += "<part-list>\n";	//List the parts
         musicXMLString += "<score-part id=\"p1\">\n"; // Create the first part
-        musicXMLString += "<part-name>Right Hand</part-name>M/score-part>\n"; //The first part is the right hand.
+        musicXMLString += "<part-name>Right Hand</part-name>\n</score-part>\n"; //The first part is the right hand.
         musicXMLString += "<score-part id=\"p2\">\n"; // Create the second part
-        musicXMLString +=  "<part-name>Left Hand</part-name>M/score-part>\n"; //The second part is the left hand.
+        musicXMLString +=  "<part-name>Left Hand</part-name>\n</score-part>\n"; //The second part is the left hand.
         musicXMLString += "</part-list>\n"; //End of the parts
 
         int timeSigBeat = stave.getTimeSignatureNumerator(); // get 'first' from time signature of the current stave.
@@ -46,7 +46,7 @@ public class MusicXmlWriter {
             // At the moment, there's only one bar per part...
             for (int bar = 0; bar < 1; bar++) {
 
-                musicXMLString += "<measure number=" + (bar + 1) +">\n";	//Write the bar number
+                musicXMLString += "<measure number=\"" + (bar + 1) +"\">\n";	//Write the bar number
                 musicXMLString += "<attributes>\n";
                 musicXMLString += "<divisions>noOfDivisions</divisions>\n";
                 musicXMLString += "<key>\n";
