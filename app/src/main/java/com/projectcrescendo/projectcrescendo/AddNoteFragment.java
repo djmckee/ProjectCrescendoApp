@@ -125,7 +125,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
     }
 
     void refreshIntonation() {
-        intonationButton.setText("Intonation: " + currentIntonation);
+        intonationButton.setText("Expression: " + currentIntonation);
     }
 
     void refreshNotesList() {
