@@ -41,35 +41,35 @@ public class MusicXmlWriter {
         for (int i = 0; i < parts.length; i++) {
             Bar currentBar = parts[i];
 
-            musicXMLString += "<part id=\"p" + i + "\">"; //So for the first part it would be p1 and the second p2
+            musicXMLString += "<part id=\"p" + i + "\">\n"; //So for the first part it would be p1 and the second p2
 
             // At the moment, there's only one bar per part...
             for (int bar = 0; bar < 1; bar++) {
 
-                musicXMLString += "<measure number=" + (bar + 1) +">";	//Write the bar number
-                musicXMLString += "<attributes>";
-                musicXMLString += "<divisions>noOfDivisions</divisions>";
-                musicXMLString += "<key>";
-                musicXMLString += "<fifths>0</fifths>";
-                musicXMLString += "</key";
-                musicXMLString += "<time>";
-                musicXMLString += "<beats>timeSigBeats</beats>";
-                musicXMLString += "<beat-type>timeSigType</beat-type>";
-                musicXMLString += "<clef>";
+                musicXMLString += "<measure number=" + (bar + 1) +">\n";	//Write the bar number
+                musicXMLString += "<attributes>\n";
+                musicXMLString += "<divisions>noOfDivisions</divisions>\n";
+                musicXMLString += "<key>\n";
+                musicXMLString += "<fifths>0</fifths>\n";
+                musicXMLString += "</key>\n";
+                musicXMLString += "<time>\n";
+                musicXMLString += "<beats>timeSigBeats</beats>\n";
+                musicXMLString += "<beat-type>timeSigType</beat-type>\n";
+                musicXMLString += "<clef>\n";
 
                 if (i == 0) {
                     // right hand part
                     // Different clefs for right and left hand
-                    musicXMLString += "<sign>G</sign>";
-                    musicXMLString += "<line>2</line>";
+                    musicXMLString += "<sign>G</sign>\n";
+                    musicXMLString += "<line>2</line>\n";
                 } else {
                     // left hand part
-                    musicXMLString += "<sign>F</sign>";
-                    musicXMLString += "<line>4</line>";
+                    musicXMLString += "<sign>F</sign>\n";
+                    musicXMLString += "<line>4</line>\n";
                 }
 
-                musicXMLString += "</clef>";
-                musicXMLString += "</attributes>";
+                musicXMLString += "</clef>\n";
+                musicXMLString += "</attributes>\n";
 
 
                 int notesInBar = currentBar.getAllNotesOnBar().size();  // get the number of notes in the current bar
@@ -77,10 +77,10 @@ public class MusicXmlWriter {
                 // If there are no notes in a bar then we can draw a rest for the entire bar
                 if (notesInBar == 0) {
 
-                    musicXMLString += "<note>";
-                    musicXMLString += "<rest/>";
-                    musicXMLString += "<duration>" + noOfDivisions + "</duration>";
-                    musicXMLString += "</note>";
+                    musicXMLString += "<note>\n";
+                    musicXMLString += "<rest/>\n";
+                    musicXMLString += "<duration>" + noOfDivisions + "</duration>\n";
+                    musicXMLString += "</note>\n";
 
                 } else {
                     for (Beat beat : currentBar.getBeats()) {
@@ -151,22 +151,22 @@ public class MusicXmlWriter {
                                 }
                             }
 
-                            musicXMLString += "<note>";
+                            musicXMLString += "<note>\n";
 
                             if (n > 0) {
-                                musicXMLString += "<chord/>";
+                                musicXMLString += "<chord/>\n";
                             }
 
-                            musicXMLString += "<pitch>";
-                            musicXMLString += "<step>" + step + "</step>";
-                            musicXMLString += "<alter>" + alter + "</alter";
-                            musicXMLString += "<octave>" + octave +"</octave>";
-                            musicXMLString += "</pitch>";
+                            musicXMLString += "<pitch>\n";
+                            musicXMLString += "<step>" + step + "</step>\n";
+                            musicXMLString += "<alter>" + alter + "</alter>\n";
+                            musicXMLString += "<octave>" + octave +"</octave>\n";
+                            musicXMLString += "</pitch>\n";
 
                             double length = noteLengths[n] * 2;
-                            musicXMLString += "<duration>" + length + "</duration>";
+                            musicXMLString += "<duration>" + length + "</duration>\n";
 
-                            musicXMLString += "</note>";
+                            musicXMLString += "</note>\n";
 
 
 
@@ -181,10 +181,10 @@ public class MusicXmlWriter {
             }
 
 
-            musicXMLString += "</part>";
+            musicXMLString += "</part>\n";
         }
 
-        musicXMLString += "\"</score-partwise>\"\n";
+        musicXMLString += "</score-partwise>\n";
         return musicXMLString;
 
     }
