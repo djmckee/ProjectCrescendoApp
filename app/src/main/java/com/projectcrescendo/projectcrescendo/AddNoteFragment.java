@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -166,7 +167,17 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         AlertDialog.Builder inputDialog = new AlertDialog.Builder(getActivity());
 
         inputDialog.setTitle("Enter note name");
-        final EditText inputTextView = new EditText(getActivity());
+        final AutoCompleteTextView inputTextView = new AutoCompleteTextView(getActivity());
+
+        List<String> noteNameStrings = new NoteManager(getActivity()).getNoteNames();
+
+        // Convert from list to array as per solution from https://stackoverflow.com/questions/9572795/convert-list-to-array-in-java
+        String[] noteNameArray = new String[noteNameStrings.size()];
+        noteNameStrings.toArray(noteNameArray);
+
+        ArrayAdapter<String> autoCompleteNotesAdapter = new ArrayAdapter<String>(getActivity() ,android.R.layout.simple_list_item_1, noteNameArray);
+        inputTextView.setAdapter(autoCompleteNotesAdapter);
+
         inputDialog.setView(inputTextView);
 
         inputDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener()
