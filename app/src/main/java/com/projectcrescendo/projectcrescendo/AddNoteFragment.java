@@ -199,17 +199,23 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
                     selectNoteLengthFragment.setListener(new SelectNoteLengthFragmentCallbackListener() {
                         @Override
                         public void noteLengthSelectedFromFragment(SelectNoteLengthFragment fragment, double length) {
-                            noteToAdd.setLength(length);
+                            if (noteToAdd != null) {
+                                noteToAdd.setLength(length);
 
-                            // there's a note to add; add it and refresh...
-                            Log.d("AddNote", ("Added note " + noteToAdd));
+                                // there's a note to add; add it and refresh...
+                                Log.d("AddNote", ("Added note " + noteToAdd));
 
-                            // Tell the listener...
-                            if (addNoteFragmentListener != null) {
-                                addNoteFragmentListener.addNoteFragmentAddedNote(AddNoteFragment.this, noteToAdd);
+                                // Tell the listener...
+                                if (addNoteFragmentListener != null) {
+                                    addNoteFragmentListener.addNoteFragmentAddedNote(AddNoteFragment.this, noteToAdd);
+                                }
+
+                                refreshNotesList();
+
+                                // Don't allow the same note to be added multiple times...
+                                noteToAdd = null;
                             }
 
-                            refreshNotesList();
 
                         }
                     });
