@@ -1,6 +1,7 @@
 package com.projectcrescendo.projectcrescendo;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
@@ -153,6 +154,17 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
         });
 
 
+        FloatingActionButton instructionButton =  (FloatingActionButton)findViewById(R.id.instruction);
+        instructionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: Push tutorial text view!
+                Log.d("TutorialActivity", "instruction button tapped");
+
+
+            }
+        });
+
     }
 
     public void refreshGrid() {
@@ -224,6 +236,8 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
         addNoteFragment.setAddNoteFragmentListener(this);
 
         addNoteFragment.show(getSupportFragmentManager(), "Add Note");
+
+
 
     }
 
