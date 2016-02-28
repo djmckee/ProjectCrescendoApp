@@ -81,8 +81,8 @@ public class SelectIntonationFragment extends DialogFragment implements
             listener.intonationSelectedFromFragment(this, newIntonation);
         }
 
-        // TODO: fix go back
-        //getFragmentManager().popBackStack();
+        // Looked up the following line at https://stackoverflow.com/questions/5901298/how-to-get-a-fragment-to-remove-itself-i-e-its-equivalent-of-finish
+        getActivity().getFragmentManager().beginTransaction().remove(this).commit();
 
     }
 

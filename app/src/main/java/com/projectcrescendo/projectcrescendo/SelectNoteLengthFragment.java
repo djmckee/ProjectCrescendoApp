@@ -85,8 +85,8 @@ public class SelectNoteLengthFragment extends DialogFragment implements
             listener.noteLengthSelectedFromFragment(this, length);
         }
 
-        // TODO: fix go back
-        //getFragmentManager().popBackStack();
+        // Looked up the following line at https://stackoverflow.com/questions/5901298/how-to-get-a-fragment-to-remove-itself-i-e-its-equivalent-of-finish
+        getActivity().getFragmentManager().beginTransaction().remove(this).commit();
 
     }
 
