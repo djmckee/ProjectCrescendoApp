@@ -19,7 +19,8 @@ public class MusicXmlWriter {
 
     public static String encode(Stave stave) {
         String musicXMLString = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n";
-        musicXMLString += "<!DOCTYPE score-partwise PUBLIC\"-//Recordare//DTD MusicXML 3.0Partwise//EN\"\"http://www.musicxml.org/dtds/partwise.dtd\">\n";
+
+        musicXMLString += "<!DOCTYPE score-partwise PUBLIC \"-//Recordare//DTD MusicXML 3.0Partwise//EN\" \"http://www.musicxml.org/dtds/partwise.dtd\">\n";
         musicXMLString += "<score-partwise version=\"3.0\">\n";
         musicXMLString += "<part-list>\n";	//List the parts
         musicXMLString += "<score-part id=\"p1\">\n"; // Create the first part
@@ -41,20 +42,22 @@ public class MusicXmlWriter {
         for (int i = 0; i < parts.length; i++) {
             Bar currentBar = parts[i];
 
-            musicXMLString += "<part id=\"p" + i + "\">\n"; //So for the first part it would be p1 and the second p2
+            musicXMLString += "<part id=\"p" + (i + 1) + "\">\n"; //So for the first part it would be p1 and the second p2
 
             // At the moment, there's only one bar per part...
             for (int bar = 0; bar < 1; bar++) {
 
                 musicXMLString += "<measure number=\"" + (bar + 1) +"\">\n";	//Write the bar number
                 musicXMLString += "<attributes>\n";
-                musicXMLString += "<divisions>noOfDivisions</divisions>\n";
+                musicXMLString += "<divisions>" +noOfDivisions + "</divisions>\n";
                 musicXMLString += "<key>\n";
                 musicXMLString += "<fifths>0</fifths>\n";
                 musicXMLString += "</key>\n";
                 musicXMLString += "<time>\n";
-                musicXMLString += "<beats>timeSigBeats</beats>\n";
-                musicXMLString += "<beat-type>timeSigType</beat-type>\n";
+                musicXMLString += "<beats>" + timeSigBeat + "</beats>\n";
+                musicXMLString += "<beat-type>" + timeSigType + " </beat-type>\n";
+                musicXMLString += "</time>\n";
+
                 musicXMLString += "<clef>\n";
 
                 if (i == 0) {
@@ -69,6 +72,7 @@ public class MusicXmlWriter {
                 }
 
                 musicXMLString += "</clef>\n";
+
                 musicXMLString += "</attributes>\n";
 
 
@@ -180,6 +184,7 @@ public class MusicXmlWriter {
 
             }
 
+            musicXMLString += "</measure>\n";
 
             musicXMLString += "</part>\n";
         }
