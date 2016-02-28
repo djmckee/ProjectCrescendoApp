@@ -197,8 +197,12 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
                     if (noteName.toUpperCase().equals(textInput)) {
                         // Input is valid!
                         isValid = true;
+
+                        // Sort out any case sensitivity issues to ensure that notes appear on the composition exactly as they do in the Notes List in the database
+                        textInput = noteName;
                     }
                 }
+
 
                 // If the note's valid, instantiate the new note and ask for a length - otherwise, error
                 if (isValid) {
