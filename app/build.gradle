@@ -25,5 +25,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.android.support:design:22.2.1'
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
+    compile 'com.loopj.android:android-async-http:1.4.9'
+
 
 }

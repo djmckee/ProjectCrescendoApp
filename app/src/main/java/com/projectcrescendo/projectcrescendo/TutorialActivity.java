@@ -160,6 +160,24 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
             public void onClick(View v) {
                 // TODO: Push tutorial text view!
                 Log.d("TutorialActivity", "instruction button tapped");
+                String musicXMLRepresentation = MusicXmlWriter.encode(stave);
+                Log.d("MusicXML", musicXMLRepresentation);
+
+                CrescendoAPIManager.uploadComposition(musicXMLRepresentation, new CrescendoAPIResponseHandler() {
+                    @Override
+                    public void uploadSucceeded(int uploadId, String uploadUrl) {
+                        Log.d("upload success", "upload success, id: " + uploadId);
+                        Log.d("upload success", "upload success, url: " + uploadUrl);
+
+                    }
+
+                    @Override
+                    public void uploadFailed() {
+                        Log.d("upload failed", "upload failed.");
+
+                    }
+                });
+
 
 
             }
