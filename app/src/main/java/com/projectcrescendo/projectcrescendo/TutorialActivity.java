@@ -1,5 +1,6 @@
 package com.projectcrescendo.projectcrescendo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
@@ -177,6 +178,10 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
                     }
                 });
+
+                Intent intent = new Intent(TutorialActivity.this, PlaybackActivity.class);
+                intent.putExtra(PlaybackActivity.SCORE_STRING_KEY, musicXMLRepresentation);
+                startActivity(intent);
 
 
 
