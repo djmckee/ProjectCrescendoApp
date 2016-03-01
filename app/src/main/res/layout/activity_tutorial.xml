@@ -31,14 +31,14 @@
         android:layout_below="@+id/instruction"
         android:layout_alignParentEnd="true">
         <RelativeLayout
-            android:layout_width="490dp"
+            android:layout_width="460dp"
             android:layout_height="260dp">
             <GridView
-                android:layout_width="490dp"
+                android:layout_width="1000dp"
                 android:layout_height="260dp"
                 android:gravity="right|center_horizontal"
                 android:id="@+id/gridView1"
-                android:numColumns="4"
+                android:numColumns="5"
                 android:layout_alignParentEnd="true" />
         </RelativeLayout>
     </HorizontalScrollView>
