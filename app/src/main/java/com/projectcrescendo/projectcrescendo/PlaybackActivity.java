@@ -165,7 +165,7 @@ public class PlaybackActivity extends ActionBarActivity {
             }
         });
 
-        // Upload compostion...
+        // Upload composition...
         CrescendoAPIManager.uploadComposition(musicXmlScore, new CrescendoAPIResponseHandler() {
             @Override
             public void uploadSucceeded(int uploadId, String uploadUrl) {
@@ -197,7 +197,7 @@ public class PlaybackActivity extends ActionBarActivity {
                     // Display error...
                     new AlertDialog.Builder(PlaybackActivity.this)
                             .setTitle("Sharing failed")
-                            .setMessage("Sorry, it looks like sharing of your compoisiton failed, please check your internet connection and try again...")
+                            .setMessage("Sorry, it looks like sharing of your composition failed, please check your internet connection and try again...")
                             .setPositiveButton("Okay", null)
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
