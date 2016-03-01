@@ -23,21 +23,32 @@
         app:pressedTranslationZ="12dp"
         app:backgroundTint="@color/teal"/>
 
-    <GridView
+    <HorizontalScrollView
+        android:id="@+id/scrollView"
         android:layout_width="490dp"
         android:layout_height="260dp"
         android:gravity="right|center_horizontal"
-        android:id="@+id/gridView1"
-        android:numColumns="4"
         android:layout_below="@+id/instruction"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true">
+        <RelativeLayout
+            android:layout_width="490dp"
+            android:layout_height="260dp">
+            <GridView
+                android:layout_width="490dp"
+                android:layout_height="260dp"
+                android:gravity="right|center_horizontal"
+                android:id="@+id/gridView1"
+                android:numColumns="4"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+    </HorizontalScrollView>
 
     <Spinner
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/right_hand_time_signature_1"
-        android:layout_alignTop="@+id/gridView1"
-        android:layout_toStartOf="@+id/gridView1"/>
+        android:layout_alignTop="@+id/scrollView"
+        android:layout_toStartOf="@+id/scrollView"/>
 
     <Spinner
         android:layout_width="50dp"
@@ -57,7 +68,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/left_hand_time_signature_2"
-        android:layout_alignBottom="@+id/gridView1"
+        android:layout_alignBottom="@+id/scrollView"
         android:layout_alignStart="@+id/left_hand_time_signature_1" />
 
 
