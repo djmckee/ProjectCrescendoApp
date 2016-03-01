@@ -49,11 +49,11 @@ public class NoteGridViewAdapter extends BaseAdapter{
         presentedActivity.getWindowManager().getDefaultDisplay().getRealSize(displaySize);
 
         // TODO: Fix the height here...
-        screenHeight = (displaySize.x) - GRID_VIEW_MARGIN_TOP;
-        screenWidth = (displaySize.y) - GRID_VIEW_MARGIN_SIDES;
+        screenHeight = presentedActivity.getResources().getDisplayMetrics().heightPixels - GRID_VIEW_MARGIN_TOP;
+
 
         Log.d("GridView", "screenWidth: " + screenWidth);
-        Log.d("GridView", "screenHeight: " + screenHeight);
+        //Log.d("GridView", "screenHeight: " + screenHeight);
 
 
     }
@@ -85,8 +85,8 @@ public class NoteGridViewAdapter extends BaseAdapter{
 
         // TODO: Fix the height here...
         // Setting height to 50% of screen, as per https://stackoverflow.com/questions/2963152/android-how-to-resize-a-custom-view-programmatically
-        int cellHeight = (int)(screenWidth / 2);
-        int cellWidth = (int)(screenHeight / 4);
+        int cellHeight = (int)(screenHeight / 3);
+        int cellWidth = 330;
 
         cellView.setLayoutParams(new LinearLayout.LayoutParams(cellWidth, cellHeight));
 
