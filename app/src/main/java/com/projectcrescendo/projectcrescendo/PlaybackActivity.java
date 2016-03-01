@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -17,11 +19,16 @@ import android.widget.ScrollView;
  * originally authored by Dolphin Computing (Cambridge) Ltd. - downloaded from
  * http://www.seescore.co.uk/developers/ on 19th February 2016.
  */
+import java.util.List;
+
+import uk.co.dolphin_com.seescoreandroid.Dispatcher;
+import uk.co.dolphin_com.seescoreandroid.Player;
 import uk.co.dolphin_com.seescoreandroid.SeeScoreView;
 import uk.co.dolphin_com.sscore.LoadOptions;
 import uk.co.dolphin_com.sscore.SScore;
 import uk.co.dolphin_com.sscore.SScoreKey;
 import uk.co.dolphin_com.sscore.ex.ScoreException;
+import uk.co.dolphin_com.sscore.playdata.Note;
 
 /**
  * An activity that uses the SeeScore SDK (downloaded from http://www.seescore.co.uk/developers/ on
@@ -66,6 +73,16 @@ public class PlaybackActivity extends ActionBarActivity {
      */
     private boolean shouldContinueSharing;
 
+    /**
+     * A music player instance so that our composition can be played back.
+     */
+    Player player;
+
+    /**
+     * Is the music player playing?
+     */
+    private boolean playerIsPlaying;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Get the MusicXML string that we've been passed in the transition to this activity...
@@ -109,11 +126,39 @@ public class PlaybackActivity extends ActionBarActivity {
             }
         });
 
-        FloatingActionButton playPauseButton = (FloatingActionButton) findViewById(R.id.playPausePlaybackButton);
+        // Instantiate the player with our current composition too to allow for playback
+        // (The player creation code is based off of the SeeScore examples provide to us by
+        //  Dolphin Computing (Cambridge) Ltd.)
+        try {
+            player = new Player(score, new CrescendoUserTempo(), this, true);
+
+            // When the player stops playing, we need to be notified
+            player.setEndHandler(new Dispatcher.EventHandler() {
+                @Override
+                public void event(int index, boolean countIn) {
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        public void run() {
+                            // TODO: Reset play button to show play rather than pause
+                            playerIsPlaying = false;
+                        }
+                    });
+                }
+            }, 0);
+
+        } catch (Player.PlayerException e) {
+            e.printStackTrace();
+            // Unable to create player...
+            player = null;
+            Log.d("Playback activity", "unable to instantiate player!");
+
+        }
+
+        final FloatingActionButton playPauseButton = (FloatingActionButton) findViewById(R.id.playPausePlaybackButton);
         playPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Toggle playback
+                // Toggle playback
+                playPauseButtonPressed();
             }
         });
 
@@ -145,6 +190,30 @@ public class PlaybackActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+
+
+    }
+
+    void playPauseButtonPressed() {
+        // Invert current playback status
+        playerIsPlaying = !playerIsPlaying;
+
+        if (player != null) {
+            if (playerIsPlaying) {
+                // Play
+
+                // Has the player already played up to the end of the composition?
+                if (player.state() == Player.State.Completed) {
+                    // Reset then play
+                    player.reset();
+                }
+
+                player.resume();
+            } else {
+                // Pause
+                player.pause();
+            }
+        }
 
 
     }
