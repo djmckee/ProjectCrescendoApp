@@ -6,7 +6,8 @@ package com.projectcrescendo.projectcrescendo.models;
  */
 public class Stave {
 
-    public static int BEATS_PER_ROW = 50;
+    public static int NUMBER_OF_BEATS = 384;
+    public static int BEATS_PER_ROW = NUMBER_OF_BEATS / 2;
 
     private Clef upperClef = new Clef(BEATS_PER_ROW);
     private Clef lowerClef = new Clef(BEATS_PER_ROW);

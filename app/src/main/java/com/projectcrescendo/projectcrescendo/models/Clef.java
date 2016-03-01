@@ -1,5 +1,7 @@
 package com.projectcrescendo.projectcrescendo.models;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,10 +35,12 @@ public class Clef {
 
         }
 
-
         int newNumberOfBeatsPerBar = (int) ((barLength / LENGTH_OF_BEAT) + 0.5);
+        Log.d("Clef", "newNumberOfBeatsPerBar: " + newNumberOfBeatsPerBar);
 
         int numberOfBars = (int) ((lengthOfClef / newNumberOfBeatsPerBar) + 0.5);
+
+        Log.d("Clef", "numberOfBars: " + numberOfBars);
 
         bars = new ArrayList<Bar>();
 
@@ -48,7 +52,7 @@ public class Clef {
             int nextIncrement = counter + newNumberOfBeatsPerBar;
 
             for (int j = counter; j < nextIncrement; j++) {
-                if (j > beatHolder.size() && j < beatHolder.size() - 1) {
+                if (j > beatHolder.size() && j < beatHolder.size()) {
                     // Add beat at 'j' in beatHolder to the new bar
                     Beat beat = beatHolder.get(j);
 

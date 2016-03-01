@@ -25,7 +25,7 @@ public class NoteGridViewAdapter extends BaseAdapter{
 
     private static final int GRID_VIEW_MARGIN_TOP = 100;
     private static final int GRID_VIEW_MARGIN_SIDES = 350;
-    private static final int NUMBER_OF_COLUMNS = 8;
+    private static final int NUMBER_OF_COLUMNS = 7;
 
     String[] arrayOfGridItems;
     Context context;

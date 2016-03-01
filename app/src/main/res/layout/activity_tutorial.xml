@@ -34,11 +34,11 @@
             android:layout_width="460dp"
             android:layout_height="260dp">
             <GridView
-                android:layout_width="7600dp"
+                android:layout_width="9000dp"
                 android:layout_height="260dp"
                 android:gravity="right|center_horizontal"
                 android:id="@+id/gridView1"
-                android:numColumns="50"
+                android:numColumns="192"
                 android:layout_alignParentEnd="true" />
         </RelativeLayout>
     </HorizontalScrollView>
