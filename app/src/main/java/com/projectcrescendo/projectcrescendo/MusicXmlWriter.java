@@ -33,9 +33,6 @@ public class MusicXmlWriter {
         int timeSigBeat = stave.getTimeSignatureNumerator(); // get 'first' from time signature of the current stave.
         int timeSigType = stave.getTimeSignatureDenominator(); // get 'second' from time signature of the current stave.
 
-        // TODO: I don't think our implementation of bars is correct.
-        int noOfBars = 1; // find the number of bars on the current stave
-
         int noOfDivisions = timeSigBeat * 2;
 
         Clef[] parts = {stave.getLowerClef(), stave.getUpperClef()};
@@ -50,32 +47,35 @@ public class MusicXmlWriter {
                 Bar currentBar = parts[i].getBars().get(bar);
 
                 musicXMLString += "<measure number=\"" + (bar + 1) +"\">\n";	//Write the bar number
-                musicXMLString += "<attributes>\n";
-                musicXMLString += "<divisions>" +noOfDivisions + "</divisions>\n";
-                musicXMLString += "<key>\n";
-                musicXMLString += "<fifths>0</fifths>\n";
-                musicXMLString += "</key>\n";
-                musicXMLString += "<time>\n";
-                musicXMLString += "<beats>" + timeSigBeat + "</beats>\n";
-                musicXMLString += "<beat-type>" + timeSigType + " </beat-type>\n";
-                musicXMLString += "</time>\n";
 
-                musicXMLString += "<clef>\n";
+                if (bar == 0) {
+                    musicXMLString += "<attributes>\n";
+                    musicXMLString += "<divisions>" +noOfDivisions + "</divisions>\n";
+                    musicXMLString += "<key>\n";
+                    musicXMLString += "<fifths>0</fifths>\n";
+                    musicXMLString += "</key>\n";
+                    musicXMLString += "<time>\n";
+                    musicXMLString += "<beats>" + timeSigBeat + "</beats>\n";
+                    musicXMLString += "<beat-type>" + timeSigType + " </beat-type>\n";
+                    musicXMLString += "</time>\n";
 
-                if (i == 0) {
-                    // right hand part
-                    // Different clefs for right and left hand
-                    musicXMLString += "<sign>G</sign>\n";
-                    musicXMLString += "<line>2</line>\n";
-                } else {
-                    // left hand part
-                    musicXMLString += "<sign>F</sign>\n";
-                    musicXMLString += "<line>4</line>\n";
+                    musicXMLString += "<clef>\n";
+
+                    if (i == 0) {
+                        // right hand part
+                        // Different clefs for right and left hand
+                        musicXMLString += "<sign>G</sign>\n";
+                        musicXMLString += "<line>2</line>\n";
+                    } else {
+                        // left hand part
+                        musicXMLString += "<sign>F</sign>\n";
+                        musicXMLString += "<line>4</line>\n";
+                    }
+
+                    musicXMLString += "</clef>\n";
+
+                    musicXMLString += "</attributes>\n";
                 }
-
-                musicXMLString += "</clef>\n";
-
-                musicXMLString += "</attributes>\n";
 
 
                 int notesInBar = currentBar.getAllNotesOnBar().size();  // get the number of notes in the current bar
@@ -123,10 +123,10 @@ public class MusicXmlWriter {
                             if (noteNameLength >= 2) {
                                 // Could be a # after it
                                 if (noteNames[n].toCharArray()[noteNameLength-1] == '#' || noteNameLength == 3) {
-                                    alter = 1;
+                                    alter = -1;
                                     accidental = true;
                                 } else if (noteNames[n].toCharArray()[noteNameLength-1] == 'b' || noteNameLength == 3) {
-                                    alter = -1;
+                                    alter = 1;
                                     accidental = true;
                                 } else {
                                     alter = 0;
@@ -136,20 +136,7 @@ public class MusicXmlWriter {
                                 alter = 0;
                             }
 
-                            if (accidental) {
-                                if (noteNameLength == 3) {
-                                    char octaveChar = noteNames[n].toCharArray()[2];
-                                    String octaveString = String.format("%c", octaveChar);
-
-                                    try {
-                                        octave = Integer.parseInt(octaveString);
-                                    } catch(NumberFormatException nfe) {
-                                        Log.d("octave error", "could not parse octave");
-                                    }
-
-                                }
-                            } else {
-                                if (noteNameLength == 2) {
+                                if (noteNameLength >= 2) {
                                     char octaveChar = noteNames[n].toCharArray()[1];
                                     String octaveString = String.format("%c", octaveChar);
 
@@ -160,7 +147,6 @@ public class MusicXmlWriter {
                                     }
 
                                 }
-                            }
 
                             musicXMLString += "<note>\n";
 
@@ -174,7 +160,7 @@ public class MusicXmlWriter {
                             musicXMLString += "<octave>" + octave +"</octave>\n";
                             musicXMLString += "</pitch>\n";
 
-                            double length = noteLengths[n] * 2;
+                            double length = noteLengths[n] * 8;
                             musicXMLString += "<duration>" + ((int) (length + 0.5)) + "</duration>\n";
 
                             musicXMLString += "</note>\n";
@@ -188,10 +174,10 @@ public class MusicXmlWriter {
 
                 }
 
+                musicXMLString += "</measure>\n";
 
             }
 
-            musicXMLString += "</measure>\n";
 
             musicXMLString += "</part>\n";
         }
