@@ -81,7 +81,7 @@ public class PlaybackActivity extends ActionBarActivity {
     /**
      * Is the music player playing?
      */
-    private boolean playerIsPlaying;
+    private boolean playerIsPlaying = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,15 +162,19 @@ public class PlaybackActivity extends ActionBarActivity {
             }
         });
 
-        FloatingActionButton stopPlaybackButton = (FloatingActionButton) findViewById(R.id.stopPlaybackButton);
+        // Set initial 'play' image programmatically.
+        updatePlayButtonUI();
+
+        final FloatingActionButton stopPlaybackButton = (FloatingActionButton) findViewById(R.id.stopPlaybackButton);
         stopPlaybackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Stop playback
+                // Stop playback
+                stopButtonPressed();
             }
         });
 
-        FloatingActionButton sharePlaybackButton = (FloatingActionButton) findViewById(R.id.sharePlaybackButton);
+        final FloatingActionButton sharePlaybackButton = (FloatingActionButton) findViewById(R.id.sharePlaybackButton);
         sharePlaybackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,7 +183,7 @@ public class PlaybackActivity extends ActionBarActivity {
             }
         });
 
-        FloatingActionButton donePlaybackButton = (FloatingActionButton) findViewById(R.id.donePlaybackButton);
+        final FloatingActionButton donePlaybackButton = (FloatingActionButton) findViewById(R.id.donePlaybackButton);
         donePlaybackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,6 +219,36 @@ public class PlaybackActivity extends ActionBarActivity {
             }
         }
 
+        updatePlayButtonUI();
+
+    }
+
+    void stopButtonPressed() {
+        // Stop playing.
+        playerIsPlaying = false;
+
+        if (player != null) {
+            player.reset();
+        }
+
+        updatePlayButtonUI();
+
+    }
+
+    void updatePlayButtonUI () {
+        final FloatingActionButton playPauseButton = (FloatingActionButton) findViewById(R.id.playPausePlaybackButton);
+
+        if (playerIsPlaying) {
+            // Show pause UI
+            // TODO: Create pause button image!
+            playPauseButton.setImageResource(R.drawable.how_to_use);
+
+        } else {
+            // Show play UI
+            // TODO: Create play button image!
+            playPauseButton.setImageResource(R.drawable.how_to_use);
+
+        }
 
     }
 
