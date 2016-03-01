@@ -3,11 +3,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.projectcrescendo.projectcrescendo.PlaybackActivity">
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/playPausePlaybackButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="left|top"
+        android:layout_margin="5dp"
+        android:src="@drawable/how_to_use"
+        android:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+        app:backgroundTint="@color/deepPurple"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/stopPlaybackButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="left|top"
+        android:layout_margin="5dp"
+        android:src="@drawable/how_to_use"
+        android:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+        app:backgroundTint="@color/red"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/sharePlaybackButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="left|top"
+        android:layout_margin="5dp"
+        android:src="@drawable/how_to_use"
+        android:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+        app:backgroundTint="@color/teal"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/donePlaybackButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="left|top"
+        android:layout_margin="5dp"
+        android:src="@drawable/how_to_use"
+        android:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+        app:backgroundTint="@color/blue"/>
+
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -21,6 +68,7 @@
         android:layout_alignParentStart="false"
         android:layout_centerHorizontal="true">
     </ScrollView>
+
 
 
 </RelativeLayout>
