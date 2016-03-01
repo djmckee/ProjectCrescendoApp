@@ -151,8 +151,8 @@ public class PlaybackActivity extends ActionBarActivity {
 
     void shareComposition() {
         // Upload to our web API and get a link to share...
-        // TODO: Show loading dialog UI
-        final ProgressDialog loadingDialog = ProgressDialog.show(PlaybackActivity.this, "", "Uploading composition...");
+        final ProgressDialog loadingDialog = ProgressDialog.show(PlaybackActivity.this, "Uploading Composition", "Uploading composition...");
+        loadingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loadingDialog.setCancelable(true);
 
         shouldContinueSharing = true;
