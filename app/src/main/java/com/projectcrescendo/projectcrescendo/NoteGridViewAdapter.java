@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.app.Activity;
 
+import com.projectcrescendo.projectcrescendo.models.Stave;
+
 interface NoteGridViewAdapterListener {
     void onItemTapListener(int itemPosition);
 }
@@ -89,8 +91,10 @@ public class NoteGridViewAdapter extends BaseAdapter{
 
         noteCellTextView.setText(arrayOfGridItems[position]);
 
+        int colourPosition = position % 7;
+
         // Set background colour for the cell depending upon its position
-        switch (position) {
+        switch (colourPosition) {
             case 0:
                 noteCellTextView.setBackgroundResource(R.color.red);
                 break;
