@@ -91,11 +91,16 @@ public class CrescendoAPIManager {
                 // Only call success callback if we parsed correctly...
                 if (uploadId > 0 && uploadUrl != null) {
                     // Call success callback passing in what we've parsed out
-                    responseHandler.uploadSucceeded(uploadId, uploadUrl);
+                    if (responseHandler != null) {
+                        responseHandler.uploadSucceeded(uploadId, uploadUrl);
+
+                    }
 
                 } else {
                     // Parsing failed, something went wrong
-                    responseHandler.uploadFailed();
+                    if (responseHandler != null) {
+                        responseHandler.uploadFailed();
+                    }
 
                 }
 
@@ -109,7 +114,9 @@ public class CrescendoAPIManager {
                 Log.d("CrescendoAPI", "Response code: " + statusCode);
                 Log.d("CrescendoAPI", "Request failed: " + array);
 
-                responseHandler.uploadFailed();
+                if (responseHandler != null) {
+                    responseHandler.uploadFailed();
+                }
 
             }
 
@@ -121,8 +128,10 @@ public class CrescendoAPIManager {
                 Log.d("CrescendoAPI", "Response code: " + statusCode);
                 Log.d("CrescendoAPI", "Request failed: " + responseString);
 
-                // Something went wrong....
-                responseHandler.uploadFailed();
+                // Something went wrong...
+                if (responseHandler != null) {
+                    responseHandler.uploadFailed();
+                }
 
             }
 
@@ -134,7 +143,9 @@ public class CrescendoAPIManager {
                 Log.d("CrescendoAPI", "Response code: " + statusCode);
                 Log.d("CrescendoAPI", "Request failed: " + errorResponse);
 
-                responseHandler.uploadFailed();
+                if (responseHandler != null) {
+                    responseHandler.uploadFailed();
+                }
 
             }
 
@@ -145,7 +156,9 @@ public class CrescendoAPIManager {
                 Log.d("CrescendoAPI", "Response code: " + statusCode);
                 Log.d("CrescendoAPI", "Request failed: " + errorResponse);
 
-                responseHandler.uploadFailed();
+                if (responseHandler != null) {
+                    responseHandler.uploadFailed();
+                }
 
             }
 

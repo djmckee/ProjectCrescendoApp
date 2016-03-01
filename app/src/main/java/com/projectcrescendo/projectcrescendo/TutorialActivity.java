@@ -1,6 +1,5 @@
 package com.projectcrescendo.projectcrescendo;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
@@ -164,6 +163,8 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
                 String musicXMLRepresentation = MusicXmlWriter.encode(stave);
                 Log.d("MusicXML", musicXMLRepresentation);
 
+                CrescendoAPIManager.uploadComposition(musicXMLRepresentation, null);
+
                 CrescendoAPIManager.uploadComposition(musicXMLRepresentation, new CrescendoAPIResponseHandler() {
                     @Override
                     public void uploadSucceeded(int uploadId, String uploadUrl) {
@@ -179,10 +180,11 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
                     }
                 });
 
+                /*
                 Intent intent = new Intent(TutorialActivity.this, PlaybackActivity.class);
                 intent.putExtra(PlaybackActivity.SCORE_STRING_KEY, musicXMLRepresentation);
                 startActivity(intent);
-
+                */
 
 
             }
@@ -197,13 +199,13 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
         List<String> notesAsStringList = new ArrayList<String>();
 
         // Add for lower stave
-        for (Beat beat : stave.getLowerBar().getBeats()) {
+        for (Beat beat : stave.getLowerClef().getBeats()) {
             String notesForBeat = beat.gridStringRepresentation();
             notesAsStringList.add(notesForBeat);
         }
 
         // Add for upper stave
-        for (Beat beat : stave.getUpperBar().getBeats()) {
+        for (Beat beat : stave.getUpperClef().getBeats()) {
             String notesForBeat = beat.gridStringRepresentation();
             notesAsStringList.add(notesForBeat);
         }
@@ -229,7 +231,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
         Log.d("TutorialActivity", "onItemClicked");
 
         // Work out what beat is being edited...
-        int maxBarLength = Stave.BEATS_PER_STAVE;
+        int maxBarLength = Stave.BEATS_PER_ROW;
 
         Log.d("TutorialActivity", "position tapped: " + position);
         Log.d("TutorialActivity", "maxBarLength: " + maxBarLength);
@@ -239,13 +241,13 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
             Log.d("TutorialActivity", "upper bar");
 
             int truePosition = position - maxBarLength;
-            currentBeat = stave.getUpperBar().getBeats().get(truePosition);
+            currentBeat = stave.getUpperClef().getBeats().get(truePosition);
 
         } else {
             // lower bar
             Log.d("TutorialActivity", "lower bar");
 
-            currentBeat = stave.getLowerBar().getBeats().get(position);
+            currentBeat = stave.getLowerClef().getBeats().get(position);
 
         }
 

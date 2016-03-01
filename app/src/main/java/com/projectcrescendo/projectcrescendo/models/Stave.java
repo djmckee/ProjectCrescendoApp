@@ -5,21 +5,22 @@ package com.projectcrescendo.projectcrescendo.models;
  * Created by Dylan McKee on 25/02/16.
  */
 public class Stave {
-    public static int BEATS_PER_STAVE = 4;
 
-    private Bar upperBar = new Bar(BEATS_PER_STAVE);
-    private Bar lowerBar = new Bar(BEATS_PER_STAVE);
+    public static int BEATS_PER_ROW = 50;
+
+    private Clef upperClef = new Clef(BEATS_PER_ROW);
+    private Clef lowerClef = new Clef(BEATS_PER_ROW);
 
     private int timeSignatureNumerator = 4;
 
     private int timeSignatureDenominator = 4;
 
-    public Bar getUpperBar() {
-        return upperBar;
+    public Clef getUpperClef() {
+        return upperClef;
     }
 
-    public Bar getLowerBar() {
-        return lowerBar;
+    public Clef getLowerClef() {
+        return lowerClef;
     }
 
 

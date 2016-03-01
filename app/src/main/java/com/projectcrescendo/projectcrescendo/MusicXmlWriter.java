@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.projectcrescendo.projectcrescendo.models.Bar;
 import com.projectcrescendo.projectcrescendo.models.Beat;
+import com.projectcrescendo.projectcrescendo.models.Clef;
 import com.projectcrescendo.projectcrescendo.models.Note;
 import com.projectcrescendo.projectcrescendo.models.Stave;
 
@@ -37,15 +38,16 @@ public class MusicXmlWriter {
 
         int noOfDivisions = timeSigBeat * 2;
 
-        Bar[] parts = {stave.getUpperBar(), stave.getLowerBar()};
+        Clef[] parts = {stave.getLowerClef(), stave.getUpperClef()};
 
         for (int i = 0; i < parts.length; i++) {
-            Bar currentBar = parts[i];
+            Clef currentClef = parts[i];
 
             musicXMLString += "<part id=\"p" + (i + 1) + "\">\n"; //So for the first part it would be p1 and the second p2
 
             // At the moment, there's only one bar per part...
-            for (int bar = 0; bar < 1; bar++) {
+            for (int bar = 0; bar < currentClef.getBars().size(); bar++) {
+                Bar currentBar = parts[i].getBars().get(bar);
 
                 musicXMLString += "<measure number=\"" + (bar + 1) +"\">\n";	//Write the bar number
                 musicXMLString += "<attributes>\n";
@@ -89,6 +91,7 @@ public class MusicXmlWriter {
                 } else {
                     for (Beat beat : currentBar.getBeats()) {
                         int notesInBeat = beat.getNotes().size();
+                        Log.d("MusicXML", "notes in beat: " + notesInBeat);
 
                         String noteNames[] = new String[notesInBeat]; // Get names of notes at the current beat in the current bar. (will have to do some string manipulation to seperate)
                         double noteLengths[] = new double[notesInBeat]; // Get the lengths of the notes in the current beat in the current bar (will have to do some string manipulation to seperate)
@@ -100,6 +103,9 @@ public class MusicXmlWriter {
                             noteNames[n] = note.getPitch();
                             noteLengths[n] = note.getLength();
 
+                            Log.d("MusicXML", "adding note: " + note.getPitch());
+
+
                         }
 
                         int alter = 0;
@@ -108,6 +114,7 @@ public class MusicXmlWriter {
 
                         //Write out each note at the current beat
                         for (int n = 0; n < notesInBeat; n++) {
+
                             char stepChar = noteNames[n].toCharArray()[0];
                             String step = String.format("%c", stepChar);
 
@@ -115,10 +122,10 @@ public class MusicXmlWriter {
                             //Will return null if there is no third character so should probably check for noteNames[n].length first
                             if (noteNameLength >= 2) {
                                 // Could be a # after it
-                                if (noteNames[n].toCharArray()[1] == '#' || noteNameLength == 3) {
+                                if (noteNames[n].toCharArray()[noteNameLength-1] == '#' || noteNameLength == 3) {
                                     alter = 1;
                                     accidental = true;
-                                } else if (noteNames[n].toCharArray()[1] == 'b' || noteNameLength == 3) {
+                                } else if (noteNames[n].toCharArray()[noteNameLength-1] == 'b' || noteNameLength == 3) {
                                     alter = -1;
                                     accidental = true;
                                 } else {
@@ -168,7 +175,7 @@ public class MusicXmlWriter {
                             musicXMLString += "</pitch>\n";
 
                             double length = noteLengths[n] * 2;
-                            musicXMLString += "<duration>" + length + "</duration>\n";
+                            musicXMLString += "<duration>" + ((int) (length + 0.5)) + "</duration>\n";
 
                             musicXMLString += "</note>\n";
 

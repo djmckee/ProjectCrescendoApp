@@ -116,10 +116,10 @@ public class PlaybackActivity extends ActionBarActivity {
         seeScoreView.setScore(score, 1.0f);
 
 
-        ScrollView sv = (ScrollView) findViewById(R.id.scrollView1);
-        sv.addView(seeScoreView);
+        scrollView = (ScrollView) findViewById(R.id.scrollView1);
+        scrollView.addView(seeScoreView);
 
-        sv.setOnTouchListener(new View.OnTouchListener(){
+        scrollView.setOnTouchListener(new View.OnTouchListener(){
             @Override
             public boolean onTouch(View arg0, MotionEvent event) {
                 return seeScoreView.onTouchEvent(event);

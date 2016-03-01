@@ -23,6 +23,17 @@ public class Bar {
 
     }
 
+    /**
+     * Constructs a new Bar with a blank beats instance.
+     */
+    public Bar() {
+
+    }
+
+    public void addBeat(Beat newBeat) {
+        beats.add(newBeat);
+    }
+
     public List<Beat> getBeats() {
         return beats;
     }
