@@ -126,7 +126,7 @@ public class PlaybackActivity extends ActionBarActivity {
         });
 
         FloatingActionButton donePlaybackButton = (FloatingActionButton) findViewById(R.id.donePlaybackButton);
-        sharePlaybackButton.setOnClickListener(new View.OnClickListener() {
+        donePlaybackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Dismiss current activity and go back to main menu
