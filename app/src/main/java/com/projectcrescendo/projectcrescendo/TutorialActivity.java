@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.widget.ArrayAdapter;
+import android.widget.HorizontalScrollView;
 import android.widget.Spinner;
 
 
@@ -34,6 +36,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
     private Beat currentBeat;
 
     private GridView gridView;
+    private HorizontalScrollView horizontalScrollView;
 
     Spinner timeSignatureR1;
     Spinner timeSignatureR2;
@@ -50,7 +53,6 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
         setContentView(R.layout.activity_tutorial);
 
         stave = new Stave();
-
 
         gridView = (GridView) findViewById(R.id.gridView1);
 
@@ -81,6 +83,8 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
             String stringValue = String.format("%d", denominator);
             timeSignatureDenominatorStrings.add(stringValue);
         }
+
+
 
         ArrayAdapter<String> topTimeSignatureAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, timeSignatureNumeratorStrings);
         ArrayAdapter<String> lowerTimeSignatureAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, timeSignatureDenominatorStrings);
