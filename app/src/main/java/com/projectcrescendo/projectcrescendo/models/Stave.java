@@ -39,6 +39,10 @@ public class Stave {
     }
 
     public void setTimeSignatureNumerator(int timeSignatureNumerator) {
+        // Change the time signature of the clefs, re-arranging the bars into the right number of beats
+        upperClef.changeBarLength(timeSignatureNumerator);
+        upperClef.changeBarLength(timeSignatureNumerator);
+
         this.timeSignatureNumerator = timeSignatureNumerator;
     }
 

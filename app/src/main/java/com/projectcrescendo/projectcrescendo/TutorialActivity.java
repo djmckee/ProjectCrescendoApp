@@ -103,6 +103,8 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
                 Log.d("spinner 1", "item selected!!!");
                 int newSignature = timeSignatureNumerators.get(position);
                 stave.setTimeSignatureNumerator(newSignature);
+
+                timeSignatureL1.setSelection(position);
             }
 
             @Override
@@ -133,6 +135,9 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
                 Log.d("spinner 3", "item selected!!!");
                 int newSignature = timeSignatureNumerators.get(position);
                 stave.setTimeSignatureNumerator(newSignature);
+
+                timeSignatureR1.setSelection(position);
+
             }
 
             @Override

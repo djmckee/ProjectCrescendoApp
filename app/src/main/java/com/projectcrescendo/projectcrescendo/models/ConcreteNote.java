@@ -21,7 +21,7 @@ public class ConcreteNote implements Note {
 
         // Set up default values.
         accidental = Accidental.Natural;
-        intonation = Intonation.Accent;
+        intonation = Intonation.None;
         dynamic = Dynamic.MezzoForte;
 
     }

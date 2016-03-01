@@ -23,8 +23,9 @@ interface NoteGridViewAdapterListener {
 
 public class NoteGridViewAdapter extends BaseAdapter{
 
-    private static int GRID_VIEW_MARGIN_TOP = 100;
-    private static int GRID_VIEW_MARGIN_SIDES = 350;
+    private static final int GRID_VIEW_MARGIN_TOP = 100;
+    private static final int GRID_VIEW_MARGIN_SIDES = 350;
+    private static final int NUMBER_OF_COLUMNS = 8;
 
     String[] arrayOfGridItems;
     Context context;
@@ -91,7 +92,7 @@ public class NoteGridViewAdapter extends BaseAdapter{
 
         noteCellTextView.setText(arrayOfGridItems[position]);
 
-        int colourPosition = position % 7;
+        int colourPosition = position % NUMBER_OF_COLUMNS;
 
         // Set background colour for the cell depending upon its position
         switch (colourPosition) {

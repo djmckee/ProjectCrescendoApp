@@ -10,7 +10,8 @@ public enum Intonation {
     Legato,
     Pedal,
     Rallentando,
-    Accelerando;
+    Accelerando,
+    None;
 
     /**
      * A helper method to return the Intonation associated with the integer passed into it
