@@ -28,6 +28,8 @@ public class Stave {
     }
 
     public void setTimeSignatureDenominator(int timeSignatureDenominator) {
+
+
         this.timeSignatureDenominator = timeSignatureDenominator;
     }
 
