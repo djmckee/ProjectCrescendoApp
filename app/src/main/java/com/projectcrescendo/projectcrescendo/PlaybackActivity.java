@@ -1,5 +1,8 @@
 package com.projectcrescendo.projectcrescendo;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -57,6 +60,11 @@ public class PlaybackActivity extends ActionBarActivity {
      * for longer scores/smaller screens.
      */
     private ScrollView scrollView;
+
+    /**
+     * A flag boolean variable to allow uploads of composition sharing to be cancelled.
+     */
+    private boolean shouldContinueSharing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +129,8 @@ public class PlaybackActivity extends ActionBarActivity {
         sharePlaybackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Share playback
+                // Share playback
+                shareComposition();
             }
         });
 
@@ -137,6 +146,65 @@ public class PlaybackActivity extends ActionBarActivity {
             }
         });
 
+
+    }
+
+    void shareComposition() {
+        // Upload to our web API and get a link to share...
+        // TODO: Show loading dialog UI
+        final ProgressDialog loadingDialog = ProgressDialog.show(PlaybackActivity.this, "", "Uploading composition...");
+        loadingDialog.setCancelable(true);
+
+        shouldContinueSharing = true;
+
+        loadingDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                // Stop upload.
+                shouldContinueSharing = false;
+            }
+        });
+
+        // Upload compostion...
+        CrescendoAPIManager.uploadComposition(musicXmlScore, new CrescendoAPIResponseHandler() {
+            @Override
+            public void uploadSucceeded(int uploadId, String uploadUrl) {
+                loadingDialog.dismiss();
+
+                // If we haven't been cancelled, share it...
+                if (shouldContinueSharing) {
+                    String textToShare = "I'm learning music with Sonata! Check out my latest Sonata composition at " + uploadUrl;
+
+                    // Looked up the android 'share intent' at http://code.tutsplus.com/tutorials/android-sdk-implement-a-share-intent--mobile-8433
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My latest Sonata Composition");
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, textToShare);
+
+                    startActivity(Intent.createChooser(shareIntent, "Share composition"));
+
+                }
+
+            }
+
+            @Override
+            public void uploadFailed() {
+                loadingDialog.dismiss();
+
+                // Show alert (if they haven't cancelled the upload)...
+                if (shouldContinueSharing) {
+                    // Display error...
+                    new AlertDialog.Builder(PlaybackActivity.this)
+                            .setTitle("Sharing failed")
+                            .setMessage("Sorry, it looks like sharing of your compoisiton failed, please check your internet connection and try again...")
+                            .setPositiveButton("Okay", null)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                }
+
+            }
+        });
 
     }
 
