@@ -27,7 +27,7 @@ interface NoteGridViewAdapterListener {
 public class NoteGridViewAdapter extends BaseAdapter{
 
     private static final int GRID_VIEW_MARGIN_TOP = 100;
-    private static final int NUMBER_OF_COLUMNS = 7;
+    private static final int[] GRID_COLOUR_RESOURCES = {R.color.red, R.color.pink, R.color.purple, R.color.deepPurple, R.color.indigo, R.color.blue, R.color.material_deep_teal_500};
 
     String[] arrayOfGridItems;
     Context context;
@@ -90,38 +90,10 @@ public class NoteGridViewAdapter extends BaseAdapter{
 
         noteCellTextView.setText(arrayOfGridItems[position]);
 
-        int colourPosition = position % NUMBER_OF_COLUMNS;
+        int colourPosition = position % GRID_COLOUR_RESOURCES.length;
 
         // Set background colour for the cell depending upon its position
-        switch (colourPosition) {
-            case 0:
-                noteCellTextView.setBackgroundResource(R.color.red);
-                break;
-            case 1:
-                noteCellTextView.setBackgroundResource(R.color.pink);
-                break;
-            case 2:
-                noteCellTextView.setBackgroundResource(R.color.purple);
-                break;
-            case 3:
-                noteCellTextView.setBackgroundResource(R.color.deepPurple);
-                break;
-            case 4:
-                noteCellTextView.setBackgroundResource(R.color.indigo);
-                break;
-            case 5:
-                noteCellTextView.setBackgroundResource(R.color.blue);
-                break;
-            case 6:
-                noteCellTextView.setBackgroundResource(R.color.material_deep_teal_500);
-                break;
-            case 7:
-                noteCellTextView.setBackgroundResource(R.color.material_blue_grey_800);
-                break;
-            default:
-                noteCellTextView.setBackgroundResource(R.color.black);
-                break;
-        }
+        noteCellTextView.setBackgroundResource(GRID_COLOUR_RESOURCES[colourPosition]);
 
 
         cellView.setOnClickListener(new OnClickListener() {
