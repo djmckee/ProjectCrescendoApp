@@ -27,7 +27,9 @@ interface NoteGridViewAdapterListener {
 public class NoteGridViewAdapter extends BaseAdapter{
 
     private static final int GRID_VIEW_MARGIN_TOP = 100;
-    private static final int[] GRID_COLOUR_RESOURCES = {R.color.red, R.color.pink, R.color.purple, R.color.deepPurple, R.color.indigo, R.color.blue, R.color.material_deep_teal_500};
+    private static final int[] GRID_COLOUR_RESOURCES = { R.color.red,
+            R.color.pink, R.color.purple, R.color.deepPurple,
+            R.color.indigo, R.color.blue, R.color.material_deep_teal_500};
 
     String[] arrayOfGridItems;
     Context context;
