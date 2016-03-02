@@ -1,6 +1,9 @@
 package com.projectcrescendo.projectcrescendo;
 
 /**
+ * A Grid View Adapter to allow us to use the GridView in the TutorialActivity to display a list
+ * of notes.
+ *
  * Created by Alexander on 23/02/2016.
  */
 import android.content.Context;
@@ -24,7 +27,6 @@ interface NoteGridViewAdapterListener {
 public class NoteGridViewAdapter extends BaseAdapter{
 
     private static final int GRID_VIEW_MARGIN_TOP = 100;
-    private static final int GRID_VIEW_MARGIN_SIDES = 350;
     private static final int NUMBER_OF_COLUMNS = 7;
 
     String[] arrayOfGridItems;
@@ -37,7 +39,6 @@ public class NoteGridViewAdapter extends BaseAdapter{
 
     private static LayoutInflater inflater=null;
     public NoteGridViewAdapter(Activity presentedActivity, String[] arrayOfGridItems) {
-        // TODO Auto-generated constructor stub
         this.arrayOfGridItems = arrayOfGridItems;
         context = presentedActivity;
 
@@ -60,19 +61,16 @@ public class NoteGridViewAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return arrayOfGridItems.length;
     }
 
     @Override
     public Object getItem(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
