@@ -8,6 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
+ * A JUnit test class to test the Accidental enum.
  *
  * Created by Craig Hirst on 02/03/2016
  */

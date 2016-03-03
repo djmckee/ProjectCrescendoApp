@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A JUnit test class to test the Beat model class.
  *
  * Created by Craig Hirst on 02/03/2016
  */

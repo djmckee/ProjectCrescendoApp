@@ -9,25 +9,39 @@ import java.util.List;
  */
 public class Beat {
 
+    // TODO: Constrain notes list to holding between 0-5 notes no matter what.
     /**
      * A list consisting of between 0 and 5 notes that belong in this beat.
      */
     private List<Note> notes = new ArrayList<Note>();
-    // TODO: Constrain notes list to holding between 0-5 notes no matter what.
 
     /**
-     * The intonation of the current beat.
+     * The intonation of the current beat, defaults to 'None'.
      */
-    private Intonation intonation = Intonation.Accent;
+    private Intonation intonation = Intonation.None;
 
+    /**
+     * Returns a list of notes in the current beat.
+     * @return a List of Note instnaces in the current beat.
+     */
     public List<Note> getNotes() {
         return notes;
     }
 
+    /**
+     * Sets the notes in the current beat.
+     * @param notes the notes that should be contained in the current beat.
+     */
     public void setNotes(List<Note> notes) {
+        // TODO: ensure notes has <= 5 notes in it!
+
         this.notes = notes;
     }
 
+    /**
+     * Returns the intonation of the current beat.
+     * @return the Intonation of the current beat.
+     */
     public Intonation getIntonation() {
         return intonation;
     }

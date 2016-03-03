@@ -52,7 +52,7 @@ public class Clef {
             int nextIncrement = counter + newNumberOfBeatsPerBar;
 
             for (int j = counter; j < nextIncrement; j++) {
-                if (j > beatHolder.size() && j < beatHolder.size()) {
+                if (j < beatHolder.size()) {
                     // Add beat at 'j' in beatHolder to the new bar
                     Beat beat = beatHolder.get(j);
 
