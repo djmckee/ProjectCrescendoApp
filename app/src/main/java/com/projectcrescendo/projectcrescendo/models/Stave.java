@@ -2,7 +2,7 @@ package com.projectcrescendo.projectcrescendo.models;
 
 /**
  * A stave is a model object made up of a Time Signature and Bar objects.
- *
+ * <p>
  * Created by Dylan McKee on 25/02/16.
  */
 public class Stave {
@@ -47,6 +47,7 @@ public class Stave {
 
     /**
      * Returns the upper clef on the stave.
+     *
      * @return the upper Clef of the Stave.
      */
     public Clef getUpperClef() {
@@ -55,6 +56,7 @@ public class Stave {
 
     /**
      * Returns the lower clef on the stave.
+     *
      * @return the lower Clef of the Stave.
      */
     public Clef getLowerClef() {
@@ -63,6 +65,7 @@ public class Stave {
 
     /**
      * Returns the lower number in the current stave's time signature.
+     *
      * @return the lower number in the stave's time signature.
      */
     public int getTimeSignatureDenominator() {
@@ -71,6 +74,7 @@ public class Stave {
 
     /**
      * Sets the lower number in the current stave's time signature.
+     *
      * @param timeSignatureDenominator the lower number of the stave's time signature.
      */
     public void setTimeSignatureDenominator(int timeSignatureDenominator) {
@@ -80,6 +84,7 @@ public class Stave {
 
     /**
      * Returns the upper number of the stave's current time signature.
+     *
      * @return the upper number of the stave's current time signature.
      */
     public int getTimeSignatureNumerator() {
@@ -89,6 +94,7 @@ public class Stave {
     /**
      * Sets the upper number of the stave's current time signature, changing the bar length of the
      * clefs accordingly too.
+     *
      * @param timeSignatureNumerator the upper number of the stave's current time signature.
      */
     public void setTimeSignatureNumerator(int timeSignatureNumerator) {
@@ -98,7 +104,6 @@ public class Stave {
 
         this.timeSignatureNumerator = timeSignatureNumerator;
     }
-
 
 
 }

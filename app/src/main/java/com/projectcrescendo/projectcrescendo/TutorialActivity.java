@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.HorizontalScrollView;
+import android.widget.Spinner;
 
 import com.projectcrescendo.projectcrescendo.models.Beat;
 import com.projectcrescendo.projectcrescendo.models.Intonation;
@@ -18,14 +20,10 @@ import com.projectcrescendo.projectcrescendo.models.Stave;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.widget.ArrayAdapter;
-import android.widget.HorizontalScrollView;
-import android.widget.Spinner;
-
 /**
  * The tutorial activity contains the grid and is where the user completes the tutorial by adding
  * notes.
- *
+ * <p>
  * Created by Alex on 27/02/16.
  */
 public class TutorialActivity extends ActionBarActivity implements NoteGridViewAdapterListener, AddNoteFragmentListener {
@@ -84,6 +82,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
     /**
      * Sets up the initial grid view and the time signature selection spinner UI on initial load of
      * the activity.
+     *
      * @param savedInstanceState not used in our implementation.
      */
     @Override
@@ -123,7 +122,6 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
             String stringValue = String.format("%d", denominator);
             timeSignatureDenominatorStrings.add(stringValue);
         }
-
 
 
         ArrayAdapter<String> topTimeSignatureAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, timeSignatureNumeratorStrings);
@@ -203,7 +201,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
         });
 
 
-        FloatingActionButton instructionButton =  (FloatingActionButton)findViewById(R.id.instruction);
+        FloatingActionButton instructionButton = (FloatingActionButton) findViewById(R.id.instruction);
         instructionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -273,6 +271,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
     /**
      * This method is called when a grid item is tapped; the index of the tapped grid item is passed
      * into it as a parameter.
+     *
      * @param position the index of the grid item that was clicked.
      */
     public void onItemTapListener(int position) {
@@ -311,7 +310,6 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
         addNoteFragment.show(getSupportFragmentManager(), "Add Note");
 
 
-
     }
 
     /**
@@ -320,7 +318,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
      * that the note shows up graphically to the user.
      *
      * @param addNoteFragment the fragment instance that the note was added from.
-     * @param note the note that was added by the user.
+     * @param note            the note that was added by the user.
      */
     @Override
     public void addNoteFragmentAddedNote(AddNoteFragment addNoteFragment, Note note) {
@@ -338,7 +336,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
      * that the note removal shows up graphically to the user.
      *
      * @param addNoteFragment the fragment instance that the note was removed from.
-     * @param note the note that was removed by the user.
+     * @param note            the note that was removed by the user.
      */
     @Override
     public void addNoteFragmentDeletedNote(AddNoteFragment addNoteFragment, Note note) {
@@ -354,7 +352,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
      * Called by the AddNoteFragment when the intonation for the currently selected beat is changed.
      *
      * @param addNoteFragment the fragment instance that the intonation was edited from.
-     * @param newIntonation the new intonation for the beat.
+     * @param newIntonation   the new intonation for the beat.
      */
     @Override
     public void addNoteFragmentIntonationSelected(AddNoteFragment addNoteFragment, Intonation newIntonation) {

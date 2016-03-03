@@ -14,13 +14,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ScrollView;
 
-/**
- * This class uses the SeeScore Library, provided under an educational non-profit only licence and
- * originally authored by Dolphin Computing (Cambridge) Ltd. - downloaded from
- * http://www.seescore.co.uk/developers/ on 19th February 2016.
- */
-import java.util.List;
-
 import uk.co.dolphin_com.seescoreandroid.Dispatcher;
 import uk.co.dolphin_com.seescoreandroid.Player;
 import uk.co.dolphin_com.seescoreandroid.SeeScoreView;
@@ -30,7 +23,12 @@ import uk.co.dolphin_com.sscore.LoadWarning;
 import uk.co.dolphin_com.sscore.SScore;
 import uk.co.dolphin_com.sscore.SScoreKey;
 import uk.co.dolphin_com.sscore.ex.ScoreException;
-import uk.co.dolphin_com.sscore.playdata.Note;
+
+/**
+ * This class uses the SeeScore Library, provided under an educational non-profit only licence and
+ * originally authored by Dolphin Computing (Cambridge) Ltd. - downloaded from
+ * http://www.seescore.co.uk/developers/ on 19th February 2016.
+ */
 
 /**
  * An activity that uses the SeeScore SDK (downloaded from http://www.seescore.co.uk/developers/ on
@@ -38,7 +36,7 @@ import uk.co.dolphin_com.sscore.playdata.Note;
  * education license) to display the MusicXML string passed to this activity, and to allow for
  * audio playback and sharing of the MusicXML file through our hosted API hosting the file, and the
  * link to the hosted file being shared on Twitter/Facebook/other social channels by the user.
- *
+ * <p>
  * Created by Dylan McKee on 22/02/2016.
  */
 public class PlaybackActivity extends ActionBarActivity {
@@ -47,39 +45,32 @@ public class PlaybackActivity extends ActionBarActivity {
      * A key for the String containing the MusicXML encoded score as it is passed between activities.
      */
     public static final String SCORE_STRING_KEY = "projectcrescendo.MusicXMLScoreString";
-
+    /**
+     * A music player instance so that our composition can be played back.
+     */
+    Player player;
     /**
      * The SeeScore view instance which displays the score.
      */
     private SeeScoreView seeScoreView;
-
     /**
      * A String representation of the MusicXML encoded score, to be set via the Intent that
      * transitions into this activity.
      */
     private String musicXmlScore;
-
     /**
      * An SScore instance of the current musical score on display.
      */
     private SScore score;
-
     /**
      * A scroll view instance to contain our SeeScore score view and make it scrollable
      * for longer scores/smaller screens.
      */
     private ScrollView scrollView;
-
     /**
      * A flag boolean variable to allow uploads of composition sharing to be cancelled.
      */
     private boolean shouldContinueSharing;
-
-    /**
-     * A music player instance so that our composition can be played back.
-     */
-    Player player;
-
     /**
      * Is the music player playing?
      */
@@ -112,7 +103,7 @@ public class PlaybackActivity extends ActionBarActivity {
         scrollView = (ScrollView) findViewById(R.id.scrollView1);
         scrollView.addView(seeScoreView);
 
-        scrollView.setOnTouchListener(new View.OnTouchListener(){
+        scrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View arg0, MotionEvent event) {
                 return seeScoreView.onTouchEvent(event);
@@ -124,7 +115,6 @@ public class PlaybackActivity extends ActionBarActivity {
         byte[] musicXmlBytes = musicXmlScore.getBytes();
         SScoreKey key = SeeScoreLicence.SeeScoreLibKey;
         LoadOptions options = new LoadOptions(key, true);
-
 
 
         // And attempt a parse...
@@ -156,7 +146,6 @@ public class PlaybackActivity extends ActionBarActivity {
             Log.d("Playback score", "warnings: " + warnings);
 
         }
-
 
 
         // Instantiate the player with our current composition too to allow for playback
@@ -253,10 +242,10 @@ public class PlaybackActivity extends ActionBarActivity {
     }
 
     void setupScore() {
-        new Thread(new Runnable(){
+        new Thread(new Runnable() {
             public void run() {
 
-                new Handler(Looper.getMainLooper()).post(new Runnable(){
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
 
                     public void run() {
                     }
@@ -303,7 +292,7 @@ public class PlaybackActivity extends ActionBarActivity {
 
     }
 
-    void updatePlayButtonUI () {
+    void updatePlayButtonUI() {
         final FloatingActionButton playPauseButton = (FloatingActionButton) findViewById(R.id.playPausePlaybackButton);
 
         if (playerIsPlaying) {

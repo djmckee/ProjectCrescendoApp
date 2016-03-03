@@ -3,7 +3,7 @@ package com.projectcrescendo.projectcrescendo.models;
 /**
  * The Tutorial class is a model class intended to hold a title string, and a List of
  * Instructions (in the order that they need to be displayed in).
- *
+ * <p>
  * Created by Dylan McKee on 16/11/15.
  */
 public class Tutorial {
@@ -20,7 +20,8 @@ public class Tutorial {
 
     /**
      * Constructs a new tutorial.
-     * @param title the title of the new tutorial
+     *
+     * @param title       the title of the new tutorial
      * @param instruction the instructional text for the new tutorial.
      */
     public Tutorial(String title, String instruction) {
@@ -31,6 +32,7 @@ public class Tutorial {
 
     /**
      * Returns the title of the current tutorial
+     *
      * @return the title of the current tutorial
      */
     public String getTitle() {
@@ -39,6 +41,7 @@ public class Tutorial {
 
     /**
      * Returns the instructional text of the current tutorial.
+     *
      * @return the instructional text of the current tutorial.
      */
     public String getInstruction() {
@@ -48,6 +51,7 @@ public class Tutorial {
     /**
      * Provides a human readable String representation of the current tutorial, for debugging
      * purposes.
+     *
      * @return a human readable String representation of the current tutorial, for debugging
      * purposes.
      */

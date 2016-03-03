@@ -1,4 +1,5 @@
 package com.projectcrescendo.projectcrescendo;
+
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,7 +23,7 @@ interface SelectNoteLengthFragmentCallbackListener {
 
 /**
  * Created by Dylan McKee on 27/02/2016
- *
+ * <p>
  * Based off of the SelectIntonationFragment, using tutorial example http://www.tutorialsbuzz.com/2014/06/android-dialogfragment-listview.html.
  */
 public class SelectNoteLengthFragment extends DialogFragment implements
@@ -97,7 +98,6 @@ public class SelectNoteLengthFragment extends DialogFragment implements
     public void setListener(SelectNoteLengthFragmentCallbackListener listener) {
         this.listener = listener;
     }
-
 
 
 }

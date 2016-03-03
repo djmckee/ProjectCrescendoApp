@@ -3,9 +3,11 @@ package com.projectcrescendo.projectcrescendo;
 /**
  * A Grid View Adapter to allow us to use the GridView in the TutorialActivity to display a list
  * of notes.
- *
+ * <p>
  * Created by Alexander on 23/02/2016.
  */
+
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.util.Log;
@@ -16,34 +18,30 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.app.Activity;
 
 
 interface NoteGridViewAdapterListener {
     void onItemTapListener(int itemPosition);
 }
 
-public class NoteGridViewAdapter extends BaseAdapter{
+public class NoteGridViewAdapter extends BaseAdapter {
 
     private static final int GRID_VIEW_MARGIN_TOP = 100;
-    private static final int[] GRID_COLOUR_RESOURCES = { R.color.red,
+    private static final int[] GRID_COLOUR_RESOURCES = {R.color.red,
             R.color.pink, R.color.purple, R.color.deepPurple,
             R.color.indigo, R.color.blue, R.color.material_deep_teal_500};
-
+    private static LayoutInflater inflater = null;
     String[] arrayOfGridItems;
     Context context;
-
     NoteGridViewAdapterListener adapterListener;
-
     double screenWidth;
     double screenHeight;
 
-    private static LayoutInflater inflater=null;
     public NoteGridViewAdapter(Activity presentedActivity, String[] arrayOfGridItems) {
         this.arrayOfGridItems = arrayOfGridItems;
         context = presentedActivity;
 
-        inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 
         // Getting screen size as per https://stackoverflow.com/questions/6520718/how-to-get-screen-width-and-height
@@ -84,7 +82,7 @@ public class NoteGridViewAdapter extends BaseAdapter{
 
         // TODO: Fix the height here...
         // Setting height to 50% of screen, as per https://stackoverflow.com/questions/2963152/android-how-to-resize-a-custom-view-programmatically
-        int cellHeight = (int)(screenHeight / 3);
+        int cellHeight = (int) (screenHeight / 3);
         int cellWidth = 330;
 
         cellView.setLayoutParams(new LinearLayout.LayoutParams(cellWidth, cellHeight));

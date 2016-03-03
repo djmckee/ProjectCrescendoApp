@@ -1,42 +1,42 @@
 package com.projectcrescendo.projectcrescendo;
 
-import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.TextView;
-import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.Button;
-import android.content.Intent;
 
 
 /**
  * The main activity provides a main menu interface, it is the first screen that users see as they
  * enter the app and it allows them to select from the various options/modes and begin using the
  * app.
- *
+ * <p>
  * Created by Dylan McKee on 16/11/2015.
  */
-public class MainActivity extends ActionBarActivity  {
+public class MainActivity extends ActionBarActivity {
+
+    /**
+     * A static block to load the SeeScoreLib.so library.
+     * Taken from the Dolphin Computing (Cambridge) Ltd. SeeScore Example Project.
+     */
+    static {
+        System.loadLibrary("stlport_shared");
+        System.loadLibrary("SeeScoreLib");
+    }
 
     /**
      * The tutorial manager instance.
      */
     private TutorialManager tutorialManager;
 
-
     /**
      * This method is ran on creation of the view. UI and listeners to be set-up here.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -53,8 +53,8 @@ public class MainActivity extends ActionBarActivity  {
 
 
         FloatingActionButton startTutorials = (FloatingActionButton) findViewById(R.id.startTutorialsButton);
-        startTutorials.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+        startTutorials.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 //startActivity(new Intent(MainActivity.this, TutorialActivity.class));
                 Log.d("MainActivity", "starting activity...");
                 startActivity(new Intent(MainActivity.this, TutorialActivity.class));
@@ -69,15 +69,6 @@ public class MainActivity extends ActionBarActivity  {
         anim.setRepeatMode(Animation.REVERSE);
         txt.startAnimation(anim);
 
-    }
-
-    /**
-     * A static block to load the SeeScoreLib.so library.
-     * Taken from the Dolphin Computing (Cambridge) Ltd. SeeScore Example Project.
-     */
-    static {
-        System.loadLibrary("stlport_shared");
-        System.loadLibrary("SeeScoreLib");
     }
 
 }

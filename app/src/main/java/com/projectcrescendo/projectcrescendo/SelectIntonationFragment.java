@@ -1,8 +1,7 @@
 package com.projectcrescendo.projectcrescendo;
-import android.annotation.SuppressLint;
+
 import android.app.DialogFragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.projectcrescendo.projectcrescendo.models.Intonation;
 
@@ -24,10 +22,9 @@ interface SelectIntonationFragmentCallbackListener {
 
 /**
  * Created by Dylan McKee on 23/02/2016
- *
+ * <p>
  * I looked at the tutorial at http://www.tutorialsbuzz.com/2014/06/android-dialogfragment-listview.html
  * and used their examples in the creation of this fragment.
- *
  */
 public class SelectIntonationFragment extends DialogFragment implements
         OnItemClickListener {
@@ -93,7 +90,6 @@ public class SelectIntonationFragment extends DialogFragment implements
     public void setListener(SelectIntonationFragmentCallbackListener listener) {
         this.listener = listener;
     }
-
 
 
 }

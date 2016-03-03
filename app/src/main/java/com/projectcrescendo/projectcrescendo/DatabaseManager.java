@@ -24,6 +24,7 @@ public class DatabaseManager extends SQLiteAssetHelper {
 
     /**
      * A constructor to create a new database manager
+     *
      * @param context the context calling the constructor
      */
     public DatabaseManager(Context context) {

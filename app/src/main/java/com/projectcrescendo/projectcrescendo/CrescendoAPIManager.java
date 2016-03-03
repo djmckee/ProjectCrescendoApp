@@ -1,32 +1,37 @@
 package com.projectcrescendo.projectcrescendo;
 
 import android.util.Log;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * This class makes use of the LoopJ library, downloaded from http://loopj.com/android-async-http/
- * via Gradle on 29/02/16, and originally authored by James Smith.
- *
- */
-import com.loopj.android.http.*;
 import cz.msebera.android.httpclient.Header;
 
 /**
+ * This class makes use of the LoopJ library, downloaded from http://loopj.com/android-async-http/
+ * via Gradle on 29/02/16, and originally authored by James Smith.
+ */
+
+/**
  * An interface to handle callbacks from the API on upload success/failure.
- *
+ * <p>
  * Created by Dylan McKee on 29/02/16.
  */
 interface CrescendoAPIResponseHandler {
     /**
      * This method is called upon upload success, this means that the composition is valid and has
      * successfully been uploaded to the Crescendo API.
-     *
+     * <p>
      * This callback hands back an id for the upload, as an integer, and a URL containing a
      * download link for the upload, as a String.
      *
-     * @param uploadId an integer containing the ID of that upload.
+     * @param uploadId  an integer containing the ID of that upload.
      * @param uploadUrl a String containing the URL to that upload, so the user can download their
      *                  composition.
      */
@@ -43,13 +48,13 @@ interface CrescendoAPIResponseHandler {
 /**
  * This class manages interaction with the Crescendo web API to allow MusicXML composition strings
  * to be uploaded to our cloud platform.
- *
+ * <p>
  * This class makes extensive use of the LoopJ HTTP library to handle HTTP requests asynchronously,
  * LoopJ was originally authored by James Smith, and downloaded by me through Gradle on 29/02/16.
- *
+ * <p>
  * I also looked at the example LoopJ code at http://loopj.com/android-async-http/ when writing
  * this class.
- *
+ * <p>
  * Created by Dylan McKee on 29/02/16.
  */
 public class CrescendoAPIManager {
@@ -67,8 +72,9 @@ public class CrescendoAPIManager {
 
     /**
      * A generic POST method to send a POST HTTP request.
-     * @param url the URL to send the request to.
-     * @param params the parameters to include in the request.
+     *
+     * @param url             the URL to send the request to.
+     * @param params          the parameters to include in the request.
      * @param responseHandler a callback to handle the response from the request.
      */
     // I took the following method from http://loopj.com/android-async-http/
@@ -79,6 +85,7 @@ public class CrescendoAPIManager {
 
     /**
      * A method that returns the endpoint passed to it appended on to the API's base URL.
+     *
      * @param relativeUrl the API endpoint.
      * @return the endpoint appended to the API's base URL.
      */
@@ -92,7 +99,7 @@ public class CrescendoAPIManager {
      * Crescendo API, and then callback the handler passed to it upon successful completion
      * (or upload failure).
      *
-     * @param compositionXml the MusicXML representation of the composition to upload, as a String,
+     * @param compositionXml  the MusicXML representation of the composition to upload, as a String,
      * @param responseHandler the callback class, must conform to the CrescendoAPIResponseHandler interface.
      */
     public static void uploadComposition(String compositionXml, final CrescendoAPIResponseHandler responseHandler) {

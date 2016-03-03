@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * A model class, made up of a list of beat objects, to represent one bar of a variable length based
  * on the time signature.
- *
+ * <p>
  * Created by Dylan McKee on 25/02/16.
  */
 public class Bar {
@@ -15,6 +15,7 @@ public class Bar {
 
     /**
      * Constructs a new Bar, asking for a length in beats.
+     *
      * @param length
      */
     public Bar(int length) {
@@ -34,6 +35,7 @@ public class Bar {
 
     /**
      * Adds a beat to the bar sequentially in the next available position.
+     *
      * @param newBeat the new beat instance to add to the bar.
      */
     public void addBeat(Beat newBeat) {
@@ -42,6 +44,7 @@ public class Bar {
 
     /**
      * Returns a list containing all of the Beat objects on the bar.
+     *
      * @return a list of the Beat objects on the current bar.
      */
     public List<Beat> getBeats() {
@@ -50,6 +53,7 @@ public class Bar {
 
     /**
      * Returns all of the notes on the current bar.
+     *
      * @return a List of all of the Note instances on the current Bar.
      */
     public List<Note> getAllNotesOnBar() {
@@ -62,7 +66,6 @@ public class Bar {
         return notes;
 
     }
-
 
 
 }
