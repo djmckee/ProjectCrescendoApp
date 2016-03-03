@@ -56,6 +56,12 @@ public class Beat {
         
     }
 
+    /**
+     * Returns a String containing a textual list of the Notes in the current beat,
+     * separated by newline characters, intended for display in the NoteGridViewAdapter.
+     *
+     * @return a String containing a textual list of the Note pitches in the current beat.
+     */
     public String gridStringRepresentation() {
         String stringRepresentation = new String();
 
