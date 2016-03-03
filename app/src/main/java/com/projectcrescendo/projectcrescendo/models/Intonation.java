@@ -5,13 +5,13 @@ package com.projectcrescendo.projectcrescendo.models;
  * Created by Dylan McKee on 27/11/15.
  */
 public enum Intonation {
+    None,
     Accent,
     Staccato,
     Legato,
     Pedal,
     Rallentando,
-    Accelerando,
-    None;
+    Accelerando;
 
     /**
      * A helper method to return the Intonation associated with the integer passed into it
