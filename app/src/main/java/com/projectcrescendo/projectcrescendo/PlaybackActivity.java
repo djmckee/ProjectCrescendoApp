@@ -24,7 +24,9 @@ import java.util.List;
 import uk.co.dolphin_com.seescoreandroid.Dispatcher;
 import uk.co.dolphin_com.seescoreandroid.Player;
 import uk.co.dolphin_com.seescoreandroid.SeeScoreView;
+import uk.co.dolphin_com.sscore.Component;
 import uk.co.dolphin_com.sscore.LoadOptions;
+import uk.co.dolphin_com.sscore.LoadWarning;
 import uk.co.dolphin_com.sscore.SScore;
 import uk.co.dolphin_com.sscore.SScoreKey;
 import uk.co.dolphin_com.sscore.ex.ScoreException;
@@ -85,20 +87,44 @@ public class PlaybackActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
         // Get the MusicXML string that we've been passed in the transition to this activity...
         Intent intent = getIntent();
         musicXmlScore = intent.getExtras().getString(SCORE_STRING_KEY);
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_playback);
 
         // Create our score view
-        seeScoreView = new SeeScoreView(this, this.getAssets(), null, null);
+        seeScoreView = new SeeScoreView(this, this.getAssets(), new SeeScoreView.ZoomNotification() {
+            @Override
+            public void zoom(float scale) {
+
+            }
+        }, new SeeScoreView.TapNotification() {
+            @Override
+            public void tap(int systemIndex, int partIndex, int barIndex, Component[] components) {
+
+            }
+        });
+
+        setContentView(R.layout.activity_playback);
+
+        scrollView = (ScrollView) findViewById(R.id.scrollView1);
+        scrollView.addView(seeScoreView);
+
+        scrollView.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View arg0, MotionEvent event) {
+                return seeScoreView.onTouchEvent(event);
+            }
+        });
+
 
         // Convert the string to a byte array for parsing by the SeeScore library
         byte[] musicXmlBytes = musicXmlScore.getBytes();
         SScoreKey key = SeeScoreLicence.SeeScoreLibKey;
         LoadOptions options = new LoadOptions(key, true);
+
 
 
         // And attempt a parse...
@@ -113,23 +139,32 @@ public class PlaybackActivity extends ActionBarActivity {
             return;
         }
 
-        seeScoreView.setScore(score, 1.0f);
+        if (score == null) {
+            Log.d("Playback score", "failed");
 
-        scrollView = (ScrollView) findViewById(R.id.scrollView1);
-        scrollView.addView(seeScoreView);
+        } else {
+            Log.d("Playback score", "exists");
 
-        scrollView.setOnTouchListener(new View.OnTouchListener(){
-            @Override
-            public boolean onTouch(View arg0, MotionEvent event) {
-                return seeScoreView.onTouchEvent(event);
+            String warnings = "";
+
+            for (LoadWarning warning : score.getLoadWarnings()) {
+                Log.d("Playback score", "warning: " + warning.toString());
+
+                warnings += warning.toString();
             }
-        });
+
+            Log.d("Playback score", "warnings: " + warnings);
+
+        }
+
+
 
         // Instantiate the player with our current composition too to allow for playback
         // (The player creation code is based off of the SeeScore examples provide to us by
         //  Dolphin Computing (Cambridge) Ltd.)
         try {
             player = new Player(score, new CrescendoUserTempo(), this, true);
+
 
             // When the player stops playing, we need to be notified
             player.setEndHandler(new Dispatcher.EventHandler() {
@@ -191,10 +226,44 @@ public class PlaybackActivity extends ActionBarActivity {
                 Intent intent = new Intent(PlaybackActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+
             }
         });
 
 
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        // your code here
+                        setupScore();
+                    }
+                },
+                5000
+        );
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        setupScore();
+
+    }
+
+    void setupScore() {
+        new Thread(new Runnable(){
+            public void run() {
+
+                new Handler(Looper.getMainLooper()).post(new Runnable(){
+
+                    public void run() {
+                    }
+                });
+            }
+
+        }).start();
     }
 
     void playPauseButtonPressed() {

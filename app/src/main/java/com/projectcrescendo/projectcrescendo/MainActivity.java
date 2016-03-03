@@ -65,4 +65,12 @@ public class MainActivity extends ActionBarActivity  {
 
     }
 
+    /**
+     * load the SeeScoreLib.so library
+     */
+    static {
+        System.loadLibrary("stlport_shared");
+        System.loadLibrary("SeeScoreLib");
+    }
+
 }
