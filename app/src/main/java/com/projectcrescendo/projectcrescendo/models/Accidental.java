@@ -19,4 +19,22 @@ public enum Accidental {
 
     }
 
+    /**
+     * A helper method to return the index of the Accidental (allowing Accidental enum values
+     * to be converted to int's, for example for database storage).
+     */
+    public static int integerValue(Accidental accidental) {
+
+        for (int i = 0; i < Accidental.values().length; i++) {
+            Accidental iteratedValue = Accidental.values()[i];
+            if (iteratedValue == accidental) {
+                return i;
+            }
+        }
+
+        // Not valid.
+        return -1;
+
+    }
+
 }

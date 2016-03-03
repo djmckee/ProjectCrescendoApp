@@ -22,4 +22,23 @@ public enum Intonation {
         return Intonation.values()[iId];
 
     }
+
+    /**
+     * A helper method to return the index of the Intonation (allowing Intonation enum values
+     * to be converted to int's, for example for database storage).
+     */
+    public static int integerValue(Intonation intonation) {
+
+        for (int i = 0; i < Intonation.values().length; i++) {
+            Intonation iteratedValue = Intonation.values()[i];
+            if (iteratedValue == intonation) {
+                return i;
+            }
+        }
+
+        // Not valid.
+        return -1;
+
+    }
+
 }

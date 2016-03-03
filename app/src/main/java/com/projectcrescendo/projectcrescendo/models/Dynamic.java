@@ -23,5 +23,24 @@ public enum Dynamic {
         return Dynamic.values()[dynamicId];
 
     }
+
+    /**
+     * A helper method to return the index of the Dynamic (allowing Dynamic enum values
+     * to be converted to int's, for example for database storage).
+     */
+    public static int integerValue(Dynamic dynamic) {
+
+        for (int i = 0; i < Dynamic.values().length; i++) {
+            Dynamic iteratedValue = Dynamic.values()[i];
+            if (iteratedValue == dynamic) {
+                return i;
+            }
+        }
+
+        // Not valid.
+        return -1;
+
+    }
+
 }
 
