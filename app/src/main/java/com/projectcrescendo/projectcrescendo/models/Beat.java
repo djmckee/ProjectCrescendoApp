@@ -22,6 +22,7 @@ public class Beat {
 
     /**
      * Returns a list of notes in the current beat.
+     *
      * @return a List of Note instnaces in the current beat.
      */
     public List<Note> getNotes() {
@@ -30,6 +31,7 @@ public class Beat {
 
     /**
      * Sets the notes in the current beat.
+     *
      * @param notes the notes that should be contained in the current beat.
      */
     public void setNotes(List<Note> notes) {
@@ -40,6 +42,7 @@ public class Beat {
 
     /**
      * Returns the intonation of the current beat.
+     *
      * @return the Intonation of the current beat.
      */
     public Intonation getIntonation() {
@@ -48,12 +51,12 @@ public class Beat {
 
     public void setIntonation(Intonation intonation) {
         this.intonation = intonation;
-        
+
         // Ensure all notes in this beat have the same intonation
         for (Note note : notes) {
             note.addIntonation(intonation);
         }
-        
+
     }
 
     /**
@@ -73,8 +76,6 @@ public class Beat {
 
         return stringRepresentation;
     }
-
-
 
 
 }

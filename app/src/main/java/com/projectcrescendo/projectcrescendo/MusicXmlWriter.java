@@ -11,16 +11,16 @@ import com.projectcrescendo.projectcrescendo.models.Stave;
 /**
  * A class to convert the Project Crescendo Stave, Bar, Beat and Note model classes into valid
  * MusicXML for playback with the SeeScore engine.
- *
+ * <p>
  * Created by Dylan McKee on 25/02/16.
  * Based on Pseudocode by Charlie Marcus.
- *
  */
 public class MusicXmlWriter {
 
     /**
      * A method that encodes the Stave instance passed to it into a valid MusicXML representation,
      * and returns this representation as a String.
+     *
      * @param stave the Stave instance containing the composition to encode.
      * @return a String containing the MusicXML representation of the composition.
      */
@@ -29,11 +29,11 @@ public class MusicXmlWriter {
 
         musicXMLString += "<!DOCTYPE score-partwise PUBLIC \"-//Recordare//DTD MusicXML 3.0Partwise//EN\" \"http://www.musicxml.org/dtds/partwise.dtd\">\n";
         musicXMLString += "<score-partwise version=\"3.0\">\n";
-        musicXMLString += "<part-list>\n";	//List the parts
+        musicXMLString += "<part-list>\n";    //List the parts
         musicXMLString += "<score-part id=\"p1\">\n"; // Create the first part
         musicXMLString += "<part-name>Right Hand</part-name>\n</score-part>\n"; //The first part is the right hand.
         musicXMLString += "<score-part id=\"p2\">\n"; // Create the second part
-        musicXMLString +=  "<part-name>Left Hand</part-name>\n</score-part>\n"; //The second part is the left hand.
+        musicXMLString += "<part-name>Left Hand</part-name>\n</score-part>\n"; //The second part is the left hand.
         musicXMLString += "</part-list>\n"; //End of the parts
 
         int timeSigBeat = stave.getTimeSignatureNumerator(); // get 'first' from time signature of the current stave.
@@ -52,11 +52,11 @@ public class MusicXmlWriter {
             for (int bar = 0; bar < currentClef.getBars().size(); bar++) {
                 Bar currentBar = parts[i].getBars().get(bar);
 
-                musicXMLString += "<measure number=\"" + (bar + 1) +"\">\n";	//Write the bar number
+                musicXMLString += "<measure number=\"" + (bar + 1) + "\">\n";    //Write the bar number
 
                 if (bar == 0) {
                     musicXMLString += "<attributes>\n";
-                    musicXMLString += "<divisions>" +noOfDivisions + "</divisions>\n";
+                    musicXMLString += "<divisions>" + noOfDivisions + "</divisions>\n";
                     musicXMLString += "<key>\n";
                     musicXMLString += "<fifths>0</fifths>\n";
                     musicXMLString += "</key>\n";
@@ -128,10 +128,10 @@ public class MusicXmlWriter {
                             //Will return null if there is no third character so should probably check for noteNames[n].length first
                             if (noteNameLength >= 2) {
                                 // Could be a # after it
-                                if (noteNames[n].toCharArray()[noteNameLength-1] == '#' || noteNameLength == 3) {
+                                if (noteNames[n].toCharArray()[noteNameLength - 1] == '#' || noteNameLength == 3) {
                                     alter = -1;
                                     accidental = true;
-                                } else if (noteNames[n].toCharArray()[noteNameLength-1] == 'b' || noteNameLength == 3) {
+                                } else if (noteNames[n].toCharArray()[noteNameLength - 1] == 'b' || noteNameLength == 3) {
                                     alter = 1;
                                     accidental = true;
                                 } else {
@@ -142,17 +142,17 @@ public class MusicXmlWriter {
                                 alter = 0;
                             }
 
-                                if (noteNameLength >= 2) {
-                                    char octaveChar = noteNames[n].toCharArray()[1];
-                                    String octaveString = String.format("%c", octaveChar);
+                            if (noteNameLength >= 2) {
+                                char octaveChar = noteNames[n].toCharArray()[1];
+                                String octaveString = String.format("%c", octaveChar);
 
-                                    try {
-                                        octave = Integer.parseInt(octaveString);
-                                    } catch(NumberFormatException nfe) {
-                                        Log.d("octave error", "could not parse octave");
-                                    }
-
+                                try {
+                                    octave = Integer.parseInt(octaveString);
+                                } catch (NumberFormatException nfe) {
+                                    Log.d("octave error", "could not parse octave");
                                 }
+
+                            }
 
                             musicXMLString += "<note>\n";
 
@@ -163,14 +163,13 @@ public class MusicXmlWriter {
                             musicXMLString += "<pitch>\n";
                             musicXMLString += "<step>" + step + "</step>\n";
                             musicXMLString += "<alter>" + alter + "</alter>\n";
-                            musicXMLString += "<octave>" + octave +"</octave>\n";
+                            musicXMLString += "<octave>" + octave + "</octave>\n";
                             musicXMLString += "</pitch>\n";
 
                             double length = noteLengths[n] * 8;
                             musicXMLString += "<duration>" + ((int) (length + 0.5)) + "</duration>\n";
 
                             musicXMLString += "</note>\n";
-
 
 
                         }

@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * A class to instantiate intonation names from the SQL Database.
- *
+ * <p>
  * Created by Dylan McKee on 23/02/16.
  */
 public class IntonationManager {
@@ -21,6 +21,7 @@ public class IntonationManager {
 
     /**
      * Constructs a new Intonation Manager.
+     *
      * @param context the context that is creating the intonation manager
      */
     public IntonationManager(Context context) {
@@ -30,6 +31,7 @@ public class IntonationManager {
 
     /**
      * Returns a list of Strings containing the Intonation names from the SQLite database.
+     *
      * @return returns a list of Strings containing the Intonation names
      */
     public List<String> getIntonationNames() {

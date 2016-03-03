@@ -20,6 +20,7 @@ public class NoteManager {
 
     /**
      * Constructs a new Note Manager.
+     *
      * @param context the context that is creating the note manager
      */
     public NoteManager(Context context) {
@@ -29,6 +30,7 @@ public class NoteManager {
 
     /**
      * Returns a list of Strings containing the note names from the SQLite database.
+     *
      * @return returns a list of Strings containing the note names
      */
     public List<String> getNoteNames() {

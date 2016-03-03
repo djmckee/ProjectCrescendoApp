@@ -2,12 +2,8 @@ package com.projectcrescendo.projectcrescendo;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-
-
 
 import com.projectcrescendo.projectcrescendo.models.ConcreteNote;
 import com.projectcrescendo.projectcrescendo.models.Intonation;
@@ -40,7 +33,7 @@ interface AddNoteFragmentListener {
      * that the note shows up graphically to the user.
      *
      * @param addNoteFragment the fragment instance that the note was added from.
-     * @param note the note that was added by the user.
+     * @param note            the note that was added by the user.
      */
     void addNoteFragmentAddedNote(AddNoteFragment addNoteFragment, Note note);
 
@@ -50,7 +43,7 @@ interface AddNoteFragmentListener {
      * that the note removal shows up graphically to the user.
      *
      * @param addNoteFragment the fragment instance that the note was removed from.
-     * @param note the note that was removed by the user.
+     * @param note            the note that was removed by the user.
      */
     void addNoteFragmentDeletedNote(AddNoteFragment addNoteFragment, Note note);
 
@@ -58,7 +51,7 @@ interface AddNoteFragmentListener {
      * Called by the AddNoteFragment when the intonation for the currently selected beat is changed.
      *
      * @param addNoteFragment the fragment instance that the intonation was edited from.
-     * @param newIntonation the new intonation for the beat.
+     * @param newIntonation   the new intonation for the beat.
      */
     void addNoteFragmentIntonationSelected(AddNoteFragment addNoteFragment, Intonation newIntonation);
 }
@@ -68,35 +61,30 @@ interface AddNoteFragmentListener {
  * intonation of the current beat. Presented from the TutorialActivity, this class uses the
  * AddNoteFragmentListener interface (defined above) to give callbacks to the TutorialActivity, so
  * that the activity can update the Stave model.
- *
+ * <p>
  * This design pattern allows us to adhere to the Model-View-Controller (MVC) design pattern.
- *
+ * <p>
  * Created by Dylan McKee on 22/02/2016.
  */
 public class AddNoteFragment extends DialogFragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, SelectIntonationFragmentCallbackListener {
 
+    // A class-wide note placeholder
+    Note noteToAdd = null;
     /**
      * The intonation of the current bar being edited in this fragment.
      */
     private Intonation currentIntonation;
-
     /**
      * A list of Notes for the current Bar instance being edited by this fragment.
      */
     private List<Note> notesForCurrentBar;
-
     /**
      * A list view to present the list of notes for the current bar in so that they can be edited.
      */
     private ListView listView;
     private ArrayAdapter<String> listViewAdapter;
-
     private Button intonationButton;
-
     private AddNoteFragmentListener addNoteFragmentListener;
-
-    // A class-wide note placeholder
-    Note noteToAdd = null;
 
     public AddNoteFragment() {
         // Required empty public constructor
@@ -121,6 +109,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
     /**
      * When the fragment is created, this method ensures that the UI elements are instantiated from
      * the XML and refreshes the notes list and intonation initially.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -154,7 +143,6 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
     /**
      * This method presents the 'Select Intonation Fragment' when the 'intonation' button is tapped.
-     *
      */
     void selectIntonation() {
         // Present a modal that allows the user to select intonation...
@@ -204,7 +192,6 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         final List<String> validNoteNames = new NoteManager(getActivity()).getNoteNames();
 
 
-
         // Get the note name...
         AlertDialog.Builder inputDialog = new AlertDialog.Builder(getActivity());
 
@@ -217,13 +204,12 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         String[] noteNameArray = new String[noteNameStrings.size()];
         noteNameStrings.toArray(noteNameArray);
 
-        ArrayAdapter<String> autoCompleteNotesAdapter = new ArrayAdapter<String>(getActivity() ,android.R.layout.simple_list_item_1, noteNameArray);
+        ArrayAdapter<String> autoCompleteNotesAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, noteNameArray);
         inputTextView.setAdapter(autoCompleteNotesAdapter);
 
         inputDialog.setView(inputTextView);
 
-        inputDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener()
-        {
+        inputDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int buttonId) {
                 // Get user input string
@@ -280,7 +266,6 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
                     selectNoteLengthFragment.show(getActivity().getFragmentManager(), "Select note length");
 
 
-
                 } else {
                     // Display error message...
                     new AlertDialog.Builder(getActivity())
@@ -291,7 +276,6 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
                             .show();
 
                 }
-
 
 
             }
@@ -309,7 +293,6 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_note, container, false);
     }
-
 
 
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -370,7 +353,6 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         }
 
     }
-
 
 
     public AddNoteFragmentListener getAddNoteFragmentListener() {
