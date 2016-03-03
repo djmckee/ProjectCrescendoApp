@@ -82,10 +82,20 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
      * A list view to present the list of notes for the current bar in so that they can be edited.
      */
     private ListView listView;
-    private ArrayAdapter<String> listViewAdapter;
+
+    /**
+     * The 'select intonation' button.
+     */
     private Button intonationButton;
+
+    /**
+     * A reference to the AddNoteFragmentListener, so that callback events can be issued.
+     */
     private AddNoteFragmentListener addNoteFragmentListener;
 
+    /**
+     * A blank constructor.
+     */
     public AddNoteFragment() {
         // Required empty public constructor
     }
@@ -144,7 +154,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
     /**
      * This method presents the 'Select Intonation Fragment' when the 'intonation' button is tapped.
      */
-    void selectIntonation() {
+    private void selectIntonation() {
         // Present a modal that allows the user to select intonation...
 
         SelectIntonationFragment selectIntonationFragment = new SelectIntonationFragment();
@@ -155,11 +165,18 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
     }
 
-    void refreshIntonation() {
+    /**
+     * Sets the intonation button text to whatever the currently selected intonation's name is.
+     */
+    private void refreshIntonation() {
         intonationButton.setText("Expression: " + currentIntonation);
     }
 
-    void refreshNotesList() {
+    /**
+     * Refreshes the list of notes within the current fragment; to be called on load, and after
+     * a note has been added/deleted.
+     */
+    private void refreshNotesList() {
         // Refresh the Android ListView...
 
         List<String> noteTitleList = new ArrayList<String>();
@@ -179,7 +196,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
             noteTitleList.add("Add new note +");
         }
 
-        listViewAdapter = new ArrayAdapter<String>(this.getActivity(), R.layout.note_list_row, noteTitleList);
+        ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(this.getActivity(), R.layout.note_list_row, noteTitleList);
 
         // refresh using the list view adapter
         listView.setAdapter(listViewAdapter);
@@ -187,6 +204,11 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
     }
 
 
+    /**
+     * Presents the user with the 'add note' UI flow, where they are asked to enter some details
+     * about their desired new note, which are then validated against stored names in the database,
+     * and if valid, get added to the current Beat.
+     */
     void addNewNote() {
         // Get all possible note names so we have something to validate against...
         final List<String> validNoteNames = new NoteManager(getActivity()).getNoteNames();
@@ -287,6 +309,13 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
     }
 
+    /**
+     * Ensures that the correct layout is used for this fragment.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -294,7 +323,14 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         return inflater.inflate(R.layout.fragment_add_note, container, false);
     }
 
-
+    /**
+     * This method is called when an item in the list view of notes is tapped.
+     *
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // If it's the Add New Note button, add new note
         if (notesForCurrentBar.size() < 5) {
@@ -306,6 +342,15 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
     }
 
+    /**
+     * This method is called when an item in the notes list is long pressed. If it's a valid note,
+     * the user is then asked if they'd like to delete it from the composition.
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     * @return
+     */
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         // If it's the add note button, return false - otherwise - delete the note.
