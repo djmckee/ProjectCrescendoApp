@@ -15,9 +15,26 @@ import cz.msebera.android.httpclient.Header;
 
 /**
  * An interface to handle callbacks from the API on upload success/failure.
+ *
+ * Created by Dylan McKee on 29/02/16.
  */
 interface CrescendoAPIResponseHandler {
+    /**
+     * This method is called upon upload success, this means that the composition is valid and has
+     * successfully been uploaded to the Crescendo API.
+     *
+     * This callback hands back an id for the upload, as an integer, and a URL containing a
+     * download link for the upload, as a String.
+     *
+     * @param uploadId an integer containing the ID of that upload.
+     * @param uploadUrl a String containing the URL to that upload, so the user can download their
+     *                  composition.
+     */
     void uploadSucceeded(int uploadId, String uploadUrl);
+
+    /**
+     * This callback method is fired when an upload to the Crescendo API has failed.
+     */
     void uploadFailed();
 
 }
@@ -38,21 +55,46 @@ interface CrescendoAPIResponseHandler {
 public class CrescendoAPIManager {
     // I took the following class structure from http://loopj.com/android-async-http/
 
+    /**
+     * The base URL for our API endpoints, as a String.
+     */
     private static final String API_BASE_URL = "http://homepages.cs.ncl.ac.uk/2015-16/csc2022_team13/";
 
+    /**
+     * The LoopJ Async HTTP Client instnace, to make our HTTP requests to the API.
+     */
     private static AsyncHttpClient httpClient = new AsyncHttpClient();
 
+    /**
+     * A generic POST method to send a POST HTTP request.
+     * @param url the URL to send the request to.
+     * @param params the parameters to include in the request.
+     * @param responseHandler a callback to handle the response from the request.
+     */
     // I took the following method from http://loopj.com/android-async-http/
     public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         httpClient.post(getAbsoluteUrl(url), params, responseHandler);
 
     }
 
+    /**
+     * A method that returns the endpoint passed to it appended on to the API's base URL.
+     * @param relativeUrl the API endpoint.
+     * @return the endpoint appended to the API's base URL.
+     */
     // I took the following method from http://loopj.com/android-async-http/
     private static String getAbsoluteUrl(String relativeUrl) {
         return API_BASE_URL + relativeUrl;
     }
 
+    /**
+     * An Async upload method to asynchronously upload a MusicXML encoded composition to the
+     * Crescendo API, and then callback the handler passed to it upon successful completion
+     * (or upload failure).
+     *
+     * @param compositionXml the MusicXML representation of the composition to upload, as a String,
+     * @param responseHandler the callback class, must conform to the CrescendoAPIResponseHandler interface.
+     */
     public static void uploadComposition(String compositionXml, final CrescendoAPIResponseHandler responseHandler) {
         final String UPLOAD_ENDPOINT = "upload.php";
 

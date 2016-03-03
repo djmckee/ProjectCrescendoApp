@@ -20,7 +20,13 @@ import android.widget.Button;
 import android.content.Intent;
 
 
-
+/**
+ * The main activity provides a main menu interface, it is the first screen that users see as they
+ * enter the app and it allows them to select from the various options/modes and begin using the
+ * app.
+ *
+ * Created by Dylan McKee on 16/11/2015.
+ */
 public class MainActivity extends ActionBarActivity  {
 
     /**
@@ -66,7 +72,8 @@ public class MainActivity extends ActionBarActivity  {
     }
 
     /**
-     * load the SeeScoreLib.so library
+     * A static block to load the SeeScoreLib.so library.
+     * Taken from the Dolphin Computing (Cambridge) Ltd. SeeScore Example Project.
      */
     static {
         System.loadLibrary("stlport_shared");

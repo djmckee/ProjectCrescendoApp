@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.app.Activity;
 
-import com.projectcrescendo.projectcrescendo.models.Stave;
 
 interface NoteGridViewAdapterListener {
     void onItemTapListener(int itemPosition);

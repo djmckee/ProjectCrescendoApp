@@ -18,6 +18,12 @@ import com.projectcrescendo.projectcrescendo.models.Stave;
  */
 public class MusicXmlWriter {
 
+    /**
+     * A method that encodes the Stave instance passed to it into a valid MusicXML representation,
+     * and returns this representation as a String.
+     * @param stave the Stave instance containing the composition to encode.
+     * @return a String containing the MusicXML representation of the composition.
+     */
     public static String encode(Stave stave) {
         String musicXMLString = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n";
 
