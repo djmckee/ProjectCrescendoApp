@@ -1,5 +1,6 @@
 package com.projectcrescendo.projectcrescendo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
@@ -21,7 +22,12 @@ import android.widget.ArrayAdapter;
 import android.widget.HorizontalScrollView;
 import android.widget.Spinner;
 
-
+/**
+ * The tutorial activity contains the grid and is where the user completes the tutorial by adding
+ * notes.
+ *
+ * Created by Alex on 27/02/16.
+ */
 public class TutorialActivity extends ActionBarActivity implements NoteGridViewAdapterListener, AddNoteFragmentListener {
 
     /**
@@ -35,17 +41,51 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
      */
     private Beat currentBeat;
 
+    /**
+     * The grid that contains the stave's beats.
+     */
     private GridView gridView;
+
+    /**
+     * The scroll view to contain the grid, allowing users to scroll it horizontally.
+     */
     private HorizontalScrollView horizontalScrollView;
 
-    Spinner timeSignatureR1;
-    Spinner timeSignatureR2;
-    Spinner timeSignatureL1;
-    Spinner timeSignatureL2;
+    /**
+     * A Spinner to allow the user to select the time signature numerator for the current stave.
+     */
+    private Spinner timeSignatureR1;
 
-    List<Integer> timeSignatureNumerators;
-    List<Integer> timeSignatureDenominators;
+    /**
+     * A Spinner to allow the user to select the time signature denominator for the current stave.
+     */
+    private Spinner timeSignatureR2;
 
+    /**
+     * A Spinner to allow the user to select the time signature numerator for the current stave.
+     */
+    private Spinner timeSignatureL1;
+
+    /**
+     * A Spinner to allow the user to select the time signature denominator for the current stave.
+     */
+    private Spinner timeSignatureL2;
+
+    /**
+     * A list of possible time signature numerators, populated from the TimeSignatureManager
+     */
+    private List<Integer> timeSignatureNumerators;
+
+    /**
+     * A list of possible time signature denominators, populated from the TimeSignatureManager
+     */
+    private List<Integer> timeSignatureDenominators;
+
+    /**
+     * Sets up the initial grid view and the time signature selection spinner UI on initial load of
+     * the activity.
+     * @param savedInstanceState not used in our implementation.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -189,21 +229,20 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
                     }
                 });
 
-                /*
                 Intent intent = new Intent(TutorialActivity.this, PlaybackActivity.class);
                 intent.putExtra(PlaybackActivity.SCORE_STRING_KEY, musicXMLRepresentation);
                 startActivity(intent);
-                */
-
 
             }
         });
 
     }
 
+    /**
+     * Updates the grid with the current stave's beats. To be performed after a notes is added or
+     * removed, so that the note shows up on the grid graphically.
+     */
     public void refreshGrid() {
-
-
         // Create a string array from the current stave's bars and beats...
         List<String> notesAsStringList = new ArrayList<String>();
 
@@ -275,6 +314,14 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
     }
 
+    /**
+     * Called by the AddNoteFragment when a note is added to the stave by the user. This method
+     * needs to add the note to the current beat that they're editing, and refresh the grid UI so
+     * that the note shows up graphically to the user.
+     *
+     * @param addNoteFragment the fragment instance that the note was added from.
+     * @param note the note that was added by the user.
+     */
     @Override
     public void addNoteFragmentAddedNote(AddNoteFragment addNoteFragment, Note note) {
         // Add the note to the current beat...
@@ -285,6 +332,14 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
     }
 
+    /**
+     * Called by the AddNoteFragment when a note is removed from the stave by the user. This method
+     * needs to remove the note to the current beat that they're editing, and refresh the grid UI so
+     * that the note removal shows up graphically to the user.
+     *
+     * @param addNoteFragment the fragment instance that the note was removed from.
+     * @param note the note that was removed by the user.
+     */
     @Override
     public void addNoteFragmentDeletedNote(AddNoteFragment addNoteFragment, Note note) {
         // Delete the note from the current beat...
@@ -295,6 +350,12 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
     }
 
+    /**
+     * Called by the AddNoteFragment when the intonation for the currently selected beat is changed.
+     *
+     * @param addNoteFragment the fragment instance that the intonation was edited from.
+     * @param newIntonation the new intonation for the beat.
+     */
     @Override
     public void addNoteFragmentIntonationSelected(AddNoteFragment addNoteFragment, Intonation newIntonation) {
         // Set intonation on the current beat

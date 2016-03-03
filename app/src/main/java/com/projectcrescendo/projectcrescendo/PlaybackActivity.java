@@ -115,7 +115,6 @@ public class PlaybackActivity extends ActionBarActivity {
 
         seeScoreView.setScore(score, 1.0f);
 
-
         scrollView = (ScrollView) findViewById(R.id.scrollView1);
         scrollView.addView(seeScoreView);
 
