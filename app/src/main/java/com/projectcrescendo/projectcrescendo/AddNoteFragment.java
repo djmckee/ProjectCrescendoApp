@@ -262,6 +262,10 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
                     SelectNoteLengthFragment selectNoteLengthFragment = new SelectNoteLengthFragment();
 
                     selectNoteLengthFragment.setListener(new SelectNoteLengthFragmentCallbackListener() {
+                        /**
+                         * @param fragment the note length selection fragment.
+                         * @param length   the length for the note, in terms of beats.
+                         */
                         @Override
                         public void noteLengthSelectedFromFragment(SelectNoteLengthFragment fragment, double length) {
                             if (noteToAdd != null) {
