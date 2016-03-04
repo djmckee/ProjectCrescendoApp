@@ -2,7 +2,7 @@ package com.projectcrescendo.projectcrescendo.models;
 
 /**
  * The Tutorial class is a model class intended to hold a title string, and a List of
- * Instructions (in the order that they need to be displayed in).
+ * TutorialSelectionMenuActivity (in the order that they need to be displayed in).
  * <p>
  * Created by Dylan McKee on 16/11/15.
  */
