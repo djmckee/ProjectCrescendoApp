@@ -1,11 +1,6 @@
 package com.projectcrescendo.projectcrescendo;
 
-/**
- * A Grid View Adapter to allow us to use the GridView in the TutorialActivity to display a list
- * of notes.
- * <p>
- * Created by Alexander on 23/02/2016.
- */
+
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,11 +14,30 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
+/**
+ * A callback interface so that the activity presenting the note grid view (i.e. the TutorialActivity)
+ * can receive callbacks when a
+ *
+ * This interface allows us to maintain a good level of abstraction, and adhere to the
+ * Model-View-Controller design pattern.
+ *
+ * Created by Dylan McKee on 24/02/2016.
+ */
 interface NoteGridViewAdapterListener {
+    /**
+     * This callback method is fired when an item in the grid of beats is tapped.
+     * @param itemPosition the position of the item tapped in the grid, zero-indexed so as to line up
+     *                     with the array containing the data that populates the grid.
+     */
     void onItemTapListener(int itemPosition);
 }
 
+/**
+ * A Grid View Adapter to allow us to use the GridView in the TutorialActivity to display a list
+ * of notes.
+ * <p>
+ * Created by Alexander on 23/02/2016.
+ */
 public class NoteGridViewAdapter extends BaseAdapter {
 
     private static final int GRID_VIEW_MARGIN_TOP = 100;

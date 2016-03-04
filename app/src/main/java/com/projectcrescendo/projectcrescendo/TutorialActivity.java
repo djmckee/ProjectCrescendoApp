@@ -303,7 +303,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
         // set note fragment up for current bar
         addNoteFragment.setCurrentIntonation(currentBeat.getIntonation());
-        addNoteFragment.setNotesForCurrentBar(currentBeat.getNotes());
+        addNoteFragment.setNotesForCurrentBeat(currentBeat.getNotes());
 
         addNoteFragment.setAddNoteFragmentListener(this);
 

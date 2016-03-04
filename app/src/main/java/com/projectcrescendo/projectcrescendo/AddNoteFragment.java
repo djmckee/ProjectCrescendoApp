@@ -71,15 +71,15 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
     // A class-wide note placeholder
     Note noteToAdd = null;
     /**
-     * The intonation of the current bar being edited in this fragment.
+     * The intonation of the current beat being edited in this fragment.
      */
     private Intonation currentIntonation;
     /**
-     * A list of Notes for the current Bar instance being edited by this fragment.
+     * A list of Notes for the current Beat instance being edited by this fragment.
      */
-    private List<Note> notesForCurrentBar;
+    private List<Note> notesForCurrentBeat;
     /**
-     * A list view to present the list of notes for the current bar in so that they can be edited.
+     * A list view to present the list of notes for the current beat in so that they can be edited.
      */
     private ListView listView;
 
@@ -110,7 +110,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         AddNoteFragment fragment = new AddNoteFragment();
 
         fragment.currentIntonation = intonation;
-        fragment.notesForCurrentBar = notesForCurrentBar;
+        fragment.notesForCurrentBeat = notesForCurrentBar;
 
         return fragment;
     }
@@ -139,8 +139,8 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
             }
         });
 
-        if (notesForCurrentBar == null) {
-            notesForCurrentBar = new ArrayList<Note>();
+        if (notesForCurrentBeat == null) {
+            notesForCurrentBeat = new ArrayList<Note>();
         }
 
         refreshNotesList();
@@ -169,7 +169,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
      * Sets the intonation button text to whatever the currently selected intonation's name is.
      */
     private void refreshIntonation() {
-        intonationButton.setText("Expression: " + currentIntonation);
+        intonationButton.setText("Expression: " + getCurrentIntonation());
     }
 
     /**
@@ -182,7 +182,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         List<String> noteTitleList = new ArrayList<String>();
 
         // Add note names to the list...
-        for (Note note : notesForCurrentBar) {
+        for (Note note : getNotesForCurrentBeat()) {
             Log.d("AddNoteFragment", "note = " + note.toString());
 
             String title = String.format("%s - length: %.2f", note.getPitch(), note.getLength());
@@ -192,7 +192,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         }
 
         // If there's less than 5 notes in the bar; add the option to add a note too...
-        if (notesForCurrentBar.size() < 5) {
+        if (getNotesForCurrentBeat().size() < 5) {
             noteTitleList.add("Add new note +");
         }
 
@@ -333,8 +333,8 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
      */
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // If it's the Add New Note button, add new note
-        if (notesForCurrentBar.size() < 5) {
-            if (position == notesForCurrentBar.size() || (notesForCurrentBar.size() == 0 && position == 0)) {
+        if (notesForCurrentBeat.size() < 5) {
+            if (position == notesForCurrentBeat.size() || (notesForCurrentBeat.size() == 0 && position == 0)) {
                 // Add new note
                 addNewNote();
             }
@@ -354,14 +354,14 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         // If it's the add note button, return false - otherwise - delete the note.
-        if (notesForCurrentBar.size() < 5) {
-            if (position == notesForCurrentBar.size() || (notesForCurrentBar.size() == 0 && position == 0)) {
+        if (notesForCurrentBeat.size() < 5) {
+            if (position == notesForCurrentBeat.size() || (notesForCurrentBeat.size() == 0 && position == 0)) {
                 // Add new note button, just return false
                 return false;
             }
         }
 
-        final Note selectedNote = notesForCurrentBar.get(position);
+        final Note selectedNote = notesForCurrentBeat.get(position);
 
         AlertDialog.Builder lengthInputDialog = new AlertDialog.Builder(getActivity());
         lengthInputDialog.setTitle("Are you sure you want to delete note '" + selectedNote.getPitch() + "'?");
@@ -387,6 +387,12 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         return true;
     }
 
+    /**
+     * This method is called when the user has selected an Intonation value from the intonation
+     * selection fragment list, and the list has dismissed itself from the screen.
+     * @param fragment the intonation selection fragment.
+     * @param newIntonation the Intonation that has been selected in the fragment.
+     */
     @Override
     public void intonationSelectedFromFragment(SelectIntonationFragment fragment, Intonation newIntonation) {
         Log.d("intonation selected", "intonation selected: " + newIntonation);
@@ -400,28 +406,53 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
     }
 
 
+    /**
+     * Returns the current AddNoteFragmentListener object for this fragment's instance.
+     * @return the current AddNoteFragmentListener object for this fragment's instance.
+     */
     public AddNoteFragmentListener getAddNoteFragmentListener() {
         return addNoteFragmentListener;
     }
 
+    /**
+     * Sets the AddNoteFragmentListener for this fragment, so callbacks can be sent when a note is
+     * added/removed, or an intonation is selected.
+     * @param addNoteFragmentListener the new AddNoteFragmentListener instance for this fragment.
+     */
     public void setAddNoteFragmentListener(AddNoteFragmentListener addNoteFragmentListener) {
         this.addNoteFragmentListener = addNoteFragmentListener;
     }
 
+    /**
+     * Returns the current intonation for the beat being edited
+     * @return the current intonation for the beat being edited in this fragment
+     */
     public Intonation getCurrentIntonation() {
         return currentIntonation;
     }
 
+    /**
+     * Sets the intonation for the beat being edited in this Fragment.
+     * @param currentIntonation the new intonation for this fragment instance.
+     */
     public void setCurrentIntonation(Intonation currentIntonation) {
         this.currentIntonation = currentIntonation;
     }
 
-    public List<Note> getNotesForCurrentBar() {
-        return notesForCurrentBar;
+    /**
+     * Returns the notes for the current beat.
+     * @return a List of Note objects for the current Beat.
+     */
+    public List<Note> getNotesForCurrentBeat() {
+        return notesForCurrentBeat;
     }
 
-    public void setNotesForCurrentBar(List<Note> notesForCurrentBar) {
-        this.notesForCurrentBar = notesForCurrentBar;
+    /**
+     * Sets the notes for the current beat being edited.
+     * @param notesForCurrentBeat a List of Note objects for the current Beat being edited.
+     */
+    public void setNotesForCurrentBeat(List<Note> notesForCurrentBeat) {
+        this.notesForCurrentBeat = notesForCurrentBeat;
     }
 
 }
