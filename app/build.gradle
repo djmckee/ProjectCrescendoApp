@@ -27,6 +27,7 @@ dependencies {
     compile 'com.android.support:design:22.2.1'
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
     compile 'com.loopj.android:android-async-http:1.4.9'
+    compile 'com.getbase:floatingactionbutton:1.10.1'
 
 
 }
