@@ -31,7 +31,7 @@
             android:name=".PlaybackActivity"
             android:label="@string/title_activity_playback" />
         <activity
-            android:name=".Instructions"
+            android:name=".TutorialSelectionMenuActivity"
             android:label="@string/title_activity_instructions"
             android:parentActivityName=".TutorialActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" >
