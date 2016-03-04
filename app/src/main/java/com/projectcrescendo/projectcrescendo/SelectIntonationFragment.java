@@ -15,16 +15,31 @@ import com.projectcrescendo.projectcrescendo.models.Intonation;
 
 import java.util.List;
 
+/**
+ * An interface to handle callbacks from the SelectIntonationFragment.
+ *
+ * Created by Dylan McKee on 23/02/2016
+ */
 interface SelectIntonationFragmentCallbackListener {
+    /**
+     * This method is called when the user has selected an Intonation value from the intonation
+     * selection fragment list, and the list has dismissed itself from the screen.
+     * @param fragment the intonation selection fragment.
+     * @param newIntonation the Intonation that has been selected in the fragment.
+     */
     void intonationSelectedFromFragment(SelectIntonationFragment fragment, Intonation newIntonation);
 
 }
 
 /**
- * Created by Dylan McKee on 23/02/2016
- * <p>
+ * A fragment that contains a list of possible intonations so that the user can select an intonation
+ * for the current Beat. Once selected, the Intonation is relayed via a callback to the fragment that
+ * presented it via the SelectIntonationFragmentCallbackListener.
+ *
  * I looked at the tutorial at http://www.tutorialsbuzz.com/2014/06/android-dialogfragment-listview.html
  * and used their examples in the creation of this fragment.
+ *
+ * Created by Dylan McKee on 23/02/2016
  */
 public class SelectIntonationFragment extends DialogFragment implements
         OnItemClickListener {
