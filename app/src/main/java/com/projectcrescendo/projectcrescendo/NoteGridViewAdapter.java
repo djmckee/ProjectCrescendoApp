@@ -1,7 +1,5 @@
 package com.projectcrescendo.projectcrescendo;
 
-
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
@@ -40,17 +38,53 @@ interface NoteGridViewAdapterListener {
  */
 public class NoteGridViewAdapter extends BaseAdapter {
 
+    /**
+     * The margin between the top of the screen and the grid, in dp.
+     */
     private static final int GRID_VIEW_MARGIN_TOP = 100;
+
+    /**
+     * An array containing colour resources to use as grid background colours.
+     */
     private static final int[] GRID_COLOUR_RESOURCES = {R.color.red,
             R.color.pink, R.color.purple, R.color.deepPurple,
             R.color.indigo, R.color.blue, R.color.material_deep_teal_500};
+
+    /**
+     * A layout inflater to instantiate the xml layout for the grid cells.
+     */
     private static LayoutInflater inflater = null;
+
+    /**
+     * A string array containing the grid items to display.
+     */
     String[] arrayOfGridItems;
+
+    /**
+     * The context of the activity presenting the grid.
+     */
     Context context;
+
+    /**
+     * A callback listener to provide callbacks when the cells in the grid are tapped.
+     */
     NoteGridViewAdapterListener adapterListener;
+
+    /**
+     * The width of the screen that the grid is presented on, in pixels.
+     */
     double screenWidth;
+
+    /**
+     * The height of the screen that the grid is presented on, in pixels.
+     */
     double screenHeight;
 
+    /**
+     * Constructs a NoteGridViewAdapter.
+     * @param presentedActivity the activity that the grid is contained within.
+     * @param arrayOfGridItems the String items to display in the grid.
+     */
     public NoteGridViewAdapter(Activity presentedActivity, String[] arrayOfGridItems) {
         this.arrayOfGridItems = arrayOfGridItems;
         context = presentedActivity;
@@ -72,22 +106,42 @@ public class NoteGridViewAdapter extends BaseAdapter {
 
     }
 
+    /**
+     * Returns the number of items to be displayed in the grid.
+     * @return the number of items to display in the grid.
+     */
     @Override
     public int getCount() {
         return arrayOfGridItems.length;
     }
 
+    /**
+     * Returns the item at the index passed into the this method.
+     * @param position the index of the item to return
+     * @return the item at the 'position' index.
+     */
     @Override
     public Object getItem(int position) {
         return position;
     }
 
+    /**
+     * Returns a unique identifying integer for the item at that position.
+     * @param position the position to return the ID for.
+     * @return the unique ID of the item.
+     */
     @Override
     public long getItemId(int position) {
         return position;
     }
 
-
+    /**
+     * Creates, sets up and returns the cell view for the grid at the specified index.
+     * @param position the index to create and return the grid cell for.
+     * @param convertView the blank grid view cell, to add our custom view into.
+     * @param parent the grid view instance.
+     * @return a grid view cell set up for the current position index in the grid.
+     */
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -124,10 +178,18 @@ public class NoteGridViewAdapter extends BaseAdapter {
         return cellView;
     }
 
+    /**
+     * Returns the listener for the current instance.
+     * @return the listener for the current instance.
+     */
     public NoteGridViewAdapterListener getAdapterListener() {
         return adapterListener;
     }
 
+    /**
+     * Sets the grid view adapter listener for the current instance.
+     * @param adapterListener the new listener for the current instance.
+     */
     public void setAdapterListener(NoteGridViewAdapterListener adapterListener) {
         this.adapterListener = adapterListener;
     }
