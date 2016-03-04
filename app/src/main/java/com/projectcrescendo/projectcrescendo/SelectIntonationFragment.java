@@ -44,11 +44,25 @@ interface SelectIntonationFragmentCallbackListener {
 public class SelectIntonationFragment extends DialogFragment implements
         OnItemClickListener {
 
-
+    /**
+     * A list view containing the possible intonations for the beat that the user can select from.
+     */
     private ListView intonationSelectionList;
 
+    /**
+     * A callback listener that implements the SelectIntonationFragmentCallbackListener, so that
+     * the fragment/activity presenting this fragment can receive a callback and know when the
+     * intonation for the beat has been selected.
+     */
     private SelectIntonationFragmentCallbackListener listener;
 
+    /**
+     * On load, this method inflates the fragment from XML.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,6 +74,11 @@ public class SelectIntonationFragment extends DialogFragment implements
         return view;
     }
 
+    /**
+     * After the fragments XML has been loaded, this method populates the list view with the possible
+     * intonation choices for the current beat that the user can select from.
+     * @param savedInstanceState
+     */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
 
@@ -82,6 +101,15 @@ public class SelectIntonationFragment extends DialogFragment implements
 
     }
 
+    /**
+     * When an intonation in the list of intonations is selected by the user, this method calls the listener
+     * to let it know of the new selection, and then once this callback has been carried out it
+     * dismisses the intonation selection fragment from the screen.
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
@@ -98,10 +126,18 @@ public class SelectIntonationFragment extends DialogFragment implements
 
     }
 
+    /**
+     * Returns the callback listener.
+     * @return the callback listener.
+     */
     public SelectIntonationFragmentCallbackListener getListener() {
         return listener;
     }
 
+    /**
+     * Sets the callback listener
+     * @param listener the callback listener that is presenting this fragment
+     */
     public void setListener(SelectIntonationFragmentCallbackListener listener) {
         this.listener = listener;
     }
