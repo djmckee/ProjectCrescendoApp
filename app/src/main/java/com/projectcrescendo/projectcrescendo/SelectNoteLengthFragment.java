@@ -18,15 +18,16 @@ import java.util.List;
 
 /**
  * An interface to handle callbacks from the SelectNoteLengthFragment.
- *
+ * <p>
  * Created by Dylan McKee on 27/02/2016
  */
 interface SelectNoteLengthFragmentCallbackListener {
     /**
      * This method is called when the user has selected a length value from the length
      * selection fragment list, and the fragment has dismissed itself from the screen.
+     *
      * @param fragment the note length selection fragment.
-     * @param length the length for the note, in terms of beats.
+     * @param length   the length for the note, in terms of beats.
      */
     void noteLengthSelectedFromFragment(SelectNoteLengthFragment fragment, double length);
 
@@ -35,15 +36,14 @@ interface SelectNoteLengthFragmentCallbackListener {
 /**
  * A fragment that contains a list of possible note lengths so that the user can select an note length
  * for the new note begin added in hte AddNoteFragment.
- *
+ * <p>
  * Once selected, the Intonation is relayed via a callback to the fragment that
  * presented it via the SelectNoteLengthFragmentCallbackListener.
- *
+ * <p>
  * I looked at the tutorial at http://www.tutorialsbuzz.com/2014/06/android-dialogfragment-listview.html
  * and used their examples in the creation of this fragment.
- *
+ * <p>
  * Created by Dylan McKee on 27/02/2016
- *
  */
 public class SelectNoteLengthFragment extends DialogFragment implements
         OnItemClickListener {
@@ -62,6 +62,7 @@ public class SelectNoteLengthFragment extends DialogFragment implements
 
     /**
      * On load, this method inflates the fragment from XML.
+     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -81,6 +82,7 @@ public class SelectNoteLengthFragment extends DialogFragment implements
     /**
      * After the fragments XML has been loaded, this method populates the list view with the possible
      * lengths for the note that the user can select from.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -116,6 +118,7 @@ public class SelectNoteLengthFragment extends DialogFragment implements
      * When an length in the list of lengths is selected by the user, this method calls the listener
      * to let it know of the new selection, and then once this callback has been carried out it
      * dismisses the lenght selection fragment from the screen.
+     *
      * @param parent
      * @param view
      * @param position
@@ -140,6 +143,7 @@ public class SelectNoteLengthFragment extends DialogFragment implements
 
     /**
      * Returns the callback listener.
+     *
      * @return the callback listener.
      */
     public SelectNoteLengthFragmentCallbackListener getListener() {
@@ -148,6 +152,7 @@ public class SelectNoteLengthFragment extends DialogFragment implements
 
     /**
      * Sets the callback listener
+     *
      * @param listener the callback listener that is presenting this fragment
      */
     public void setListener(SelectNoteLengthFragmentCallbackListener listener) {

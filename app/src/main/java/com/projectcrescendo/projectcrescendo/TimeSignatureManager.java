@@ -62,8 +62,9 @@ public class TimeSignatureManager {
     /**
      * Returns a List of time signature numerators (i.e. the upper number for the possible time
      * signatures)
+     *
      * @return a List of integers containing the upper number for possible time signatures,
-     *         from the app's SQLite database.
+     * from the app's SQLite database.
      */
     public List<Integer> getTimeSignatureNumerators() {
         return timeSignatureNumerators;
@@ -72,8 +73,9 @@ public class TimeSignatureManager {
     /**
      * Returns a List of time signature denominators (i.e. the lower number for the possible time
      * signatures)
+     *
      * @return a List of integers containing the lower number for possible time signatures,
-     *         from the app's SQLite database.
+     * from the app's SQLite database.
      */
     public List<Integer> getTimeSignatureDenominator() {
         return timeSignatureDenominator;
