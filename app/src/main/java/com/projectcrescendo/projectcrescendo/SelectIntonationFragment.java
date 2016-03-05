@@ -17,14 +17,15 @@ import java.util.List;
 
 /**
  * An interface to handle callbacks from the SelectIntonationFragment.
- *
+ * <p>
  * Created by Dylan McKee on 23/02/2016
  */
 interface SelectIntonationFragmentCallbackListener {
     /**
      * This method is called when the user has selected an Intonation value from the intonation
      * selection fragment list, and the list has dismissed itself from the screen.
-     * @param fragment the intonation selection fragment.
+     *
+     * @param fragment      the intonation selection fragment.
      * @param newIntonation the Intonation that has been selected in the fragment.
      */
     void intonationSelectedFromFragment(SelectIntonationFragment fragment, Intonation newIntonation);
@@ -35,10 +36,10 @@ interface SelectIntonationFragmentCallbackListener {
  * A fragment that contains a list of possible intonations so that the user can select an intonation
  * for the current Beat. Once selected, the Intonation is relayed via a callback to the fragment that
  * presented it via the SelectIntonationFragmentCallbackListener.
- *
+ * <p>
  * I looked at the tutorial at http://www.tutorialsbuzz.com/2014/06/android-dialogfragment-listview.html
  * and used their examples in the creation of this fragment.
- *
+ * <p>
  * Created by Dylan McKee on 23/02/2016
  */
 public class SelectIntonationFragment extends DialogFragment implements
@@ -58,6 +59,7 @@ public class SelectIntonationFragment extends DialogFragment implements
 
     /**
      * On load, this method inflates the fragment from XML.
+     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -77,6 +79,7 @@ public class SelectIntonationFragment extends DialogFragment implements
     /**
      * After the fragments XML has been loaded, this method populates the list view with the possible
      * intonation choices for the current beat that the user can select from.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -105,6 +108,7 @@ public class SelectIntonationFragment extends DialogFragment implements
      * When an intonation in the list of intonations is selected by the user, this method calls the listener
      * to let it know of the new selection, and then once this callback has been carried out it
      * dismisses the intonation selection fragment from the screen.
+     *
      * @param parent
      * @param view
      * @param position
@@ -128,6 +132,7 @@ public class SelectIntonationFragment extends DialogFragment implements
 
     /**
      * Returns the callback listener.
+     *
      * @return the callback listener.
      */
     public SelectIntonationFragmentCallbackListener getListener() {
@@ -136,6 +141,7 @@ public class SelectIntonationFragment extends DialogFragment implements
 
     /**
      * Sets the callback listener
+     *
      * @param listener the callback listener that is presenting this fragment
      */
     public void setListener(SelectIntonationFragmentCallbackListener listener) {

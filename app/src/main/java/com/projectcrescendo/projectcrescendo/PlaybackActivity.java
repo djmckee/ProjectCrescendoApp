@@ -14,6 +14,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ScrollView;
 
+/**
+ * This class uses the SeeScore Library, provided under an educational non-profit only licence and
+ * originally authored by Dolphin Computing (Cambridge) Ltd. - downloaded from
+ * http://www.seescore.co.uk/developers/ on 19th February 2016.
+ */
 import uk.co.dolphin_com.seescoreandroid.Dispatcher;
 import uk.co.dolphin_com.seescoreandroid.Player;
 import uk.co.dolphin_com.seescoreandroid.SeeScoreView;
@@ -24,11 +29,7 @@ import uk.co.dolphin_com.sscore.SScore;
 import uk.co.dolphin_com.sscore.SScoreKey;
 import uk.co.dolphin_com.sscore.ex.ScoreException;
 
-/**
- * This class uses the SeeScore Library, provided under an educational non-profit only licence and
- * originally authored by Dolphin Computing (Cambridge) Ltd. - downloaded from
- * http://www.seescore.co.uk/developers/ on 19th February 2016.
- */
+
 
 /**
  * An activity that uses the SeeScore SDK (downloaded from http://www.seescore.co.uk/developers/ on
@@ -76,6 +77,13 @@ public class PlaybackActivity extends ActionBarActivity {
      */
     private boolean playerIsPlaying = false;
 
+    /**
+     * This method is ran on view creation and sets up the current score from the MusicXML
+     * passed to this activity through the Intent pushing it, and instantiates the SeeScore
+     * SDK for viewing of the musical score and for playback.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +91,13 @@ public class PlaybackActivity extends ActionBarActivity {
         // Get the MusicXML string that we've been passed in the transition to this activity...
         Intent intent = getIntent();
         musicXmlScore = intent.getExtras().getString(SCORE_STRING_KEY);
+
+        // Assert that there's some MusicXML to display
+        if (musicXmlScore == null) {
+            // Nothing to display; throw exception
+            throw new NullPointerException("MusicXML is null - ensure that the Intent pushing the PlaybackActivity is passing in MusicXML!");
+
+        }
 
 
         // Create our score view
@@ -233,6 +248,10 @@ public class PlaybackActivity extends ActionBarActivity {
 
     }
 
+    /**
+     * This method is fired whenever this screen is loaded.
+     * It refreshes the SeeScore view.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -241,6 +260,9 @@ public class PlaybackActivity extends ActionBarActivity {
 
     }
 
+    /**
+     * This method sets up the SeeScore score viewer to display the current score.
+     */
     void setupScore() {
         new Thread(new Runnable() {
             public void run() {
@@ -255,6 +277,10 @@ public class PlaybackActivity extends ActionBarActivity {
         }).start();
     }
 
+    /**
+     * This method toggles playback of the current score via the SeeScore SDK and updates the
+     * UI in this activity accordingly.
+     */
     void playPauseButtonPressed() {
         // Invert current playback status
         playerIsPlaying = !playerIsPlaying;
@@ -280,6 +306,9 @@ public class PlaybackActivity extends ActionBarActivity {
 
     }
 
+    /**
+     * Stops the playback of the current score in SeeScore, and resets the playback UI.
+     */
     void stopButtonPressed() {
         // Stop playing.
         playerIsPlaying = false;
@@ -292,6 +321,9 @@ public class PlaybackActivity extends ActionBarActivity {
 
     }
 
+    /**
+     * Updates the play/pause button to reflect the current state of playback.
+     */
     void updatePlayButtonUI() {
         final FloatingActionButton playPauseButton = (FloatingActionButton) findViewById(R.id.playPausePlaybackButton);
 
@@ -309,6 +341,11 @@ public class PlaybackActivity extends ActionBarActivity {
 
     }
 
+    /**
+     * Shares the current score by first uploading it to our web API, and then presenting a standard
+     * Android share intent to allow users to share the link to the MusicXML version of the
+     * composition on Facebook, Twitter, and other social media.
+     */
     void shareComposition() {
         // Upload to our web API and get a link to share...
         final ProgressDialog loadingDialog = ProgressDialog.show(PlaybackActivity.this, "Uploading Composition", "Uploading composition...");
@@ -327,6 +364,11 @@ public class PlaybackActivity extends ActionBarActivity {
 
         // Upload composition...
         CrescendoAPIManager.uploadComposition(musicXmlScore, new CrescendoAPIResponseHandler() {
+            /**
+             * Uploaded to our API - show a share sheet so that the URL to the upload can be shared.
+             * @param uploadId  an integer containing the ID of that upload.
+             * @param uploadUrl a String containing the URL to that upload, so the user can download their
+             */
             @Override
             public void uploadSucceeded(int uploadId, String uploadUrl) {
                 loadingDialog.dismiss();
@@ -348,6 +390,9 @@ public class PlaybackActivity extends ActionBarActivity {
 
             }
 
+            /**
+             * Upload to our API failed; show a generic failure warning.
+             */
             @Override
             public void uploadFailed() {
                 loadingDialog.dismiss();

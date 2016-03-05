@@ -4,6 +4,9 @@
  * <p>
  * SeeScore For Android
  * Dolphin Computing http://www.dolphin-com.co.uk
+ * <p>
+ * SeeScore For Android
+ * Dolphin Computing http://www.dolphin-com.co.uk
  */
 /**
  * SeeScore For Android

@@ -15,15 +15,16 @@ import android.widget.TextView;
 /**
  * A callback interface so that the activity presenting the note grid view (i.e. the TutorialActivity)
  * can receive callbacks when a
- *
+ * <p>
  * This interface allows us to maintain a good level of abstraction, and adhere to the
  * Model-View-Controller design pattern.
- *
+ * <p>
  * Created by Dylan McKee on 24/02/2016.
  */
 interface NoteGridViewAdapterListener {
     /**
      * This callback method is fired when an item in the grid of beats is tapped.
+     *
      * @param itemPosition the position of the item tapped in the grid, zero-indexed so as to line up
      *                     with the array containing the data that populates the grid.
      */
@@ -82,8 +83,9 @@ public class NoteGridViewAdapter extends BaseAdapter {
 
     /**
      * Constructs a NoteGridViewAdapter.
+     *
      * @param presentedActivity the activity that the grid is contained within.
-     * @param arrayOfGridItems the String items to display in the grid.
+     * @param arrayOfGridItems  the String items to display in the grid.
      */
     public NoteGridViewAdapter(Activity presentedActivity, String[] arrayOfGridItems) {
         this.arrayOfGridItems = arrayOfGridItems;
@@ -108,6 +110,7 @@ public class NoteGridViewAdapter extends BaseAdapter {
 
     /**
      * Returns the number of items to be displayed in the grid.
+     *
      * @return the number of items to display in the grid.
      */
     @Override
@@ -117,6 +120,7 @@ public class NoteGridViewAdapter extends BaseAdapter {
 
     /**
      * Returns the item at the index passed into the this method.
+     *
      * @param position the index of the item to return
      * @return the item at the 'position' index.
      */
@@ -127,6 +131,7 @@ public class NoteGridViewAdapter extends BaseAdapter {
 
     /**
      * Returns a unique identifying integer for the item at that position.
+     *
      * @param position the position to return the ID for.
      * @return the unique ID of the item.
      */
@@ -137,9 +142,10 @@ public class NoteGridViewAdapter extends BaseAdapter {
 
     /**
      * Creates, sets up and returns the cell view for the grid at the specified index.
-     * @param position the index to create and return the grid cell for.
+     *
+     * @param position    the index to create and return the grid cell for.
      * @param convertView the blank grid view cell, to add our custom view into.
-     * @param parent the grid view instance.
+     * @param parent      the grid view instance.
      * @return a grid view cell set up for the current position index in the grid.
      */
     @Override
@@ -180,6 +186,7 @@ public class NoteGridViewAdapter extends BaseAdapter {
 
     /**
      * Returns the listener for the current instance.
+     *
      * @return the listener for the current instance.
      */
     public NoteGridViewAdapterListener getAdapterListener() {
@@ -188,6 +195,7 @@ public class NoteGridViewAdapter extends BaseAdapter {
 
     /**
      * Sets the grid view adapter listener for the current instance.
+     *
      * @param adapterListener the new listener for the current instance.
      */
     public void setAdapterListener(NoteGridViewAdapterListener adapterListener) {

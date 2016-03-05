@@ -315,6 +315,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
     /**
      * Ensures that the correct layout is used for this fragment.
+     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -349,6 +350,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
     /**
      * This method is called when an item in the notes list is long pressed. If it's a valid note,
      * the user is then asked if they'd like to delete it from the composition.
+     *
      * @param parent
      * @param view
      * @param position
@@ -394,7 +396,8 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
     /**
      * This method is called when the user has selected an Intonation value from the intonation
      * selection fragment list, and the list has dismissed itself from the screen.
-     * @param fragment the intonation selection fragment.
+     *
+     * @param fragment      the intonation selection fragment.
      * @param newIntonation the Intonation that has been selected in the fragment.
      */
     @Override
@@ -412,6 +415,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
     /**
      * Returns the current AddNoteFragmentListener object for this fragment's instance.
+     *
      * @return the current AddNoteFragmentListener object for this fragment's instance.
      */
     public AddNoteFragmentListener getAddNoteFragmentListener() {
@@ -421,6 +425,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
     /**
      * Sets the AddNoteFragmentListener for this fragment, so callbacks can be sent when a note is
      * added/removed, or an intonation is selected.
+     *
      * @param addNoteFragmentListener the new AddNoteFragmentListener instance for this fragment.
      */
     public void setAddNoteFragmentListener(AddNoteFragmentListener addNoteFragmentListener) {
@@ -429,6 +434,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
     /**
      * Returns the current intonation for the beat being edited
+     *
      * @return the current intonation for the beat being edited in this fragment
      */
     public Intonation getCurrentIntonation() {
@@ -437,6 +443,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
     /**
      * Sets the intonation for the beat being edited in this Fragment.
+     *
      * @param currentIntonation the new intonation for this fragment instance.
      */
     public void setCurrentIntonation(Intonation currentIntonation) {
@@ -445,6 +452,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
     /**
      * Returns the notes for the current beat.
+     *
      * @return a List of Note objects for the current Beat.
      */
     public List<Note> getNotesForCurrentBeat() {
@@ -453,6 +461,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
     /**
      * Sets the notes for the current beat being edited.
+     *
      * @param notesForCurrentBeat a List of Note objects for the current Beat being edited.
      */
     public void setNotesForCurrentBeat(List<Note> notesForCurrentBeat) {
