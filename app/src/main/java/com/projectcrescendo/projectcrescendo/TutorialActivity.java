@@ -2,7 +2,6 @@ package com.projectcrescendo.projectcrescendo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +15,9 @@ import com.projectcrescendo.projectcrescendo.models.Beat;
 import com.projectcrescendo.projectcrescendo.models.Intonation;
 import com.projectcrescendo.projectcrescendo.models.Note;
 import com.projectcrescendo.projectcrescendo.models.Stave;
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -233,6 +235,8 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
             }
         });
+
+        FloatingActionsMenu SonataTutorial = (FloatingActionsMenu)findViewById(R.id.sonata_tutorial);
 
     }
 
