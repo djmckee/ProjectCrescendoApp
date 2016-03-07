@@ -101,7 +101,7 @@ public class PlaybackActivity extends ActionBarActivity {
 
 
         // Create our score view
-        seeScoreView = new SeeScoreView(this, this.getAssets(), new SeeScoreView.ZoomNotification() {
+        seeScoreView = new SeeScoreView(this, getAssets(), new SeeScoreView.ZoomNotification() {
             @Override
             public void zoom(float scale) {
 
@@ -110,6 +110,12 @@ public class PlaybackActivity extends ActionBarActivity {
             @Override
             public void tap(int systemIndex, int partIndex, int barIndex, Component[] components) {
 
+            }
+        });
+
+        seeScoreView.setLayoutCompletionHandler(new Runnable(){
+            public void run() {
+                // Fired when the score has finished loading in the SeeScore viewer.
             }
         });
 
@@ -191,6 +197,7 @@ public class PlaybackActivity extends ActionBarActivity {
 
         }
 
+        /*
         final FloatingActionButton playPauseButton = (FloatingActionButton) findViewById(R.id.playPausePlaybackButton);
         playPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -245,6 +252,9 @@ public class PlaybackActivity extends ActionBarActivity {
                 },
                 5000
         );
+        */
+
+        setupScore();
 
     }
 
@@ -264,17 +274,9 @@ public class PlaybackActivity extends ActionBarActivity {
      * This method sets up the SeeScore score viewer to display the current score.
      */
     void setupScore() {
-        new Thread(new Runnable() {
-            public void run() {
 
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
+        seeScoreView.setScore(score, 1.0f);
 
-                    public void run() {
-                    }
-                });
-            }
-
-        }).start();
     }
 
     /**
@@ -325,6 +327,8 @@ public class PlaybackActivity extends ActionBarActivity {
      * Updates the play/pause button to reflect the current state of playback.
      */
     void updatePlayButtonUI() {
+        // TODO: Re-implement at some point
+        /*
         final FloatingActionButton playPauseButton = (FloatingActionButton) findViewById(R.id.playPausePlaybackButton);
 
         if (playerIsPlaying) {
@@ -338,6 +342,9 @@ public class PlaybackActivity extends ActionBarActivity {
             playPauseButton.setImageResource(R.drawable.how_to_use);
 
         }
+
+
+        */
 
     }
 

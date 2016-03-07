@@ -11,6 +11,9 @@
     tools:context="com.projectcrescendo.projectcrescendo.PlaybackActivity">
 
 
+    <!-- TODO: Re-implement at some point.
+
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/playPausePlaybackButton"
         android:layout_width="50dp"
@@ -55,6 +58,7 @@
         app:pressedTranslationZ="12dp"
         app:backgroundTint="@color/blue"/>
 
+       -->
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -63,10 +67,11 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignWithParentIfMissing="false"
-        android:layout_alignParentBottom="false"
         android:layout_alignParentEnd="false"
         android:layout_alignParentStart="false"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true">
     </ScrollView>
 
 
