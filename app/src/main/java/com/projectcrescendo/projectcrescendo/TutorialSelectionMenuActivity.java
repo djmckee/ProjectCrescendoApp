@@ -17,7 +17,7 @@ public class TutorialSelectionMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instructions);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);//Test the app commit git
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
