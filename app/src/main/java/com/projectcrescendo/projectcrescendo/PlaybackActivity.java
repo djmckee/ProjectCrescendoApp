@@ -197,7 +197,6 @@ public class PlaybackActivity extends ActionBarActivity {
 
         }
 
-        /*
         final FloatingActionButton playPauseButton = (FloatingActionButton) findViewById(R.id.playPausePlaybackButton);
         playPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -242,18 +241,6 @@ public class PlaybackActivity extends ActionBarActivity {
         });
 
 
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        // your code here
-                        setupScore();
-                    }
-                },
-                5000
-        );
-        */
-
         setupScore();
 
     }
@@ -274,7 +261,6 @@ public class PlaybackActivity extends ActionBarActivity {
      * This method sets up the SeeScore score viewer to display the current score.
      */
     void setupScore() {
-
         seeScoreView.setScore(score, 1.0f);
 
     }
@@ -327,8 +313,6 @@ public class PlaybackActivity extends ActionBarActivity {
      * Updates the play/pause button to reflect the current state of playback.
      */
     void updatePlayButtonUI() {
-        // TODO: Re-implement at some point
-        /*
         final FloatingActionButton playPauseButton = (FloatingActionButton) findViewById(R.id.playPausePlaybackButton);
 
         if (playerIsPlaying) {
@@ -344,7 +328,6 @@ public class PlaybackActivity extends ActionBarActivity {
         }
 
 
-        */
 
     }
 
