@@ -11,9 +11,6 @@
     tools:context="com.projectcrescendo.projectcrescendo.PlaybackActivity">
 
 
-    <!-- TODO: Re-implement at some point.
-
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/playPausePlaybackButton"
         android:layout_width="50dp"
@@ -57,8 +54,6 @@
         android:elevation="6dp"
         app:pressedTranslationZ="12dp"
         app:backgroundTint="@color/blue"/>
-
-       -->
 
     <ScrollView
         android:id="@+id/scrollView1"
