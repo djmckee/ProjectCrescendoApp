@@ -4,7 +4,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.projectcrescendo.projectcrescendo.models.Beat;
+import com.projectcrescendo.projectcrescendo.models.ConcreteNote;
+import com.projectcrescendo.projectcrescendo.models.Intonation;
+import com.projectcrescendo.projectcrescendo.models.Note;
 import com.projectcrescendo.projectcrescendo.models.Tutorial;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +46,74 @@ public class TutorialManager {
                 // I looked up the use of 'moveToNext' and 'getColumnIndex' at http://examples.javacodegeeks.com/android/core/database/android-cursor-example/
                 do {
                     String title = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex("title"));
-                    String instructionalText = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex("text"));
+                    //String instructionalText = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex("text"));
 
-                    Tutorial savedTutorial = new Tutorial(title, instructionalText);
+
+                    String instructionsJsonText = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex("texts"));
+                    List<String> instructionsList = new ArrayList<String>();
+
+
+                    try {
+                        JSONArray jsonStringArray = new JSONArray(instructionsJsonText);
+
+                        for (int i = 0; i < jsonStringArray.length(); i++) {
+                            String tutorialString = jsonStringArray.getString(i);
+
+                            instructionsList.add(tutorialString);
+
+                        }
+
+
+                    } catch (JSONException exception) {
+
+                    }
+
+                    Tutorial savedTutorial = new Tutorial(title, instructionsList);
+
+                    String validNoteGridJsonText = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex("valid_grid_representation"));
+
+                    try {
+                        JSONArray jsonStringArray = new JSONArray(validNoteGridJsonText);
+                        for (int i = 0; i < jsonStringArray.length(); i++) {
+                            Beat requiredBeat = new Beat();
+                            Beat prePopulatedBeat = new Beat();
+
+                            JSONObject gridItem = jsonStringArray.getJSONObject(i);
+
+                            JSONArray gridItemNotes = gridItem.getJSONArray("notes");
+                            for (int j = 0; j < gridItemNotes.length(); j++) {
+                                JSONObject noteItem = gridItemNotes.getJSONObject(j);
+
+                                String notePitch = noteItem.getString("name");
+                                double  noteLength = noteItem.getDouble("length");
+                                boolean isPrePopulated = noteItem.optBoolean("is_prepopulated");
+
+                                Note note = new ConcreteNote(notePitch);
+
+                                note.setLength(noteLength);
+
+                                requiredBeat.getNotes().add(note);
+
+                                if (isPrePopulated) {
+                                    prePopulatedBeat.getNotes().add(note);
+                                }
+
+                            }
+
+                            String intonationString = gridItem.getString("expression");
+                            Intonation beatIntonation = Intonation.getIntonationWithName(intonationString);
+                            requiredBeat.setIntonation(beatIntonation);
+                            prePopulatedBeat.setIntonation(beatIntonation);
+
+                            savedTutorial.getValidBeats().add(requiredBeat);
+                            savedTutorial.getPrePopulatedNotes().add(prePopulatedBeat);
+
+                        }
+
+                    } catch (JSONException exception) {
+
+                    }
+
 
                     tutorialsList.add(savedTutorial);
 
