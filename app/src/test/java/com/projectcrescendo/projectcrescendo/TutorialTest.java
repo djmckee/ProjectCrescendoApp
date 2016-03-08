@@ -7,6 +7,9 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A JUnit test class to test the Tutorial model.
  *
@@ -18,7 +21,9 @@ public class TutorialTest {
     @BeforeClass
     public static void constructTestEnv() {
         System.out.println("Constructing test environment...");
-        testTutorial = new Tutorial("test_title", "test_instruction");
+        List<String> array = new ArrayList<String>();
+        array.add("test_instruction");
+        testTutorial = new Tutorial("test_title", array);
     }
 
     @AfterClass
@@ -38,7 +43,9 @@ public class TutorialTest {
     @Test
     public void testGetInstruction() throws Exception {
         // Passes if returned string is equal to the string we set as a parameter
-        Assert.assertEquals("test_instruction", testTutorial.getInstruction());
+        List<String> array = new ArrayList<String>();
+        array.add("test_instruction");
+        Assert.assertEquals("test_instruction", testTutorial.getInstructions());
     }
 
     @Test

@@ -175,4 +175,36 @@ public class ConcreteNote implements Note {
         return "Note - name: " + getPitch() + " length: " + getLength();
     }
 
+    /**
+     * @param o
+     * @return
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ConcreteNote)) return false;
+
+        ConcreteNote that = (ConcreteNote) o;
+
+        if (Double.compare(that.getLength(), getLength()) != 0) return false;
+        if (!getPitch().equals(that.getPitch())) return false;
+        if (getAccidental() != that.getAccidental()) return false;
+        if (getIntonation() != that.getIntonation()) return false;
+        return getDynamic() == that.getDynamic();
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = getPitch().hashCode();
+        result = 31 * result + (getAccidental() != null ? getAccidental().hashCode() : 0);
+        result = 31 * result + (getIntonation() != null ? getIntonation().hashCode() : 0);
+        result = 31 * result + (getDynamic() != null ? getDynamic().hashCode() : 0);
+        temp = Double.doubleToLongBits(getLength());
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
+
 }

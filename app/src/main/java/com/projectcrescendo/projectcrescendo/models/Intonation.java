@@ -14,6 +14,40 @@ public enum Intonation {
     Accelerando;
 
     /**
+     * A helper method to return the Intonation by name.
+     * @param intonationNameString the name of the desired Intonation
+     * @return an Intonation matching the name passed to this method.
+     */
+    public static Intonation getIntonationWithName(String intonationNameString) {
+        // Don't let case insensitivity break this
+        intonationNameString = intonationNameString.toLowerCase();
+
+        switch (intonationNameString) {
+            case "accent":
+                return Accent;
+
+            case "staccato":
+                return Staccato;
+
+            case "legato":
+                return Legato;
+
+            case "pedal":
+                return Pedal;
+
+            case "rallentando":
+                return Rallentando;
+
+            case "accelerando":
+                return Accelerando;
+
+            default:
+                return None;
+
+        }
+    }
+
+    /**
      * A helper method to return the Intonation associated with the integer passed into it
      * (association done by database primary key).
      */

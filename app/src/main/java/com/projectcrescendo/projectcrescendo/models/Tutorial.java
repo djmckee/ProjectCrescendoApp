@@ -1,5 +1,8 @@
 package com.projectcrescendo.projectcrescendo.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The Tutorial class is a model class intended to hold a title string, and a List of
  * TutorialSelectionMenuActivity (in the order that they need to be displayed in).
@@ -14,20 +17,30 @@ public class Tutorial {
     final private String title;
 
     /**
-     * The tutorial instruction text, as a String
+     * The tutorial instruction texts, as a Strings
      */
-    private String instruction;
+    final private List<String> instructions;
+
+    /**
+     * The list of notes that must be pre-populated into the grid.
+     */
+    final private List<Beat> prePopulatedBeats = new ArrayList<Beat>();
+
+    /**
+     * The list of notes that MUST be present for the tutorial to be passed as valid.
+     */
+    final private List<Beat> validBeats = new ArrayList<Beat>();
+
 
     /**
      * Constructs a new tutorial.
      *
      * @param title       the title of the new tutorial
-     * @param instruction the instructional text for the new tutorial.
+     * @param instructions a list of the instructional texts for the new tutorial.
      */
-    public Tutorial(String title, String instruction) {
+    public Tutorial(String title, List<String> instructions) {
         this.title = title;
-        this.instruction = instruction;
-
+        this.instructions = instructions;
     }
 
     /**
@@ -40,12 +53,12 @@ public class Tutorial {
     }
 
     /**
-     * Returns the instructional text of the current tutorial.
+     * Returns the instructional texts of the current tutorial.
      *
-     * @return the instructional text of the current tutorial.
+     * @return a List of the instructional texts of the current tutorial.
      */
-    public String getInstruction() {
-        return instruction;
+    public List<String> getInstructions() {
+        return instructions;
     }
 
     /**
@@ -59,5 +72,23 @@ public class Tutorial {
     public String toString() {
         return "Tutorial '" + title + "'";
     }
+
+
+    /**
+     * Returns a list of beats that must be populated on the grid on load of the tutorial.
+     * @return a List of Beat objects that must be pre-populated on the grid at the start of the tutorial.
+     */
+    public List<Beat> getPrePopulatedNotes() {
+        return prePopulatedBeats;
+    }
+
+    /**
+     * Return a list of beats that must be on the grid for the tutorial composition to be valid.
+     * @return a List of Beats that must be on the grid for the tutorial composiiton to be valid.
+     */
+    public List<Beat> getValidBeats() {
+        return validBeats;
+    }
+
 
 }
