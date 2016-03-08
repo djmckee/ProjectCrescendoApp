@@ -11,62 +11,63 @@
     tools:context="com.projectcrescendo.projectcrescendo.PlaybackActivity">
 
 
-    <android.support.design.widget.FloatingActionButton
+    <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/playPausePlaybackButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="left|bottom"
-        android:layout_margin="5dp"
-        android:src="@drawable/how_to_use"
         android:elevation="6dp"
-        app:pressedTranslationZ="12dp"
-        app:backgroundTint="@color/deepPurple"/>
+        app:fab_icon="@drawable/Play_Pause"
+        app:fab_colorNormal="@color/red"
+        app:fab_colorPressed="@color/pink"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_below="@+id/scrollView1"
+        android:layout_alignParentEnd="true" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/stopPlaybackButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="right|bottom"
-        android:layout_margin="45dp"
-        android:src="@drawable/how_to_use"
         android:elevation="6dp"
-        app:pressedTranslationZ="12dp"
-        app:backgroundTint="@color/red"/>
+        app:fab_icon="@drawable/Stop"
+        app:fab_colorNormal="@color/indigo"
+        app:fab_colorPressed="@color/blue"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/donePlaybackButton" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/sharePlaybackButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="left|top"
-        android:layout_margin="75dp"
-        android:src="@drawable/how_to_use"
         android:elevation="6dp"
-        app:pressedTranslationZ="12dp"
-        app:backgroundTint="@color/teal"/>
+        app:fab_icon="@drawable/Share"
+        app:fab_colorNormal="@color/orange_red"
+        app:fab_colorPressed="@color/pink"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/donePlaybackButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="right|top"
-        android:layout_margin="95dp"
-        android:src="@drawable/how_to_use"
         android:elevation="6dp"
-        app:pressedTranslationZ="12dp"
-        app:backgroundTint="@color/blue"/>
+        app:fab_icon="@drawable/Done"
+        app:fab_colorNormal="@color/teal"
+        app:fab_colorPressed="@color/light_teal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
         android:layout_alignWithParentIfMissing="false"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentStart="false"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignTop="@+id/stopPlaybackButton"
+        android:layout_alignStart="@+id/playPausePlaybackButton">
     </ScrollView>
 
 
