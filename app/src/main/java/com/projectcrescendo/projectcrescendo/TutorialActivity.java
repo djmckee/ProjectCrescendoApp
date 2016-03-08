@@ -237,6 +237,44 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
         });
 
         FloatingActionsMenu SonataTutorial = (FloatingActionsMenu)findViewById(R.id.sonata_tutorial);
+        FloatingActionButton tutorial1 = (FloatingActionButton) findViewById(R.id.tutorial_1);
+        FloatingActionButton tutorial2 = (FloatingActionButton) findViewById(R.id.tutorial_2);
+        FloatingActionButton tutorial3 = (FloatingActionButton) findViewById(R.id.tutorial_3);
+
+
+
+        tutorial1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tutorial_Fragment fragment = new Tutorial_Fragment(); //tutorial 1 frag
+                fragment.setTutorialText("Test");
+                fragment.show(getSupportFragmentManager(), "my fragment");
+            }
+        });
+
+        tutorial2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Tutorial_Fragment fragment = new Tutorial_Fragment();//tutorial 2 frag
+                fragment.setTutorialText("Test1");
+                fragment.show(getSupportFragmentManager(), "my fragment");
+            }
+        });
+
+        tutorial3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Tutorial_Fragment fragment = new Tutorial_Fragment();//tutorial 1 frag
+                fragment.setTutorialText("Test1");
+                fragment.show(getSupportFragmentManager(), "my fragment");
+            }
+        });
+
+
+
+
 
     }
 
