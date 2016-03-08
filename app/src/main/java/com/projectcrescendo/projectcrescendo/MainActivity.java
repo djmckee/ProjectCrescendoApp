@@ -44,9 +44,12 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
+        // TODO: Uncomment once tutorial manager is working.
         tutorialManager = new TutorialManager(this);
 
         Log.d("Debug", "tutorials: " + tutorialManager.getTutorialsList());
+        */
 
         NoteManager noteManager = new NoteManager(this);
         Log.d("Debug", "note names: " + noteManager.getNoteNames());

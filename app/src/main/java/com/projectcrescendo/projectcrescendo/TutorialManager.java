@@ -46,20 +46,25 @@ public class TutorialManager {
                 // I looked up the use of 'moveToNext' and 'getColumnIndex' at http://examples.javacodegeeks.com/android/core/database/android-cursor-example/
                 do {
                     String title = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex("title"));
-                    //String instructionalText = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex("text"));
 
-
-                    String instructionsJsonText = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex("texts"));
+                    String instructionsJsonText = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex("instructions"));
                     List<String> instructionsList = new ArrayList<String>();
 
+                    List<Integer> tutorialPoints = new ArrayList<Integer>();
 
                     try {
                         JSONArray jsonStringArray = new JSONArray(instructionsJsonText);
 
                         for (int i = 0; i < jsonStringArray.length(); i++) {
-                            String tutorialString = jsonStringArray.getString(i);
+                            JSONObject tutorialObject = jsonStringArray.getJSONObject(i);
+
+                            String tutorialString = tutorialObject.getString("instruction_text");
 
                             instructionsList.add(tutorialString);
+
+                            int tutorialBreakpoint = tutorialObject.getInt("pattern_match_index");
+
+                            tutorialPoints.add(tutorialBreakpoint);
 
                         }
 
@@ -69,6 +74,12 @@ public class TutorialManager {
                     }
 
                     Tutorial savedTutorial = new Tutorial(title, instructionsList);
+
+
+                    for (int point : tutorialPoints) {
+                        savedTutorial.getTutorialPatternMatchIndex().add(point);
+
+                    }
 
                     String validNoteGridJsonText = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex("valid_grid_representation"));
 
@@ -106,7 +117,7 @@ public class TutorialManager {
                             prePopulatedBeat.setIntonation(beatIntonation);
 
                             savedTutorial.getValidBeats().add(requiredBeat);
-                            savedTutorial.getPrePopulatedNotes().add(prePopulatedBeat);
+                            savedTutorial.getPrePopulatedBeats().add(prePopulatedBeat);
 
                         }
 

@@ -31,6 +31,7 @@ public class Tutorial {
      */
     final private List<Beat> validBeats = new ArrayList<Beat>();
 
+    final private List<Integer> tutorialPatternMatchIndex = new ArrayList<Integer>();
 
     /**
      * Constructs a new tutorial.
@@ -78,16 +79,63 @@ public class Tutorial {
      * Returns a list of beats that must be populated on the grid on load of the tutorial.
      * @return a List of Beat objects that must be pre-populated on the grid at the start of the tutorial.
      */
-    public List<Beat> getPrePopulatedNotes() {
+    public List<Beat> getPrePopulatedBeats() {
         return prePopulatedBeats;
     }
 
     /**
      * Return a list of beats that must be on the grid for the tutorial composition to be valid.
-     * @return a List of Beats that must be on the grid for the tutorial composiiton to be valid.
+     * @return a List of Beats that must be on the grid for the tutorial composition to be valid.
      */
     public List<Beat> getValidBeats() {
         return validBeats;
+    }
+
+    public List<Integer> getTutorialPatternMatchIndex() {
+        return tutorialPatternMatchIndex;
+    }
+
+    private List<Beat> getBeats(List<Beat> allBeats, boolean isUpperClef) {
+        List<Beat> beats = new ArrayList<Beat>();
+
+        for (int i = 0; i < allBeats.size(); i++) {
+            Beat currentBeat = allBeats.get(i);
+            // Upper clef contains only even numbers...
+            if (isUpperClef) {
+                if ((i % 2) == 0) {
+                    beats.add(currentBeat);
+
+                }
+            } else {
+                // Lower clef contains only odd beats
+                if ((i % 2) != 0) {
+                    beats.add(currentBeat);
+
+                }
+            }
+        }
+
+        return beats;
+    }
+
+    public List<Beat> getPrePopupalatedBeatsForUpperClef() {
+        return getBeats(getPrePopulatedBeats(), true);
+
+    }
+
+    public List<Beat> getPrePopupalatedBeatsForLowerClef() {
+        return getBeats(getPrePopulatedBeats(), false);
+
+    }
+
+    public List<Beat> getValidBeatsForUpperClef() {
+        return getBeats(getValidBeats(), true);
+
+    }
+
+    public List<Beat> getValidBeatsForLowerClef() {
+        return getBeats(getValidBeats(), false);
+
     }
 
 

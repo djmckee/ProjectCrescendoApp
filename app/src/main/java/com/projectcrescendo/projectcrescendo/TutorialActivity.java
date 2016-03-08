@@ -18,6 +18,7 @@ import com.projectcrescendo.projectcrescendo.models.Stave;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.projectcrescendo.projectcrescendo.models.Tutorial;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +81,12 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
      * A list of possible time signature denominators, populated from the TimeSignatureManager
      */
     private List<Integer> timeSignatureDenominators;
+
+    /**
+     * The current tutorial being done by the user in this activity, if there is one and the app
+     * isn't in 'free play' mode.
+     */
+    private Tutorial tutorial;
 
     /**
      * Sets up the initial grid view and the time signature selection spinner UI on initial load of
@@ -400,6 +407,28 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
     public void addNoteFragmentIntonationSelected(AddNoteFragment addNoteFragment, Intonation newIntonation) {
         // Set intonation on the current beat
         currentBeat.setIntonation(newIntonation);
+
+    }
+
+    public Tutorial getTutorial() {
+        return tutorial;
+    }
+
+    public void setTutorial(Tutorial tutorial) {
+        this.tutorial = tutorial;
+    }
+
+    private boolean isInTutorialMode() {
+        return (tutorial != null);
+    }
+
+    private void performTutorialCheck() {
+        // Don't bother checking if there's no tutorial present...
+        if (!isInTutorialMode()) {
+            return;
+        }
+
+
 
     }
 
