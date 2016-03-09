@@ -18,8 +18,7 @@
         android:layout_height="50dp"
         android:layout_gravity="left|top"
         android:layout_margin="5dp"
-        fab:fab_icon="@drawable/how_to_use"
-        />
+        fab:fab_icon="@drawable/how_to_use" />
 
 
 
