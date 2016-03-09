@@ -10,18 +10,26 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.projectcrescendo.projectcrescendo.PlaybackActivity">
 
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/donePlaybackButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right|top"
+        android:elevation="6dp"
+        app:fab_icon="@drawable/done"
+        app:fab_colorNormal="@color/teal"
+        app:fab_colorPressed="@color/light_teal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
     <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/playPausePlaybackButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_gravity="left|bottom"
         android:elevation="6dp"
         app:fab_icon="@drawable/play_pause"
         app:fab_colorNormal="@color/red"
         app:fab_colorPressed="@color/pink"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
 
@@ -49,27 +57,17 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/donePlaybackButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="right|top"
-        android:elevation="6dp"
-        app:fab_icon="@drawable/done"
-        app:fab_colorNormal="@color/teal"
-        app:fab_colorPressed="@color/light_teal"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
 
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="false"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@+id/donePlaybackButton">
     </ScrollView>
+
 
 
 
