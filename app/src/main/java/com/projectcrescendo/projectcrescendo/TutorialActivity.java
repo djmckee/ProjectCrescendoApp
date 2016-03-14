@@ -210,8 +210,8 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
         });
 
 
-        FloatingActionButton instructionButton = (FloatingActionButton) findViewById(R.id.instruction);
-        instructionButton.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton exportButton = (FloatingActionButton) findViewById(R.id.export);
+        exportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: Push tutorial text view!
@@ -242,6 +242,8 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
             }
         });
+
+        FloatingActionButton instructionButton = (FloatingActionButton) findViewById(R.id.instruction);
 
         FloatingActionsMenu SonataTutorial = (FloatingActionsMenu)findViewById(R.id.sonata_tutorial);
         FloatingActionButton tutorial1 = (FloatingActionButton) findViewById(R.id.tutorial_1);
