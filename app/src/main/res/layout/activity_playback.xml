@@ -17,8 +17,6 @@
         android:layout_gravity="right|top"
         android:elevation="6dp"
         app:fab_icon="@drawable/done"
-        app:fab_colorNormal="@color/teal"
-        app:fab_colorPressed="@color/light_teal"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 
@@ -28,8 +26,8 @@
         android:layout_height="50dp"
         android:elevation="6dp"
         app:fab_icon="@drawable/play_pause"
-        app:fab_colorNormal="@color/red"
-        app:fab_colorPressed="@color/pink"
+        app:fab_colorNormal="@color/green"
+        app:fab_colorPressed="@color/light_green"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
 
@@ -40,8 +38,8 @@
         android:layout_gravity="right|bottom"
         android:elevation="6dp"
         app:fab_icon="@drawable/stop"
-        app:fab_colorNormal="@color/indigo"
-        app:fab_colorPressed="@color/blue"
+        app:fab_colorNormal="@color/red"
+        app:fab_colorPressed="@color/pink"
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/donePlaybackButton" />
 

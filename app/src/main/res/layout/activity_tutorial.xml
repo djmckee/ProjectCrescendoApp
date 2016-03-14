@@ -12,14 +12,28 @@
     android:paddingTop="@dimen/activity_vertical_margin" -->
 
 
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/export"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="left|top"
+        fab:fab_icon="@drawable/save"
+        fab:fab_colorNormal="@color/indigo"
+        fab:fab_addButtonColorPressed="@color/blue"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
     <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/instruction"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="left|top"
-        android:layout_margin="5dp"
-        fab:fab_icon="@drawable/how_to_use" />
-
+        fab:fab_icon="@drawable/how_to_use"
+        android:layout_above="@+id/right_hand_time_signature_1"
+        android:layout_alignParentStart="true" />
 
 
     <HorizontalScrollView
@@ -27,7 +41,7 @@
         android:layout_width="490dp"
         android:layout_height="260dp"
         android:gravity="right|center_horizontal"
-        android:layout_below="@+id/instruction"
+        android:layout_below="@+id/export"
         android:layout_alignParentEnd="true">
         <RelativeLayout
             android:layout_width="460dp"
@@ -82,7 +96,7 @@
         fab:fab_expandDirection="down"
         fab:fab_labelStyle="@style/menu_labels_style"
         fab:fab_labelsPosition="right"
-        android:layout_alignTop="@+id/instruction"
+        android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/instruction">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
