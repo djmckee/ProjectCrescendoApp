@@ -1,8 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-    <android.support.design.widget.CoordinatorLayout tools:context=".TutorialSelectionMenuActivity" android:fitsSystemWindows="true" android:layout_height="match_parent" android:layout_width="match_parent" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
-    <android.support.design.widget.AppBarLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:theme="@style/AppBarOverlay">
-    <android.support.v7.widget.Toolbar android:layout_height="?attr/actionBarSize" android:layout_width="match_parent" app:popupTheme="@style/PopupOverlay" android:background="?attr/colorPrimary" android:id="@+id/toolbar"/>
-</android.support.design.widget.AppBarLayout>
-    <include layout="@layout/content_instructions"/>
-    <ListView android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/listview"> </ListView>
-</android.support.design.widget.CoordinatorLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/instructions"/>
+    </ScrollView>
+
+</RelativeLayout>
