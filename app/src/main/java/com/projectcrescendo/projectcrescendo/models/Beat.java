@@ -9,7 +9,6 @@ import java.util.List;
  */
 public class Beat {
 
-    // TODO: Constrain notes list to holding between 0-5 notes no matter what.
     /**
      * A list consisting of between 0 and 5 notes that belong in this beat.
      */
@@ -35,7 +34,12 @@ public class Beat {
      * @param notes the notes that should be contained in the current beat.
      */
     public void setNotes(List<Note> notes) {
-        // TODO: ensure notes has <= 5 notes in it!
+        // Perform a quick bounds check, ensure notes has <= 5 notes in it!
+        if (notes.size() > 5) {
+            // If there's more than 5 notes, use only the first 5 in the array.
+            notes = notes.subList(0, 4);
+
+        }
 
         this.notes = notes;
     }
@@ -49,6 +53,11 @@ public class Beat {
         return intonation;
     }
 
+    /**
+     * Sets the intonation for the current beat, and for all of the notes contained within it.
+     *
+     * @param intonation the new intonation for the beat.
+     */
     public void setIntonation(Intonation intonation) {
         this.intonation = intonation;
 
@@ -77,5 +86,38 @@ public class Beat {
         return stringRepresentation;
     }
 
+
+    /**
+     * Checks whether or not the object 'o' passed to this method is equal in type and in terms of
+     * being logically equal to this Beat instance.
+     *
+     * @param o the object to compare to this Beat instance.
+     * @return a boolean indicating whether or not 'o' is equal to this exact Beat instance.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Beat)) return false;
+
+        Beat beat = (Beat) o;
+
+        if (getNotes() != null ? !getNotes().equals(beat.getNotes()) : beat.getNotes() != null)
+            return false;
+        return getIntonation() == beat.getIntonation();
+
+    }
+
+    /**
+     * Returns an integer that contains a hash to uniquely identify instances of the Beat object,
+     * and returns a hash number. If the instances are logically equal, the hashes will be the same.
+     *
+     * @return an integer containing a hash that represents this Beat instance.
+     */
+    @Override
+    public int hashCode() {
+        int result = getNotes() != null ? getNotes().hashCode() : 0;
+        result = 31 * result + (getIntonation() != null ? getIntonation().hashCode() : 0);
+        return result;
+    }
 
 }
