@@ -420,24 +420,77 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
     }
 
+    /**
+     * The current tutorial being completed by the user, if one exists.
+     * @return the tutorial currently being completed by the user.
+     */
     public Tutorial getTutorial() {
         return tutorial;
     }
 
+    /**
+     * Sets the Tutorial for the user to complete
+     * @param tutorial the Tutorial instance for the user to complete in this TutorialActivity.
+     */
     public void setTutorial(Tutorial tutorial) {
         this.tutorial = tutorial;
     }
 
+    /**
+     * Returns true if the user is currently completing a Tutorial in this TutorialActivity.
+     * @return a boolean indicating whether or not the user is currently completing a Tutorial.
+     */
     private boolean isInTutorialMode() {
         return (tutorial != null);
     }
 
-    private void performTutorialCheck() {
+    /**
+     * A method to check whether or not the current tutorial has been completed correctly up to the
+     * beat number passed into this method (the 'limit' parameter).
+     * @param limit the beat number to verify correctness of this tutorial up to.
+     */
+    private void performTutorialCheck(int limit) {
         // Don't bother checking if there's no tutorial present...
         if (!isInTutorialMode()) {
             return;
         }
 
+        boolean upperBarCorrect = true;
+        boolean lowerBarCorrect = true;
+
+        List<Beat> upperBeats = stave.getUpperClef().getBeats();
+        List<Beat> lowerBeats = stave.getLowerClef().getBeats();
+
+        List<Beat> correctUpperBeats = tutorial.getValidBeatsForUpperClef();
+        List<Beat> correctLowerBeats = tutorial.getValidBeatsForLowerClef();
+
+        for (int i = 0; i < limit; i++) {
+            Beat upperBeat = upperBeats.get(i);
+            Beat lowerBeat = lowerBeats.get(i);
+
+            Beat desiredUpperBeat = correctUpperBeats.get(i);
+            Beat desiredLowerBeat = correctLowerBeats.get(i);
+
+            if (!upperBeat.equals(desiredUpperBeat)) {
+                // Invalid upper bar.
+                upperBarCorrect = false;
+            }
+
+            if (!lowerBeat.equals(desiredLowerBeat)) {
+                // Invalid lower bar.
+                lowerBarCorrect = false;
+            }
+
+        }
+
+        // TODO: Return something or call some kind of correct/incorrect callback or method.
+        if (lowerBarCorrect && upperBarCorrect) {
+            // Tutorial Valid.
+
+        } else {
+            // Tutorial Invalid.
+
+        }
 
 
     }
