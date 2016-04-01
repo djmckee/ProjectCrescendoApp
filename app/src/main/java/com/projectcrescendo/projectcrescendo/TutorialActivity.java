@@ -2,6 +2,8 @@ package com.projectcrescendo.projectcrescendo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
@@ -262,32 +264,62 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
         tutorial1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Tutorial_Fragment fragment = new Tutorial_Fragment(); //tutorial 1 frag
-                fragment.setTutorialText("Test");
-                fragment.show(getSupportFragmentManager(), "my fragment");
-            }
-        });
+
+            public void onClick(View v)
+                {
+                    final Tutorial_Fragment fragment = new Tutorial_Fragment(); //tutorial 1 frag
+                    fragment.setArguments(getIntent().getExtras());
+
+                    FragmentManager fragManager = getSupportFragmentManager();
+                    final FragmentTransaction transaction = fragManager.beginTransaction();
+
+                    transaction.add(R.id.tutorial_fragment, fragment);
+                    fragment.setTutorialText("Test");
+
+                    transaction.commit();
+                    fragment.setTutorialText("Test");
+                }
+            });
+
+
 
         tutorial2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                Tutorial_Fragment fragment = new Tutorial_Fragment();//tutorial 2 frag
-                fragment.setTutorialText("Test1");
-                fragment.show(getSupportFragmentManager(), "my fragment");
-            }
+
+        public void onClick(View v)
+        {
+            final Tutorial_Fragment fragment = new Tutorial_Fragment(); //tutorial 1 frag
+            fragment.setArguments(getIntent().getExtras());
+
+            FragmentManager fragManager = getSupportFragmentManager();
+            final FragmentTransaction transaction = fragManager.beginTransaction();
+
+            transaction.add(R.id.tutorial_fragment, fragment);
+            fragment.setTutorialText("Test");
+
+            transaction.commit();
+            fragment.setTutorialText("Test");
+        }
         });
 
         tutorial3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                Tutorial_Fragment fragment = new Tutorial_Fragment();//tutorial 1 frag
-                fragment.setTutorialText("Test1");
-                fragment.show(getSupportFragmentManager(), "my fragment");
-            }
-        });
+
+                public void onClick(View v)
+                {
+                    final Tutorial_Fragment fragment = new Tutorial_Fragment(); //tutorial 1 frag
+                    fragment.setArguments(getIntent().getExtras());
+
+                    FragmentManager fragManager = getSupportFragmentManager();
+                    final  FragmentTransaction transaction = fragManager.beginTransaction();
+
+                    transaction.add(R.id.tutorial_fragment, fragment);
+                    fragment.setTutorialText("Test");
+
+                    transaction.commit();
+                    fragment.setTutorialText("Test");
+                }
+            });
+
+
 
 
 
