@@ -317,17 +317,15 @@ public class PlaybackActivity extends ActionBarActivity {
     void updatePlayButtonUI() {
         final FloatingActionButton playPauseButton = (FloatingActionButton) findViewById(R.id.playPausePlaybackButton);
 
-        /*if (playerIsPlaying) {
+        if (playerIsPlaying) {
             // Show pause UI
-            // TODO: Create pause button image!
-            playPauseButton.setImageResource(R.drawable.how_to_use);
+            playPauseButton.setImageResource(R.drawable.pause);
 
         } else {
             // Show play UI
-            // TODO: Create play button image!
-            playPauseButton.setImageResource(R.drawable.how_to_use);
+            playPauseButton.setImageResource(R.drawable.play);
 
-        }*/
+        }
 
 
 
