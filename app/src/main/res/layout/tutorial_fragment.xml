@@ -6,15 +6,17 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Okay"
-        android:id="@+id/tutorial1textview"
+        android:id="@+id/tutorial_Text_View"
         android:layout_gravity="center_horizontal"
         android:layout_above="@+id/tutorial_Button"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="86dp" />
+    </ScrollView>
 
     <Button
         android:layout_width="wrap_content"
@@ -25,6 +27,5 @@
         android:layout_marginBottom="113dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
-    </ScrollView>
 
 </RelativeLayout>
