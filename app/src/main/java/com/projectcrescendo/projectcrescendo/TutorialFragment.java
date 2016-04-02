@@ -12,19 +12,39 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
 /**
  * Created by jordan on 08/03/2016.
  */
-public class Tutorial_Fragment extends Fragment  {
-    private String settext;
-    public View  onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+public class TutorialFragment extends DialogFragment {
 
-        TextView tutorialText = (TextView) findViewById(R.id.tutorial_Button);
-        tutorialText.setText(gettutorialText());
+    // TODO: Add JavaDoc comments explaining what this class does, what the variables hold and what the methods do.
 
-        Button closebutton = (Button) findViewById(R.id.tutorial_Button);
+    private String tutorialText;
+    private TextView tutorialTextView;
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        return inflater.inflate(R.layout.tutorial_fragment,
+                container, false);
+    }
+
+    /**
+     * When the fragment is created, this method ensures that the UI elements are instantiated from
+     * the XML and refreshes the notes list and intonation initially.
+     *
+     * @param savedInstanceState
+     */
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        tutorialTextView = (TextView) this.getView().findViewById(R.id.tutorial_Text_View);
+        if (tutorialText != null) {
+            tutorialTextView.setText(tutorialText);
+        }
+
+
+        Button closebutton = (Button) this.getView().findViewById(R.id.tutorial_Button);
 
         closebutton.setOnClickListener(
                 new Button.OnClickListener() {
@@ -34,17 +54,23 @@ public class Tutorial_Fragment extends Fragment  {
                 }
         );
 
-        return inflater.inflate(R.layout.tutorial_fragment,
-                container, false);
+    }
+
+    public String getTutorialText() {
+        return tutorialText;
+    }
+
+    public void setTutorialText(String tutorialText) {
+        this.tutorialText = tutorialText;
+
+        if (tutorialTextView != null) {
+            tutorialTextView.setText(tutorialText);
+        }
+
     }
 
 
-
-
-
-
-
-
+    // TODO: Probably delete this code!??!? (* confused emoji  *)
     //  public View onCreateView(LayoutInflater inflater, ViewGroup container,
     //                         Bundle savedInstanceState) {
 //
@@ -81,10 +107,4 @@ public class Tutorial_Fragment extends Fragment  {
 
 
 
-    public void setTutorialText(String setText){
-        this.settext = setText; //set text for all the tutorials
-    }
-
-    private String gettutorialText(){
-        return settext;
-    }
+}

@@ -261,68 +261,44 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
         FloatingActionButton tutorial3 = (FloatingActionButton) findViewById(R.id.tutorial_3);
 
 
-
         tutorial1.setOnClickListener(new View.OnClickListener() {
             @Override
 
             public void onClick(View v)
-                {
-                    final Tutorial_Fragment fragment = new Tutorial_Fragment(); //tutorial 1 frag
-                    fragment.setArguments(getIntent().getExtras());
+            {
+                final TutorialFragment tutorialFragment = new TutorialFragment();
 
-                    FragmentManager fragManager = getSupportFragmentManager();
-                    final FragmentTransaction transaction = fragManager.beginTransaction();
+                tutorialFragment.show(getSupportFragmentManager(), "Add Note");
 
-                    transaction.add(R.id.tutorial_fragment, fragment);
-                    fragment.setTutorialText("Test");
-
-                    transaction.commit();
-                    fragment.setTutorialText("Test");
-                }
-            });
+                tutorialFragment.setTutorialText("Tutorial 1");
+            }
+        });
 
 
 
         tutorial2.setOnClickListener(new View.OnClickListener() {
 
-        public void onClick(View v)
-        {
-            final Tutorial_Fragment fragment = new Tutorial_Fragment(); //tutorial 1 frag
-            fragment.setArguments(getIntent().getExtras());
+            public void onClick(View v)
+            {
+                final TutorialFragment tutorialFragment = new TutorialFragment();
 
-            FragmentManager fragManager = getSupportFragmentManager();
-            final FragmentTransaction transaction = fragManager.beginTransaction();
+                tutorialFragment.show(getSupportFragmentManager(), "Add Note");
 
-            transaction.add(R.id.tutorial_fragment, fragment);
-            fragment.setTutorialText("Test");
-
-            transaction.commit();
-            fragment.setTutorialText("Test");
-        }
+                tutorialFragment.setTutorialText("Tutorial 2");
+            }
         });
 
         tutorial3.setOnClickListener(new View.OnClickListener() {
 
-                public void onClick(View v)
-                {
-                    final Tutorial_Fragment fragment = new Tutorial_Fragment(); //tutorial 1 frag
-                    fragment.setArguments(getIntent().getExtras());
+            public void onClick(View v)
+            {
+                final TutorialFragment tutorialFragment = new TutorialFragment();
 
-                    FragmentManager fragManager = getSupportFragmentManager();
-                    final  FragmentTransaction transaction = fragManager.beginTransaction();
+                tutorialFragment.show(getSupportFragmentManager(), "Add Note");
 
-                    transaction.add(R.id.tutorial_fragment, fragment);
-                    fragment.setTutorialText("Test");
-
-                    transaction.commit();
-                    fragment.setTutorialText("Test");
-                }
-            });
-
-
-
-
-
+                tutorialFragment.setTutorialText("Tutorial 2");
+            }
+        });
 
 
     }
@@ -496,6 +472,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
         List<Beat> correctUpperBeats = tutorial.getValidBeatsForUpperClef();
         List<Beat> correctLowerBeats = tutorial.getValidBeatsForLowerClef();
 
+        // Check up to the desired limit
         for (int i = 0; i < limit; i++) {
             Beat upperBeat = upperBeats.get(i);
             Beat lowerBeat = lowerBeats.get(i);
