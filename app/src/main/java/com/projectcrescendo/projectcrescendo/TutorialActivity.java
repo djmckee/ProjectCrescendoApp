@@ -50,22 +50,22 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
     /**
      * A Spinner to allow the user to select the time signature numerator for the current stave.
      */
-    private Spinner timeSignatureR1;
+    private Spinner rightTimeSignatureNumeratorSpinner;
 
     /**
      * A Spinner to allow the user to select the time signature denominator for the current stave.
      */
-    private Spinner timeSignatureR2;
+    private Spinner rightTimeSignatureDenominatorSpinner;
 
     /**
      * A Spinner to allow the user to select the time signature numerator for the current stave.
      */
-    private Spinner timeSignatureL1;
+    private Spinner leftTimeSignatureNumeratorSpinner;
 
     /**
      * A Spinner to allow the user to select the time signature denominator for the current stave.
      */
-    private Spinner timeSignatureL2;
+    private Spinner leftTimeSignatureDenominatorSpinner;
 
     /**
      * A list of possible time signature numerators, populated from the TimeSignatureManager
@@ -123,10 +123,10 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
         // Set up spinner...
         // Ambrose: got code from http://prasans.info/2011/03/add-edittexts-dynamically-and-retrieve-values-android/ for the Spinner UI
-        timeSignatureR1 = (Spinner) findViewById(R.id.right_hand_time_signature_1);
-        timeSignatureR2 = (Spinner) findViewById(R.id.right_hand_time_signature_2);
-        timeSignatureL1 = (Spinner) findViewById(R.id.left_hand_time_signature_1);
-        timeSignatureL2 = (Spinner) findViewById(R.id.left_hand_time_signature_2);
+        rightTimeSignatureNumeratorSpinner = (Spinner) findViewById(R.id.right_hand_time_signature_1);
+        rightTimeSignatureDenominatorSpinner = (Spinner) findViewById(R.id.right_hand_time_signature_2);
+        leftTimeSignatureNumeratorSpinner = (Spinner) findViewById(R.id.left_hand_time_signature_1);
+        leftTimeSignatureDenominatorSpinner = (Spinner) findViewById(R.id.left_hand_time_signature_2);
 
         TimeSignatureManager timeSignatureManager = new TimeSignatureManager(this);
 
@@ -153,19 +153,20 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         topTimeSignatureAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         lowerTimeSignatureAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        timeSignatureR1.setAdapter(topTimeSignatureAdapter);
-        timeSignatureR2.setAdapter(lowerTimeSignatureAdapter);
-        timeSignatureL1.setAdapter(topTimeSignatureAdapter);
-        timeSignatureL2.setAdapter(lowerTimeSignatureAdapter);
+        rightTimeSignatureNumeratorSpinner.setAdapter(topTimeSignatureAdapter);
+        rightTimeSignatureDenominatorSpinner.setAdapter(lowerTimeSignatureAdapter);
+        leftTimeSignatureNumeratorSpinner.setAdapter(topTimeSignatureAdapter);
+        leftTimeSignatureDenominatorSpinner.setAdapter(lowerTimeSignatureAdapter);
 
-        timeSignatureR1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        rightTimeSignatureNumeratorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("spinner 1", "item selected!!!");
                 int newSignature = timeSignatureNumerators.get(position);
                 stave.setTimeSignatureNumerator(newSignature);
 
-                timeSignatureL1.setSelection(position);
+                leftTimeSignatureNumeratorSpinner.setSelection(position);
             }
 
             @Override
@@ -175,7 +176,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
             }
         });
 
-        timeSignatureR2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        rightTimeSignatureDenominatorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("spinner 2", "item selected!!!");
@@ -190,14 +191,14 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
             }
         });
 
-        timeSignatureL1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        leftTimeSignatureNumeratorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("spinner 3", "item selected!!!");
                 int newSignature = timeSignatureNumerators.get(position);
                 stave.setTimeSignatureNumerator(newSignature);
 
-                timeSignatureR1.setSelection(position);
+                rightTimeSignatureNumeratorSpinner.setSelection(position);
 
             }
 
@@ -208,7 +209,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
             }
         });
 
-        timeSignatureL2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        leftTimeSignatureDenominatorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("spinner 4", "item selected!!!");
@@ -468,6 +469,12 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
         // Remove any existing notes and dynamics from the grid by re-setting the stave...
         stave = new Stave();
+
+        // Reset time signatures
+        rightTimeSignatureNumeratorSpinner.setSelection(0);
+        rightTimeSignatureDenominatorSpinner.setSelection(0);
+        leftTimeSignatureNumeratorSpinner.setSelection(0);
+        leftTimeSignatureDenominatorSpinner.setSelection(0);
 
         // Get upper and lower stave instances...
         List<Beat> upperBeats = stave.getUpperClef().getBeats();
