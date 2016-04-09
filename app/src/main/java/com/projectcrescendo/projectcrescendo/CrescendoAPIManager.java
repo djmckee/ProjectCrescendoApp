@@ -66,7 +66,7 @@ public class CrescendoAPIManager {
     private static final String API_BASE_URL = "http://homepages.cs.ncl.ac.uk/2015-16/csc2022_team13/";
 
     /**
-     * The LoopJ Async HTTP Client instnace, to make our HTTP requests to the API.
+     * The LoopJ Async HTTP Client instance, to make our HTTP requests to the API.
      */
     private static AsyncHttpClient httpClient = new AsyncHttpClient();
 
