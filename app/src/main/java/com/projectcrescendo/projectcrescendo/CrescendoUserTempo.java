@@ -18,7 +18,7 @@ public class CrescendoUserTempo implements UserTempo {
      */
     @Override
     public int getUserTempo() {
-        /** TODO: we could make user tempo variable eventually, but for now just keeping it at a
+        /* We could make user tempo variable in future, but for now just keeping it at a
          mid piano tempo; I looked up tempo values at
          http://www.enjoy-your-piano.com/how-to-read-music-tempo-dynamics.html */
         return 80;

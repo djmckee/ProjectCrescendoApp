@@ -3,7 +3,6 @@ package com.projectcrescendo.projectcrescendo;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -98,13 +97,8 @@ public class NoteGridViewAdapter extends BaseAdapter {
         Point displaySize = new Point();
         presentedActivity.getWindowManager().getDefaultDisplay().getRealSize(displaySize);
 
-        // TODO: Fix the height here...
+        // Compute height by removing padding from display height in pixels.
         screenHeight = presentedActivity.getResources().getDisplayMetrics().heightPixels - GRID_VIEW_MARGIN_TOP;
-
-
-        Log.d("GridView", "screenWidth: " + screenWidth);
-        //Log.d("GridView", "screenHeight: " + screenHeight);
-
 
     }
 
@@ -154,7 +148,6 @@ public class NoteGridViewAdapter extends BaseAdapter {
         View cellView = inflater.inflate(R.layout.note_grid_cell, null);
         TextView noteCellTextView = (TextView) cellView.findViewById(R.id.textView1);
 
-        // TODO: Fix the height here...
         // Setting height to 50% of screen, as per https://stackoverflow.com/questions/2963152/android-how-to-resize-a-custom-view-programmatically
         int cellHeight = (int) (screenHeight / 3);
         int cellWidth = 330;
