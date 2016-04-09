@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 
 /**
- * Created by jordan on 08/03/2016.
+ * Created by Jordan on 08/03/2016.
  */
 public class TutorialFragment extends DialogFragment {
 
