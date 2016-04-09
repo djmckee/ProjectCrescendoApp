@@ -107,6 +107,14 @@ public class Beat {
 
     }
 
+    @Override
+    public String toString() {
+        return "Beat{" +
+                "notes=" + notes +
+                ", intonation=" + intonation +
+                '}';
+    }
+
     /**
      * Returns an integer that contains a hash to uniquely identify instances of the Beat object,
      * and returns a hash number. If the instances are logically equal, the hashes will be the same.

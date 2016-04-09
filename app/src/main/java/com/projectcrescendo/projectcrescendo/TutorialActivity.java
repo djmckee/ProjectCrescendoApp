@@ -38,7 +38,6 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
      */
     private Stave stave;
 
-
     /**
      * A convenience placeholder; holds the current beat being edited whilst adding/removing notes, changing Intonation, etc.
      */
@@ -89,6 +88,20 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
      * isn't in 'free play' mode.
      */
     private Tutorial tutorial;
+
+    /**
+     * The index of the current instruction on display to the user from the instructions array
+     * attached to the current Tutorial instance; assuming that the app is in tutorial mode.
+     *
+     * Defaults to -1 to mark an invalid setup if the app isn't in tutorial mode.
+     */
+    private int instructionIndex = -1;
+
+    /**
+     * An instance of the tutorial manager to allow tutorials to be selected from the tutorials
+     * list stored within the database, and completed within this current activity.
+     */
+    private TutorialManager tutorialManager;
 
     /**
      * Sets up the initial grid view and the time signature selection spinner UI on initial load of
@@ -255,53 +268,47 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
             }
         });
 
-        FloatingActionsMenu SonataTutorial = (FloatingActionsMenu)findViewById(R.id.sonata_tutorial);
-        FloatingActionButton tutorial1 = (FloatingActionButton) findViewById(R.id.tutorial_1);
-        FloatingActionButton tutorial2 = (FloatingActionButton) findViewById(R.id.tutorial_2);
-        FloatingActionButton tutorial3 = (FloatingActionButton) findViewById(R.id.tutorial_3);
+        tutorialManager = new TutorialManager(this);
+        List<Tutorial> tutorials = tutorialManager.getTutorialsList();
 
+        // Invert the list so the first tutorial in the database appears at the top of the menu
+        // This is due to the LIFO nature of the FloatingActionsMenu...
+        List<Tutorial> placeholderList = new ArrayList<Tutorial>();
 
-        tutorial1.setOnClickListener(new View.OnClickListener() {
-            @Override
+        for (int i = tutorials.size() - 1; i >= 0; i--){
+            placeholderList.add(tutorials.get(i));
+        }
 
-            public void onClick(View v)
-            {
-                final TutorialFragment tutorialFragment = new TutorialFragment();
+        tutorials = placeholderList;
 
-                tutorialFragment.show(getSupportFragmentManager(), "Add Note");
+        final FloatingActionsMenu tutorialSelectionMenu = (FloatingActionsMenu)findViewById(R.id.sonata_tutorial);
 
-                tutorialFragment.setTutorialText("Tutorial 1");
-            }
-        });
+        // Create a menu item for each tutorial...
+        for (final Tutorial tutorial : tutorials) {
+            FloatingActionButton tutorialSelectionButton = new FloatingActionButton(this);
+            tutorialSelectionButton.setColorNormal(R.color.white);
+            tutorialSelectionButton.setColorPressed(R.color.purple);
+            tutorialSelectionButton.setTitle(tutorial.getTitle());
 
+            tutorialSelectionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
 
+                public void onClick(View v)
+                {
+                    // Load relevant tutorial
+                    setTutorial(tutorial);
 
-        tutorial2.setOnClickListener(new View.OnClickListener() {
+                    // Close the menu, tutorial has been loaded...
+                    tutorialSelectionMenu.collapse();
 
-            public void onClick(View v)
-            {
-                final TutorialFragment tutorialFragment = new TutorialFragment();
+                }
+            });
 
-                tutorialFragment.show(getSupportFragmentManager(), "Add Note");
-
-                tutorialFragment.setTutorialText("Tutorial 2");
-            }
-        });
-
-        tutorial3.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v)
-            {
-                final TutorialFragment tutorialFragment = new TutorialFragment();
-
-                tutorialFragment.show(getSupportFragmentManager(), "Add Note");
-
-                tutorialFragment.setTutorialText("Tutorial 2");
-            }
-        });
-
+            tutorialSelectionMenu.addButton(tutorialSelectionButton);
+        }
 
     }
+
 
     /**
      * Updates the grid with the current stave's beats. To be performed after a notes is added or
@@ -437,11 +444,48 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
     }
 
     /**
-     * Sets the Tutorial for the user to complete
+     * Sets the Tutorial for the user to complete, starting from the first instruction in the tutorial.
      * @param tutorial the Tutorial instance for the user to complete in this TutorialActivity.
      */
     public void setTutorial(Tutorial tutorial) {
+        // Set tutorial placeholder
         this.tutorial = tutorial;
+
+        // Instructions will need to start from the first (0)...
+        instructionIndex = 0;
+
+        // Remove any existing notes and dynamics from the grid by re-setting the stave...
+        stave = new Stave();
+
+        // Get upper and lower stave instances...
+        List<Beat> upperBeats = stave.getUpperClef().getBeats();
+        List<Beat> lowerBeats = stave.getLowerClef().getBeats();
+
+
+        // Pre-load the stave with the tutorial's pre-filled notes...
+        List<Beat> topPrefilledBeats = tutorial.getPrePopupalatedBeatsForUpperClef();
+        Log.d("TutorialActivity", "topPrefilledBeats = " + topPrefilledBeats);
+        for (int i = 0; i < upperBeats.size(); i++) {
+            Beat upperBeat = upperBeats.get(i);
+            Beat prefilledBeat = topPrefilledBeats.get(i);
+            upperBeat.setIntonation(prefilledBeat.getIntonation());
+            upperBeat.setNotes(prefilledBeat.getNotes());
+        }
+
+
+        List<Beat> bottomPrefilledBeats = tutorial.getPrePopupalatedBeatsForLowerClef();
+        Log.d("TutorialActivity", "bottomPrefilledBeats = " + bottomPrefilledBeats);
+
+        for (int i = 0; i < lowerBeats.size(); i++) {
+            Beat lowerBeat = lowerBeats.get(i);
+            Beat prefilledBeat = bottomPrefilledBeats.get(i);
+            lowerBeat.setIntonation(prefilledBeat.getIntonation());
+            lowerBeat.setNotes(prefilledBeat.getNotes());
+        }
+
+        // Refresh the grid UI to reflect these stave changes...
+        refreshGrid();
+
     }
 
     /**
@@ -463,6 +507,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
             return;
         }
 
+        // Assume the bars are correct until we loop through to find a mistake...
         boolean upperBarCorrect = true;
         boolean lowerBarCorrect = true;
 
@@ -495,9 +540,11 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
         // TODO: Return something or call some kind of correct/incorrect callback or method.
         if (lowerBarCorrect && upperBarCorrect) {
             // Tutorial Valid.
+            Log.d("TutorialActivity", "Tutorial valid");
 
         } else {
             // Tutorial Invalid.
+            Log.d("TutorialActivity", "Tutorial invalid");
 
         }
 
