@@ -106,20 +106,26 @@
         fab:fab_labelStyle="@style/menu_labels_style"
         fab:fab_labelsPosition="right"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/instruction">
+        android:layout_toEndOf="@+id/instruction"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="false">
 
 
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
         android:id="@+id/tutorialActivityInstructionText"
         android:layout_alignParentTop="true"
         android:layout_above="@+id/scrollView"
-        android:layout_toEndOf="@+id/sonata_tutorial" />
+        android:ellipsize="end"
+        android:layout_toEndOf="@+id/sonata_tutorial"
+        android:layout_toStartOf="@+id/verify"
+        android:layout_alignParentStart="false"
+        android:textAlignment="center"
+        android:gravity="center" />
 
 
 </RelativeLayout>

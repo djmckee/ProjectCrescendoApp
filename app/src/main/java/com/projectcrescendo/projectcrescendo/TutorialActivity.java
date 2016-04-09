@@ -282,6 +282,13 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
         FloatingActionButton verificationButton = (FloatingActionButton) findViewById(R.id.verify);
 
+        verificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateButtonClicked();
+            }
+        });
+
 
         tutorialManager = new TutorialManager(this);
         List<Tutorial> tutorials = tutorialManager.getTutorialsList();
@@ -529,6 +536,13 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
     }
 
     private void validateButtonClicked() {
+        // Don't bother checking if there's no tutorial present...
+        if (!isInTutorialMode()) {
+            showNoTutorialError();
+
+            return;
+        }
+
         // If we're at the last instruction, don't bother validating.
         if (instructionIndex == tutorialManager.getTutorialsList().size()) {
             return;
@@ -542,6 +556,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
     }
 
+
     /**
      * A method to check whether or not the current tutorial has been completed correctly up to the
      * beat number passed into this method (the 'limit' parameter).
@@ -550,13 +565,8 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
     private void performTutorialCheck(int limit) {
         // Don't bother checking if there's no tutorial present...
         if (!isInTutorialMode()) {
-            // TODO: Show error if user tries to validate tutorial without ever selecting a tutorial
-            new AlertDialog.Builder(this)
-                    .setTitle("Not in tutorial mode!")
-                    .setMessage("Please select a tutorial by pressing the + button, then validate once you've completed the tutorial steps.")
-                    .setPositiveButton("Okay", null)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
+            showNoTutorialError();
+
             return;
         }
 
@@ -617,6 +627,17 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
         }
 
 
+    }
+
+
+    private void showNoTutorialError() {
+        // Show error if user tries to validate tutorial without ever selecting a tutorial
+        new AlertDialog.Builder(this)
+                .setTitle("Not in tutorial mode!")
+                .setMessage("Please select a tutorial by pressing the + button, then validate once you've completed the tutorial steps.")
+                .setPositiveButton("Okay", null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     private void moveToNextTutorialStep() {
