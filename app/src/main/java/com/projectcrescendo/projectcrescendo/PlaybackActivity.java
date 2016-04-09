@@ -242,7 +242,7 @@ public class PlaybackActivity extends ActionBarActivity {
             }
         });
 
-
+        // Ensure SeeScore displays the score that's been passed into this activity.
         setupScore();
 
     }
