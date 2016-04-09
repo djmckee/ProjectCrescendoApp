@@ -96,7 +96,7 @@ public class TutorialManager {
                                 JSONObject noteItem = gridItemNotes.getJSONObject(j);
 
                                 String notePitch = noteItem.getString("name");
-                                double  noteLength = noteItem.getDouble("length");
+                                double noteLength = noteItem.getDouble("length");
                                 boolean isPrePopulated = noteItem.optBoolean("is_prepopulated");
 
                                 Note note = new ConcreteNote(notePitch);

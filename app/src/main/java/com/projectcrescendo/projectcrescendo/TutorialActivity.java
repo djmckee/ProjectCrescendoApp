@@ -3,30 +3,25 @@ package com.projectcrescendo.projectcrescendo;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.HorizontalScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.projectcrescendo.projectcrescendo.models.Beat;
 import com.projectcrescendo.projectcrescendo.models.Intonation;
 import com.projectcrescendo.projectcrescendo.models.Note;
 import com.projectcrescendo.projectcrescendo.models.Stave;
-
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.projectcrescendo.projectcrescendo.models.Tutorial;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * The tutorial activity contains the grid and is where the user completes the tutorial by adding
@@ -34,7 +29,6 @@ import java.util.StringTokenizer;
  * <p>
  * Created by Alex on 27/02/16.
  * Modified by Dylan, Ambrose and Jordan.
- *
  */
 public class TutorialActivity extends ActionBarActivity implements NoteGridViewAdapterListener, AddNoteFragmentListener {
 
@@ -52,11 +46,6 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
      * The grid that contains the stave's beats.
      */
     private GridView gridView;
-
-    /**
-     * The scroll view to contain the grid, allowing users to scroll it horizontally.
-     */
-    private HorizontalScrollView horizontalScrollView;
 
     /**
      * A Spinner to allow the user to select the time signature numerator for the current stave.
@@ -97,7 +86,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
     /**
      * The index of the current instruction on display to the user from the instructions array
      * attached to the current Tutorial instance; assuming that the app is in tutorial mode.
-     *
+     * <p>
      * Defaults to -1 to mark an invalid setup if the app isn't in tutorial mode.
      */
     private int instructionIndex = -1;
@@ -297,13 +286,13 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
         // This is due to the LIFO nature of the FloatingActionsMenu...
         List<Tutorial> placeholderList = new ArrayList<Tutorial>();
 
-        for (int i = tutorials.size() - 1; i >= 0; i--){
+        for (int i = tutorials.size() - 1; i >= 0; i--) {
             placeholderList.add(tutorials.get(i));
         }
 
         tutorials = placeholderList;
 
-        final FloatingActionsMenu tutorialSelectionMenu = (FloatingActionsMenu)findViewById(R.id.sonata_tutorial);
+        final FloatingActionsMenu tutorialSelectionMenu = (FloatingActionsMenu) findViewById(R.id.sonata_tutorial);
 
         // Create a menu item for each tutorial...
         for (final Tutorial tutorial : tutorials) {
@@ -315,8 +304,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
             tutorialSelectionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
 
-                public void onClick(View v)
-                {
+                public void onClick(View v) {
                     // Load relevant tutorial
                     setTutorial(tutorial);
 
@@ -459,6 +447,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
     /**
      * The current tutorial being completed by the user, if one exists.
+     *
      * @return the tutorial currently being completed by the user.
      */
     public Tutorial getTutorial() {
@@ -467,6 +456,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
     /**
      * Sets the Tutorial for the user to complete, starting from the first instruction in the tutorial.
+     *
      * @param tutorial the Tutorial instance for the user to complete in this TutorialActivity.
      */
     public void setTutorial(Tutorial tutorial) {
@@ -529,6 +519,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
     /**
      * Returns true if the user is currently completing a Tutorial in this TutorialActivity.
+     *
      * @return a boolean indicating whether or not the user is currently completing a Tutorial.
      */
     private boolean isInTutorialMode() {
@@ -560,6 +551,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
     /**
      * A method to check whether or not the current tutorial has been completed correctly up to the
      * beat number passed into this method (the 'limit' parameter).
+     *
      * @param limit the beat number to verify correctness of this tutorial up to.
      */
     private void performTutorialCheck(int limit) {
