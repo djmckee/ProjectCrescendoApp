@@ -1,11 +1,7 @@
 package com.projectcrescendo.projectcrescendo;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +10,34 @@ import android.widget.TextView;
 
 
 /**
+ * This class displays tutorial text to the user, allowing them to view the instructional text
+ * explaining to them what they should do at this point in the tutorial to progress further.
+ * It is presented by the TutorialActivity.
+ * <p>
  * Created by Jordan on 08/03/2016.
  */
 public class TutorialFragment extends DialogFragment {
 
-    // TODO: Add JavaDoc comments explaining what this class does, what the variables hold and what the methods do.
-
+    /**
+     * The text for this instruction within the tutorial, set by the TutorialActivity and displayed
+     * to the user within a TextView in this fragment.
+     */
     private String tutorialText;
+
+    /**
+     * The TextView that contains the tutorial text to display to the user in this fragment.
+     */
     private TextView tutorialTextView;
 
+
+    /**
+     * Inflates this view from the XML Layout.
+     *
+     * @param inflater           the layout inflater, provided by the OS.
+     * @param container          the view that this view is to be presented in.
+     * @param savedInstanceState any saved instance state.
+     * @return an inflated version of this fragment's XML layout.
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         return inflater.inflate(R.layout.tutorial_fragment,
@@ -44,9 +59,9 @@ public class TutorialFragment extends DialogFragment {
         }
 
 
-        Button closebutton = (Button) this.getView().findViewById(R.id.tutorial_Button);
+        Button closeButton = (Button) this.getView().findViewById(R.id.tutorial_Button);
 
-        closebutton.setOnClickListener(
+        closeButton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
                         getActivity().getFragmentManager().popBackStack();
@@ -56,10 +71,20 @@ public class TutorialFragment extends DialogFragment {
 
     }
 
+    /**
+     * Returns the tutorial text that is displayed within this fragment.
+     *
+     * @return the tutorial instruction text that is displayed to the user within this fragment.
+     */
     public String getTutorialText() {
         return tutorialText;
     }
 
+    /**
+     * Sets the tutorial instruction text to display to the user within this fragment.
+     *
+     * @param tutorialText the text to display to the user in this fragment.
+     */
     public void setTutorialText(String tutorialText) {
         this.tutorialText = tutorialText;
 
@@ -68,43 +93,5 @@ public class TutorialFragment extends DialogFragment {
         }
 
     }
-
-
-    // TODO: Probably delete this code!??!? (* confused emoji  *)
-    //  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-    //                         Bundle savedInstanceState) {
-//
-//        View v = inflater.inflate(R.layout.tutoiral_fragment, container, false);
-//        View tv = v.findViewById(R.id.text);
-//
-//        TextView  textView =  (TextView) v.findViewById(R.id.tutorial1textview); //add the textview to the fragment
-//        textView.setText(gettutorialText()); //set the text to display on the screen
-//
-//        Button exitButton = (Button)v.findViewById(R.id.tutorial_Button);
-//        exitButton.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                FragmentManager fm = getFragmentManager();
-//                android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
-//                FragmentOne f = (FragmentOne) fm.findFragmentByTag("tag");
-//
-//                if(f == null) {  // not added
-//                    f = new FragmentOne();
-//                    ft.add(R.id.frg1, f, "tag");
-//                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//
-//                } else {  // already added
-//
-//                    ft.remove(f);
-//                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-//                }
-//
-//                ft.commit();
-//            }
-//        });
-//
-//        return v;
-//    }
-
-
 
 }

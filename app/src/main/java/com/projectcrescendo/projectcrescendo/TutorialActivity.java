@@ -1,30 +1,27 @@
 package com.projectcrescendo.projectcrescendo;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.HorizontalScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.projectcrescendo.projectcrescendo.models.Beat;
 import com.projectcrescendo.projectcrescendo.models.Intonation;
 import com.projectcrescendo.projectcrescendo.models.Note;
 import com.projectcrescendo.projectcrescendo.models.Stave;
-
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.projectcrescendo.projectcrescendo.models.Tutorial;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * The tutorial activity contains the grid and is where the user completes the tutorial by adding
@@ -32,7 +29,6 @@ import java.util.StringTokenizer;
  * <p>
  * Created by Alex on 27/02/16.
  * Modified by Dylan, Ambrose and Jordan.
- *
  */
 public class TutorialActivity extends ActionBarActivity implements NoteGridViewAdapterListener, AddNoteFragmentListener {
 
@@ -50,11 +46,6 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
      * The grid that contains the stave's beats.
      */
     private GridView gridView;
-
-    /**
-     * The scroll view to contain the grid, allowing users to scroll it horizontally.
-     */
-    private HorizontalScrollView horizontalScrollView;
 
     /**
      * A Spinner to allow the user to select the time signature numerator for the current stave.
@@ -95,7 +86,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
     /**
      * The index of the current instruction on display to the user from the instructions array
      * attached to the current Tutorial instance; assuming that the app is in tutorial mode.
-     *
+     * <p>
      * Defaults to -1 to mark an invalid setup if the app isn't in tutorial mode.
      */
     private int instructionIndex = -1;
@@ -105,6 +96,11 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
      * list stored within the database, and completed within this current activity.
      */
     private TutorialManager tutorialManager;
+
+    /**
+     * A label to hold a piece of instructional text from the Tutorial.
+     */
+    private TextView instructionalTextView;
 
     /**
      * Sets up the initial grid view and the time signature selection spinner UI on initial load of
@@ -245,6 +241,23 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
             }
         });
 
+
+        instructionalTextView = (TextView) findViewById(R.id.tutorialActivityInstructionText);
+
+        // Set the instructional text view to a default...
+        instructionalTextView.setText("Welcome to Sonata! Press the '+' button on the left to select a tutorial...");
+
+        // When the instructional text snippet is tapped, show it in full...
+        instructionalTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TutorialFragment tutorialFragment = new TutorialFragment();
+                tutorialFragment.setTutorialText((String) instructionalTextView.getText());
+                tutorialFragment.show(getSupportFragmentManager(), "Tutorial");
+
+            }
+        });
+
         FloatingActionButton instructionButton = (FloatingActionButton) findViewById(R.id.instruction);
         instructionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -258,6 +271,13 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
         FloatingActionButton verificationButton = (FloatingActionButton) findViewById(R.id.verify);
 
+        verificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateButtonClicked();
+            }
+        });
+
 
         tutorialManager = new TutorialManager(this);
         List<Tutorial> tutorials = tutorialManager.getTutorialsList();
@@ -266,13 +286,13 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
         // This is due to the LIFO nature of the FloatingActionsMenu...
         List<Tutorial> placeholderList = new ArrayList<Tutorial>();
 
-        for (int i = tutorials.size() - 1; i >= 0; i--){
+        for (int i = tutorials.size() - 1; i >= 0; i--) {
             placeholderList.add(tutorials.get(i));
         }
 
         tutorials = placeholderList;
 
-        final FloatingActionsMenu tutorialSelectionMenu = (FloatingActionsMenu)findViewById(R.id.sonata_tutorial);
+        final FloatingActionsMenu tutorialSelectionMenu = (FloatingActionsMenu) findViewById(R.id.sonata_tutorial);
 
         // Create a menu item for each tutorial...
         for (final Tutorial tutorial : tutorials) {
@@ -284,8 +304,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
             tutorialSelectionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
 
-                public void onClick(View v)
-                {
+                public void onClick(View v) {
                     // Load relevant tutorial
                     setTutorial(tutorial);
 
@@ -428,6 +447,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
     /**
      * The current tutorial being completed by the user, if one exists.
+     *
      * @return the tutorial currently being completed by the user.
      */
     public Tutorial getTutorial() {
@@ -436,6 +456,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
     /**
      * Sets the Tutorial for the user to complete, starting from the first instruction in the tutorial.
+     *
      * @param tutorial the Tutorial instance for the user to complete in this TutorialActivity.
      */
     public void setTutorial(Tutorial tutorial) {
@@ -489,7 +510,8 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
             fragment.show(getSupportFragmentManager(), "Tutorial");
 
-            // TODO: Show instruction 1 in a text box, currently being added by Jordan?
+            // Show instruction 1 in a text box
+            instructionalTextView.setText(firstInstruction);
 
         }
 
@@ -497,20 +519,51 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
     /**
      * Returns true if the user is currently completing a Tutorial in this TutorialActivity.
+     *
      * @return a boolean indicating whether or not the user is currently completing a Tutorial.
      */
     private boolean isInTutorialMode() {
         return (tutorial != null);
     }
 
+    private void validateButtonClicked() {
+        // Don't bother checking if there's no tutorial present...
+        if (!isInTutorialMode()) {
+            showNoTutorialError();
+
+            return;
+        }
+
+        // If we're at the last instruction, don't bother validating.
+        if (instructionIndex == tutorialManager.getTutorialsList().size()) {
+            return;
+        }
+
+        // Work out where to validate up to...
+        int validationLimit = tutorial.getTutorialPatternMatchIndex().get(instructionIndex);
+
+        // Do the validation check...
+        performTutorialCheck(validationLimit);
+
+    }
+
+
     /**
      * A method to check whether or not the current tutorial has been completed correctly up to the
      * beat number passed into this method (the 'limit' parameter).
+     *
      * @param limit the beat number to verify correctness of this tutorial up to.
      */
     private void performTutorialCheck(int limit) {
         // Don't bother checking if there's no tutorial present...
         if (!isInTutorialMode()) {
+            showNoTutorialError();
+
+            return;
+        }
+
+        // If we're at the last instruction, don't bother validating.
+        if (instructionIndex == tutorialManager.getTutorialsList().size()) {
             return;
         }
 
@@ -544,17 +597,63 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
         }
 
-        // TODO: Return something or call some kind of correct/incorrect callback or method.
         if (lowerBarCorrect && upperBarCorrect) {
             // Tutorial Valid.
             Log.d("TutorialActivity", "Tutorial valid");
+
+            // Move to next instruction...
+            moveToNextTutorialStep();
 
         } else {
             // Tutorial Invalid.
             Log.d("TutorialActivity", "Tutorial invalid");
 
+            // Show error
+            new AlertDialog.Builder(this)
+                    .setTitle("That's not quite right!")
+                    .setMessage("Looks like your tutorial isn't quite right - please check against the last step and try again!")
+                    .setPositiveButton("Okay", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+
         }
 
+
+    }
+
+
+    private void showNoTutorialError() {
+        // Show error if user tries to validate tutorial without ever selecting a tutorial
+        new AlertDialog.Builder(this)
+                .setTitle("Not in tutorial mode!")
+                .setMessage("Please select a tutorial by pressing the + button, then validate once you've completed the tutorial steps.")
+                .setPositiveButton("Okay", null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    private void moveToNextTutorialStep() {
+        // Increment tutorial instruction counter
+        instructionIndex++;
+
+        String fragmentText;
+
+        // If we're at the last instruction, show congratulation message
+        if (instructionIndex == tutorialManager.getTutorialsList().size()) {
+            // Show congratulatory fragment!
+            fragmentText = "Congratulations! You've completed the " + tutorial.getTitle() + " tutorial!";
+
+        } else {
+            // Go to next step...
+            fragmentText = tutorial.getInstructions().get(instructionIndex);
+
+        }
+
+        instructionalTextView.setText(fragmentText);
+
+        TutorialFragment tutorialFragment = new TutorialFragment();
+        tutorialFragment.setTutorialText(fragmentText);
+        tutorialFragment.show(getSupportFragmentManager(), "Tutorial");
 
     }
 

@@ -22,6 +22,11 @@ import android.widget.TextView;
 public class MainActivity extends ActionBarActivity {
 
     /**
+     * A constant defining the duration of the fade in/out animation of the 'start' text view.
+     */
+    private static final int FADE_ANIMATION_DURATION = 2000;
+
+    /**
      * A static block to load the SeeScoreLib.so library.
      * Taken from the Dolphin Computing (Cambridge) Ltd. SeeScore Example Project.
      */
@@ -29,11 +34,6 @@ public class MainActivity extends ActionBarActivity {
         System.loadLibrary("stlport_shared");
         System.loadLibrary("SeeScoreLib");
     }
-
-    /**
-     * The tutorial manager instance.
-     */
-    private TutorialManager tutorialManager;
 
     /**
      * This method is ran on creation of the view. UI and listeners to be set-up here.
@@ -45,13 +45,6 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*
-        // TODO: Uncomment once tutorial manager is working.
-        tutorialManager = new TutorialManager(this);
-
-        Log.d("Debug", "tutorials: " + tutorialManager.getTutorialsList());
-        */
-
         NoteManager noteManager = new NoteManager(this);
         Log.d("Debug", "note names: " + noteManager.getNoteNames());
 
@@ -59,19 +52,18 @@ public class MainActivity extends ActionBarActivity {
         FloatingActionButton startTutorials = (FloatingActionButton) findViewById(R.id.startTutorialsButton);
         startTutorials.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //startActivity(new Intent(MainActivity.this, TutorialActivity.class));
                 Log.d("MainActivity", "starting activity...");
                 startActivity(new Intent(MainActivity.this, TutorialActivity.class));
             }
         });
 
         // View animation code from https://stackoverflow.com/questions/16800716/android-fade-view-in-and-out
-        TextView txt = (TextView) findViewById(R.id.tab_to_start);
+        TextView startInformationTextView = (TextView) findViewById(R.id.tab_to_start);
         AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
-        anim.setDuration(2000);
-        anim.setRepeatCount(999999999);
+        anim.setDuration(FADE_ANIMATION_DURATION);
+        anim.setRepeatCount(Integer.MAX_VALUE);
         anim.setRepeatMode(Animation.REVERSE);
-        txt.startAnimation(anim);
+        startInformationTextView.startAnimation(anim);
 
     }
 
