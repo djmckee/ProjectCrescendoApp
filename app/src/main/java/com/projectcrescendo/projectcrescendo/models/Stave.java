@@ -106,4 +106,53 @@ public class Stave {
     }
 
 
+    /**
+     * Checks whether or not the object 'o' passed to this method is equal in type and in terms of
+     * being logically equal to this Stave instance.
+     *
+     * @param o the object to compare to this Stave instance.
+     * @return a boolean indicating whether or not 'o' is equal to this exact Stave instance.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Stave)) return false;
+
+        Stave stave = (Stave) o;
+
+        if (getTimeSignatureNumerator() != stave.getTimeSignatureNumerator()) return false;
+        if (getTimeSignatureDenominator() != stave.getTimeSignatureDenominator()) return false;
+        if (getUpperClef() != null ? !getUpperClef().equals(stave.getUpperClef()) : stave.getUpperClef() != null)
+            return false;
+        return getLowerClef() != null ? getLowerClef().equals(stave.getLowerClef()) : stave.getLowerClef() == null;
+
+    }
+
+    /**
+     * Returns an integer that contains a hash of the fields of the current Stave instance,
+     * allowing for a simple check for equality.
+     * @return an integer representing the field values of the current Stave instance.
+     */
+    @Override
+    public int hashCode() {
+        int result = getUpperClef() != null ? getUpperClef().hashCode() : 0;
+        result = 31 * result + (getLowerClef() != null ? getLowerClef().hashCode() : 0);
+        result = 31 * result + getTimeSignatureNumerator();
+        result = 31 * result + getTimeSignatureDenominator();
+        return result;
+    }
+
+    /**
+     * Returns a human readable string representation of the current Stave.
+     * @return a human readable string representation of the current Stave for debug purposes.
+     */
+    @Override
+    public String toString() {
+        return "Stave{" +
+                "upperClef=" + upperClef +
+                ", lowerClef=" + lowerClef +
+                ", timeSignatureNumerator=" + timeSignatureNumerator +
+                ", timeSignatureDenominator=" + timeSignatureDenominator +
+                '}';
+    }
 }

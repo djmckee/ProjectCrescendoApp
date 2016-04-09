@@ -105,6 +105,11 @@ public class Beat {
 
     }
 
+    /**
+     * Returns a human readable string representation of the current beat.
+     * @return a human readable string representation of the current beat; detailing intonation 
+     * and notes.
+     */
     @Override
     public String toString() {
         return "Beat{" +

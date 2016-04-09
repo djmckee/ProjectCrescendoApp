@@ -190,11 +190,15 @@ public class ConcreteNote implements Note {
 
         if (Double.compare(that.getLength(), getLength()) != 0) return false;
         if (!getPitch().equals(that.getPitch())) return false;
-        if (getAccidental() != that.getAccidental()) return false;
-        return getIntonation() == that.getIntonation() && getDynamic() == that.getDynamic();
+        return getAccidental() == that.getAccidental() && getIntonation() == that.getIntonation() && getDynamic() == that.getDynamic();
 
     }
 
+    /**
+     * Returns an integer that contains a hash of the fields of the current ConcreteNote instance,
+     * allowing for a simple check for equality.
+     * @return an integer representing the field values of the current ConcreteNote instance.
+     */
     @Override
     public int hashCode() {
         int result;
