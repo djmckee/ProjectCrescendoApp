@@ -18,13 +18,22 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="left|top"
-        fab:fab_icon="@drawable/save"
-        fab:fab_colorNormal="@color/indigo"
-        fab:fab_addButtonColorPressed="@color/blue"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        fab:fab_icon="@drawable/play"
+        fab:fab_colorNormal="@color/green"
+        fab:fab_addButtonColorPressed="@color/light_green"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignEnd="@+id/scrollView" />
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/verify"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="left|top"
+        fab:fab_icon="@drawable/verify"
+        fab:fab_colorNormal="@color/red"
+        fab:fab_addButtonColorPressed="@color/pink"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/export" />
 
     <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/instruction"
