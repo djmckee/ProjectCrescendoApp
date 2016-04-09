@@ -25,7 +25,6 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:elevation="6dp"
-        app:fab_icon="@drawable/play"
         app:fab_colorNormal="@color/green"
         app:fab_colorPressed="@color/light_green"
         android:layout_alignParentTop="true"
