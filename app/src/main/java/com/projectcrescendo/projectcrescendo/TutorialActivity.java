@@ -24,12 +24,15 @@ import com.projectcrescendo.projectcrescendo.models.Tutorial;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * The tutorial activity contains the grid and is where the user completes the tutorial by adding
  * notes.
  * <p>
  * Created by Alex on 27/02/16.
+ * Modified by Dylan, Ambrose and Jordan.
+ *
  */
 public class TutorialActivity extends ActionBarActivity implements NoteGridViewAdapterListener, AddNoteFragmentListener {
 
@@ -229,27 +232,11 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
         exportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Push tutorial text view!
+                // Push tutorial playback view!
                 Log.d("TutorialActivity", "export button tapped");
+
+                // Encode the stave to MusicXML for the playback activity to playback...
                 String musicXMLRepresentation = MusicXmlWriter.encode(stave);
-                Log.d("MusicXML", musicXMLRepresentation);
-
-                CrescendoAPIManager.uploadComposition(musicXMLRepresentation, null);
-
-                CrescendoAPIManager.uploadComposition(musicXMLRepresentation, new CrescendoAPIResponseHandler() {
-                    @Override
-                    public void uploadSucceeded(int uploadId, String uploadUrl) {
-                        Log.d("upload success", "upload success, id: " + uploadId);
-                        Log.d("upload success", "upload success, url: " + uploadUrl);
-
-                    }
-
-                    @Override
-                    public void uploadFailed() {
-                        Log.d("upload failed", "upload failed.");
-
-                    }
-                });
 
                 Intent intent = new Intent(TutorialActivity.this, PlaybackActivity.class);
                 intent.putExtra(PlaybackActivity.SCORE_STRING_KEY, musicXMLRepresentation);
@@ -485,6 +472,22 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
         // Refresh the grid UI to reflect these stave changes...
         refreshGrid();
+
+        // Show the first instruction for this tutorial in a TutorialFragment to signify the change to the user...
+
+        String firstInstruction = tutorial.getInstructions().get(0);
+
+        // Check there's an instruction to display, then display it...
+        if (firstInstruction != null) {
+            TutorialFragment fragment = new TutorialFragment();
+
+            fragment.setTutorialText(firstInstruction);
+
+            fragment.show(getSupportFragmentManager(), "Tutorial");
+
+            // TODO: Show instruction 1 in a text box, currently being added by Jordan?
+
+        }
 
     }
 
