@@ -88,7 +88,7 @@ public class CrescendoAPIManager {
      * @param responseHandler a callback to handle the response from the request.
      */
     // I took the following method from http://loopj.com/android-async-http/
-    public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+    private static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         httpClient.post(getAbsoluteUrl(url), params, responseHandler);
 
     }
