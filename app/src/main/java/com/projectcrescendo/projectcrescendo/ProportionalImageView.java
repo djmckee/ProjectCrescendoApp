@@ -1,9 +1,9 @@
 package com.projectcrescendo.projectcrescendo;
 
-import android.widget.ImageView;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.widget.ImageView;
 
 /**
  * Created by Ambrose Suen on 3/4/2016.
@@ -29,7 +29,6 @@ public class ProportionalImageView extends ImageView {
             int w = MeasureSpec.getSize(widthMeasureSpec);
             int h = w * d.getIntrinsicHeight() / d.getIntrinsicWidth();
             setMeasuredDimension(w, h);
-        }
-        else super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        } else super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 }

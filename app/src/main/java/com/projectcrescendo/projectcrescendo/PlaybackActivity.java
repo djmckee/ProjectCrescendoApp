@@ -7,20 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-
-import com.getbase.floatingactionbutton.FloatingActionButton;
-
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ScrollView;
 
-/**
- * This class uses the SeeScore Library, provided under an educational non-profit only licence and
- * originally authored by Dolphin Computing (Cambridge) Ltd. - downloaded from
- * http://www.seescore.co.uk/developers/ on 19th February 2016.
- */
+import com.getbase.floatingactionbutton.FloatingActionButton;
+
 import uk.co.dolphin_com.seescoreandroid.Dispatcher;
 import uk.co.dolphin_com.seescoreandroid.Player;
 import uk.co.dolphin_com.seescoreandroid.SeeScoreView;
@@ -31,6 +25,11 @@ import uk.co.dolphin_com.sscore.SScore;
 import uk.co.dolphin_com.sscore.SScoreKey;
 import uk.co.dolphin_com.sscore.ex.ScoreException;
 
+/**
+ * This class uses the SeeScore Library, provided under an educational non-profit only licence and
+ * originally authored by Dolphin Computing (Cambridge) Ltd. - downloaded from
+ * http://www.seescore.co.uk/developers/ on 19th February 2016.
+ */
 
 
 /**
@@ -139,7 +138,7 @@ public class PlaybackActivity extends ActionBarActivity {
             }
         });
 
-        seeScoreView.setLayoutCompletionHandler(new Runnable(){
+        seeScoreView.setLayoutCompletionHandler(new Runnable() {
             public void run() {
                 // Fired when the score has finished loading in the SeeScore viewer.
             }
@@ -170,7 +169,15 @@ public class PlaybackActivity extends ActionBarActivity {
 
         } catch (ScoreException sE) {
             // Do not continue loading.
-            // TODO: Show error
+            // Show error report to user
+
+            new AlertDialog.Builder(PlaybackActivity.this)
+                    .setTitle("Playback error")
+                    .setMessage("Sorry, it looks like your composition could not be played back. Please check it over and try again...")
+                    .setPositiveButton("Okay", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+
             Log.d("Playback error", sE.toString());
 
             return;
@@ -394,7 +401,6 @@ public class PlaybackActivity extends ActionBarActivity {
             playPauseButton.setImageResource(R.drawable.play);
 
         }
-
 
 
     }

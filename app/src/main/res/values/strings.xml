@@ -14,8 +14,6 @@
     <string name="title_activity_tutorial">TutorialActivity</string>
     <string name="title_activity_playback">PlaybackActivity</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_instructions">Instructions</string>
 
     <!-- <string-array name="time_signature">

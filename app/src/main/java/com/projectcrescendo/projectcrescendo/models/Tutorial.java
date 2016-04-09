@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * The Tutorial class is a model class intended to hold a title string, and a List of
  * TutorialSelectionMenuActivity (in the order that they need to be displayed in).
- *
+ * <p>
  * <p>
  * Created by Dylan McKee on 16/11/15.
  */
@@ -37,7 +37,7 @@ public class Tutorial {
     /**
      * Constructs a new tutorial.
      *
-     * @param title       the title of the new tutorial
+     * @param title        the title of the new tutorial
      * @param instructions a list of the instructional texts for the new tutorial.
      */
     public Tutorial(String title, List<String> instructions) {
@@ -78,6 +78,7 @@ public class Tutorial {
 
     /**
      * Returns a list of beats that must be populated on the grid on load of the tutorial.
+     *
      * @return a List of Beat objects that must be pre-populated on the grid at the start of the tutorial.
      */
     public List<Beat> getPrePopulatedBeats() {
@@ -86,6 +87,7 @@ public class Tutorial {
 
     /**
      * Return a list of beats that must be on the grid for the tutorial composition to be valid.
+     *
      * @return a List of Beats that must be on the grid for the tutorial composition to be valid.
      */
     public List<Beat> getValidBeats() {
@@ -94,6 +96,7 @@ public class Tutorial {
 
     /**
      * Returns the indices that the current tutorial performs pattern matches at.
+     *
      * @return a list of integers containing the indices numbers that the current tutorial
      */
     public List<Integer> getTutorialPatternMatchIndex() {
@@ -104,10 +107,11 @@ public class Tutorial {
      * Returns a List of Beat objects that match the criteria of being on either the upper or lower
      * Clef (decided by the 'isUpperClef' bool), from the List of Beats passed in to the method
      * (the allBeats parameter)
-     * @param allBeats the beats to select the upper/lower beats to return from.
+     *
+     * @param allBeats    the beats to select the upper/lower beats to return from.
      * @param isUpperClef should the beats be selected from the upper clef, or the lower clef?
      * @return a sublist of beats for either the upper or the lower clef, from the 'allBeats' array
-     *          passed into the method.
+     * passed into the method.
      */
     private List<Beat> getBeats(List<Beat> allBeats, boolean isUpperClef) {
         List<Beat> beats = new ArrayList<Beat>();
@@ -135,6 +139,7 @@ public class Tutorial {
     /**
      * Returns a List of Beats that should be pre-populated onto the stave's upper clef for this
      * tutorial.
+     *
      * @return a List of Beats that should be pre-populated onto the stave's upper clef.
      */
     public List<Beat> getPrePopupalatedBeatsForUpperClef() {
@@ -145,6 +150,7 @@ public class Tutorial {
     /**
      * Returns a List of Beats that should be pre-populated onto the stave's lower clef for this
      * tutorial.
+     *
      * @return a List of Beats that should be pre-populated onto the stave's lower clef.
      */
     public List<Beat> getPrePopupalatedBeatsForLowerClef() {
@@ -155,8 +161,9 @@ public class Tutorial {
     /**
      * Returns a List of Beats that must appear, in order, on the stave's upper clef for this tutorial
      * to have been completed correctly.
+     *
      * @return a List of Beats that must appear on the stave's upper clef, in order, for this tutorial
-     *          to be marked as correct.
+     * to be marked as correct.
      */
     public List<Beat> getValidBeatsForUpperClef() {
         return getBeats(getValidBeats(), true);
@@ -166,8 +173,9 @@ public class Tutorial {
     /**
      * Returns a List of Beats that must appear, in order, on the stave's lower clef for this tutorial
      * to have been completed correctly.
+     *
      * @return a List of Beats that must appear on the stave's lower clef, in order, for this tutorial
-     *          to be marked as correct.
+     * to be marked as correct.
      */
     public List<Beat> getValidBeatsForLowerClef() {
         return getBeats(getValidBeats(), false);

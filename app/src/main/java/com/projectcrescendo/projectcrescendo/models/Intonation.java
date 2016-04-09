@@ -15,6 +15,7 @@ public enum Intonation {
 
     /**
      * A helper method to return the Intonation by name.
+     *
      * @param intonationNameString the name of the desired Intonation
      * @return an Intonation matching the name passed to this method.
      */
