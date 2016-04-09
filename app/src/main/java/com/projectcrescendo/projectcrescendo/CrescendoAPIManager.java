@@ -71,6 +71,16 @@ public class CrescendoAPIManager {
     private static AsyncHttpClient httpClient = new AsyncHttpClient();
 
     /**
+     * The Client ID for our app. This MUST match the Client ID for the app on the server-side.
+     */
+    private static String API_CLIENT_ID = "VJyR29hQKnwG3R8CjbN6";
+
+    /**
+     * The Client Secret for our app. This MUST match the Client Secret for the app on the server-side.
+     */
+    private static String API_CLIENT_SECRET = "HgNzSKYJqQKyNT2mGVSUr4cUvMcGs2Ym7x3U5dHA";
+
+    /**
      * A generic POST method to send a POST HTTP request.
      *
      * @param url             the URL to send the request to.
@@ -107,6 +117,8 @@ public class CrescendoAPIManager {
 
         RequestParams params = new RequestParams();
         params.put("musicxml_content", compositionXml);
+        params.put("client_id", API_CLIENT_ID);
+        params.put("client_secret", API_CLIENT_SECRET);
 
         Log.d("CrescendoAPI params", params.toString());
 
