@@ -11,29 +11,29 @@ public class Stave {
      * The number of beats for the total Stave. Must be divisible by 4, 6 and 8 to be valid because
      * of possible Bar lengths.
      */
-    public static int NUMBER_OF_BEATS = 384;
+    private static final int NUMBER_OF_BEATS = 384;
 
     /**
      * The number of Clefs in the current stave - always 2 for our purposes - because there's 2
      * hands playing the piano.
      */
-    public static int NUMBER_OF_CLEFS = 2;
+    private static final int NUMBER_OF_CLEFS = 2;
 
     /**
      * The number of beats per Clef - half of the number of beats on the total Stave, because there
      * is 2 clefs.
      */
-    public static int BEATS_PER_ROW = NUMBER_OF_BEATS / NUMBER_OF_CLEFS;
+    public static final int BEATS_PER_ROW = NUMBER_OF_BEATS / NUMBER_OF_CLEFS;
 
     /**
      * The upper clef in the stave.
      */
-    private Clef upperClef = new Clef(BEATS_PER_ROW);
+    private final Clef upperClef = new Clef(BEATS_PER_ROW);
 
     /**
      * The lower clef in the stave.
      */
-    private Clef lowerClef = new Clef(BEATS_PER_ROW);
+    private final Clef lowerClef = new Clef(BEATS_PER_ROW);
 
     /**
      * The top number in the stave's current time signature, initialised to a default value of 4.

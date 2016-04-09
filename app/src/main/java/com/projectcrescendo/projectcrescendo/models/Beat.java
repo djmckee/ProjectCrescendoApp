@@ -22,7 +22,7 @@ public class Beat {
     /**
      * Returns a list of notes in the current beat.
      *
-     * @return a List of Note instnaces in the current beat.
+     * @return a List of Note instances in the current beat.
      */
     public List<Note> getNotes() {
         return notes;
@@ -75,7 +75,7 @@ public class Beat {
      * @return a String containing a textual list of the Note pitches in the current beat.
      */
     public String gridStringRepresentation() {
-        String stringRepresentation = new String();
+        String stringRepresentation = "";
 
         // Add each note on a new line for display in the grid
         for (Note note : notes) {
@@ -101,9 +101,7 @@ public class Beat {
 
         Beat beat = (Beat) o;
 
-        if (getNotes() != null ? !getNotes().equals(beat.getNotes()) : beat.getNotes() != null)
-            return false;
-        return getIntonation() == beat.getIntonation();
+        return getNotes() != null ? getNotes().equals(beat.getNotes()) : beat.getNotes() == null && getIntonation() == beat.getIntonation();
 
     }
 

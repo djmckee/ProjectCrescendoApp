@@ -1,13 +1,13 @@
 package com.projectcrescendo.projectcrescendo;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 /**
  * show instructions of the app
  * Created by Ambrose Suen on 26/3/2016.
  */
-public class Instructions extends ActionBarActivity {
+public class Instructions extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

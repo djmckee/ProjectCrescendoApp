@@ -11,12 +11,12 @@ import java.util.List;
  */
 public class Bar {
 
-    private List<Beat> beats = new ArrayList<Beat>();
+    private final List<Beat> beats = new ArrayList<Beat>();
 
     /**
      * Constructs a new Bar, asking for a length in beats.
      *
-     * @param length
+     * @param length the length of the bar, expressed in terms of beats.
      */
     public Bar(int length) {
         for (int i = 0; i < length; i++) {

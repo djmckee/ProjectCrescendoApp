@@ -3,7 +3,7 @@ package com.projectcrescendo.projectcrescendo;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,7 +30,7 @@ import java.util.List;
  * Created by Alex on 27/02/16.
  * Modified by Dylan, Ambrose and Jordan.
  */
-public class TutorialActivity extends ActionBarActivity implements NoteGridViewAdapterListener, AddNoteFragmentListener {
+public class TutorialActivity extends AppCompatActivity implements NoteGridViewAdapterListener, AddNoteFragmentListener {
 
     /**
      * The Stave for this composition.
@@ -245,7 +245,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
         instructionalTextView = (TextView) findViewById(R.id.tutorialActivityInstructionText);
 
         // Set the instructional text view to a default...
-        instructionalTextView.setText("Welcome to Sonata! Press the '+' button on the left to select a tutorial...");
+        instructionalTextView.setText(R.string.initialInstructionText);
 
         // When the instructional text snippet is tapped, show it in full...
         instructionalTextView.setOnClickListener(new View.OnClickListener() {
@@ -324,7 +324,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
      * Updates the grid with the current stave's beats. To be performed after a notes is added or
      * removed, so that the note shows up on the grid graphically.
      */
-    public void refreshGrid() {
+    private void refreshGrid() {
         // Create a string array from the current stave's bars and beats...
         List<String> notesAsStringList = new ArrayList<String>();
 
@@ -459,7 +459,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
      *
      * @param tutorial the Tutorial instance for the user to complete in this TutorialActivity.
      */
-    public void setTutorial(Tutorial tutorial) {
+    private void setTutorial(Tutorial tutorial) {
         // Set tutorial placeholder
         this.tutorial = tutorial;
 
@@ -475,7 +475,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
 
         // Pre-load the stave with the tutorial's pre-filled notes...
-        List<Beat> topPrefilledBeats = tutorial.getPrePopupalatedBeatsForUpperClef();
+        List<Beat> topPrefilledBeats = tutorial.getPrePopulatedBeatsForUpperClef();
         Log.d("TutorialActivity", "topPrefilledBeats = " + topPrefilledBeats);
         for (int i = 0; i < upperBeats.size(); i++) {
             Beat upperBeat = upperBeats.get(i);
@@ -485,7 +485,7 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
         }
 
 
-        List<Beat> bottomPrefilledBeats = tutorial.getPrePopupalatedBeatsForLowerClef();
+        List<Beat> bottomPrefilledBeats = tutorial.getPrePopulatedBeatsForLowerClef();
         Log.d("TutorialActivity", "bottomPrefilledBeats = " + bottomPrefilledBeats);
 
         for (int i = 0; i < lowerBeats.size(); i++) {

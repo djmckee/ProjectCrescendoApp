@@ -32,7 +32,7 @@ public class ConcreteNote implements Note {
     private double length = 0.5;
 
     /**
-     * Constructs a note, accepting the note pitch as a human readable string as a paramter.
+     * Constructs a note, accepting the note pitch as a human readable string as a parameter.
      *
      * @param pitch the pitch of the note, as a human readable string (for example 'C0').
      */
@@ -176,8 +176,10 @@ public class ConcreteNote implements Note {
     }
 
     /**
-     * @param o
-     * @return
+     * Returns true if the object being compared to this ConcreteNote instance is exactly equal in
+     * terms of field values, and false if not.
+     * @param o the object to compare this concrete note instance to.
+     * @return a boolean - true if the objects are equal, false if not.
      */
     @Override
     public boolean equals(Object o) {
@@ -189,8 +191,7 @@ public class ConcreteNote implements Note {
         if (Double.compare(that.getLength(), getLength()) != 0) return false;
         if (!getPitch().equals(that.getPitch())) return false;
         if (getAccidental() != that.getAccidental()) return false;
-        if (getIntonation() != that.getIntonation()) return false;
-        return getDynamic() == that.getDynamic();
+        return getIntonation() == that.getIntonation() && getDynamic() == that.getDynamic();
 
     }
 

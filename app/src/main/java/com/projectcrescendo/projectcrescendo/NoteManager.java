@@ -16,7 +16,7 @@ public class NoteManager {
     /**
      * The SQLite database manager.
      */
-    final DatabaseManager databaseManager;
+    private final DatabaseManager databaseManager;
 
     /**
      * Constructs a new Note Manager.
@@ -52,6 +52,8 @@ public class NoteManager {
                 } while (noteNameQueryCursor.moveToNext());
 
             }
+
+            noteNameQueryCursor.close();
         }
 
         databaseInstance.close();

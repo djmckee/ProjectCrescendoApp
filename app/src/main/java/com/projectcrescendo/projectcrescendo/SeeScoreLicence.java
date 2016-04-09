@@ -15,15 +15,16 @@
  * SeeScore For Android
  * Dolphin Computing http://www.dolphin-com.co.uk
  */
-/* SeeScoreLib Key for ProjectCrescendo
-
- IMPORTANT! This file is for ProjectCrescendo only.
- It must be used only for the application for which it is licensed,
- and must not be released to any other individual or company.
-
- Please keep it safe, and make sure you don't post it online or email it.
- Keep it in a separate folder from your source code, so that when you backup the code
- or store it in a source management system, the key is not included.
+/**
+ *  SeeScoreLib Key for ProjectCrescendo
+ *
+ *  IMPORTANT! This file is for ProjectCrescendo only.
+ *  It must be used only for the application for which it is licensed,
+ *  and must not be released to any other individual or company.
+ *  Please keep it safe, and make sure you don't post it online or email it.
+ *  Keep it in a separate folder from your source code, so that when you backup the code
+ *  or store it in a source management system, the key is not included.
+ *
  */
 
 package com.projectcrescendo.projectcrescendo;

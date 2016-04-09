@@ -58,27 +58,22 @@ public class NoteGridViewAdapter extends BaseAdapter {
     /**
      * A string array containing the grid items to display.
      */
-    String[] arrayOfGridItems;
+    private final String[] arrayOfGridItems;
 
     /**
      * The context of the activity presenting the grid.
      */
-    Context context;
+    private final Context context;
 
     /**
      * A callback listener to provide callbacks when the cells in the grid are tapped.
      */
-    NoteGridViewAdapterListener adapterListener;
-
-    /**
-     * The width of the screen that the grid is presented on, in pixels.
-     */
-    double screenWidth;
+    private NoteGridViewAdapterListener adapterListener;
 
     /**
      * The height of the screen that the grid is presented on, in pixels.
      */
-    double screenHeight;
+    private final double screenHeight;
 
     /**
      * Constructs a NoteGridViewAdapter.

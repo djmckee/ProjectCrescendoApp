@@ -68,17 +68,17 @@ public class CrescendoAPIManager {
     /**
      * The LoopJ Async HTTP Client instance, to make our HTTP requests to the API.
      */
-    private static AsyncHttpClient httpClient = new AsyncHttpClient();
+    private static final AsyncHttpClient httpClient = new AsyncHttpClient();
 
     /**
      * The Client ID for our app. This MUST match the Client ID for the app on the server-side.
      */
-    private static String API_CLIENT_ID = "VJyR29hQKnwG3R8CjbN6";
+    private static final String API_CLIENT_ID = "VJyR29hQKnwG3R8CjbN6";
 
     /**
      * The Client Secret for our app. This MUST match the Client Secret for the app on the server-side.
      */
-    private static String API_CLIENT_SECRET = "HgNzSKYJqQKyNT2mGVSUr4cUvMcGs2Ym7x3U5dHA";
+    private static final String API_CLIENT_SECRET = "HgNzSKYJqQKyNT2mGVSUr4cUvMcGs2Ym7x3U5dHA";
 
     /**
      * A generic POST method to send a POST HTTP request.

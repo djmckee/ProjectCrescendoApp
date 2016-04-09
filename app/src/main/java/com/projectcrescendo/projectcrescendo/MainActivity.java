@@ -3,7 +3,7 @@ package com.projectcrescendo.projectcrescendo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -19,7 +19,7 @@ import android.widget.TextView;
  * Created by Dylan McKee on 16/11/2015.
  * Modified by Ambrose and Alex.
  */
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     /**
      * A constant defining the duration of the fade in/out animation of the 'start' text view.
@@ -38,7 +38,7 @@ public class MainActivity extends ActionBarActivity {
     /**
      * This method is ran on creation of the view. UI and listeners to be set-up here.
      *
-     * @param savedInstanceState
+     * @param savedInstanceState the state of the activity being created.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {

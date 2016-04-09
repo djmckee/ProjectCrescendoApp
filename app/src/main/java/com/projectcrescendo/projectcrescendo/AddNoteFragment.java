@@ -68,8 +68,10 @@ interface AddNoteFragmentListener {
  */
 public class AddNoteFragment extends DialogFragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, SelectIntonationFragmentCallbackListener {
 
-    // A class-wide note placeholder
-    Note noteToAdd = null;
+    /**
+     * A class-wide note placeholder to hold the Note instance being added in the current fragment.
+     */
+    private Note noteToAdd = null;
     /**
      * The intonation of the current beat being edited in this fragment.
      */
@@ -120,7 +122,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
      * When the fragment is created, this method ensures that the UI elements are instantiated from
      * the XML and refreshes the notes list and intonation initially.
      *
-     * @param savedInstanceState
+     * @param savedInstanceState the saved state of the fragment, if any exists.
      */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -169,7 +171,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
      * Sets the intonation button text to whatever the currently selected intonation's name is.
      */
     private void refreshIntonation() {
-        intonationButton.setText("Expression: " + getCurrentIntonation());
+        intonationButton.setText(getString(R.string.expression) + getCurrentIntonation());
     }
 
     /**
@@ -209,7 +211,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
      * about their desired new note, which are then validated against stored names in the database,
      * and if valid, get added to the current Beat.
      */
-    void addNewNote() {
+    private void addNewNote() {
         // Get all possible note names so we have something to validate against...
         final List<String> validNoteNames = new NoteManager(getActivity()).getNoteNames();
 
@@ -316,10 +318,10 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
     /**
      * Ensures that the correct layout is used for this fragment.
      *
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
+     * @param inflater the LayoutInflater for this fragment.
+     * @param container the View containing this fragment.
+     * @param savedInstanceState saved state about this fragment.
+     * @return a View containing this fragment, from the XML representation.
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -331,10 +333,10 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
     /**
      * This method is called when an item in the list view of notes is tapped.
      *
-     * @param parent
-     * @param view
-     * @param position
-     * @param id
+     * @param parent the ListView containing the notes.
+     * @param view the cell containing the selected note.
+     * @param position the position of the selected note in the list.
+     * @param id the id of the cell containing the selected note in the list.
      */
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // If it's the Add New Note button, add new note
@@ -351,11 +353,12 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
      * This method is called when an item in the notes list is long pressed. If it's a valid note,
      * the user is then asked if they'd like to delete it from the composition.
      *
-     * @param parent
-     * @param view
-     * @param position
-     * @param id
-     * @return
+     * @param parent the ListView containing the notes.
+     * @param view the cell containing the selected note.
+     * @param position the position of the selected note in the list.
+     * @param id the ID of the cell containing the selected note in the list.
+     * @return a boolean indicating whether the currently selected note can be long pressed
+     * and marked for deletion, or not.
      */
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -437,7 +440,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
      *
      * @return the current intonation for the beat being edited in this fragment
      */
-    public Intonation getCurrentIntonation() {
+    private Intonation getCurrentIntonation() {
         return currentIntonation;
     }
 
@@ -455,7 +458,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
      *
      * @return a List of Note objects for the current Beat.
      */
-    public List<Note> getNotesForCurrentBeat() {
+    private List<Note> getNotesForCurrentBeat() {
         return notesForCurrentBeat;
     }
 

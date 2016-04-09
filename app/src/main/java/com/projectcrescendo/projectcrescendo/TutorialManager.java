@@ -69,7 +69,7 @@ public class TutorialManager {
                         }
 
 
-                    } catch (JSONException exception) {
+                    } catch (JSONException ignored) {
 
                     }
 
@@ -121,7 +121,7 @@ public class TutorialManager {
 
                         }
 
-                    } catch (JSONException exception) {
+                    } catch (JSONException ignored) {
 
                     }
 
@@ -131,6 +131,8 @@ public class TutorialManager {
                 } while (tutorialsQueryCursor.moveToNext());
 
             }
+
+            tutorialsQueryCursor.close();
         }
 
         databaseInstance.close();
