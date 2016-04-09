@@ -103,5 +103,14 @@
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/tutorialActivityInstructionText"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/scrollView"
+        android:layout_toEndOf="@+id/sonata_tutorial" />
+
 
 </RelativeLayout>
