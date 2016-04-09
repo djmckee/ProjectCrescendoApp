@@ -110,7 +110,7 @@ public class Tutorial {
      *
      * @param allBeats    the beats to select the upper/lower beats to return from.
      * @param isUpperClef should the beats be selected from the upper clef, or the lower clef?
-     * @return a sublist of beats for either the upper or the lower clef, from the 'allBeats' array
+     * @return a sub-list of beats for either the upper or the lower clef, from the 'allBeats' array
      * passed into the method.
      */
     private List<Beat> getBeats(List<Beat> allBeats, boolean isUpperClef) {
@@ -142,7 +142,7 @@ public class Tutorial {
      *
      * @return a List of Beats that should be pre-populated onto the stave's upper clef.
      */
-    public List<Beat> getPrePopupalatedBeatsForUpperClef() {
+    public List<Beat> getPrePopulatedBeatsForUpperClef() {
         return getBeats(getPrePopulatedBeats(), true);
 
     }
@@ -153,7 +153,7 @@ public class Tutorial {
      *
      * @return a List of Beats that should be pre-populated onto the stave's lower clef.
      */
-    public List<Beat> getPrePopupalatedBeatsForLowerClef() {
+    public List<Beat> getPrePopulatedBeatsForLowerClef() {
         return getBeats(getPrePopulatedBeats(), false);
 
     }

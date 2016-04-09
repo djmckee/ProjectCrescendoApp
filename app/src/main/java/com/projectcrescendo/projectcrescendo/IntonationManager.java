@@ -17,7 +17,7 @@ public class IntonationManager {
     /**
      * The SQLite database manager.
      */
-    final DatabaseManager databaseManager;
+    private final DatabaseManager databaseManager;
 
     /**
      * Constructs a new Intonation Manager.
@@ -52,6 +52,9 @@ public class IntonationManager {
                 } while (intonationQueryCursor.moveToNext());
 
             }
+
+            intonationQueryCursor.close();
+            
         }
 
         databaseInstance.close();

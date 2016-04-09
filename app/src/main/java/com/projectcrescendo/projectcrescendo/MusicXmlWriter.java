@@ -99,8 +99,8 @@ public class MusicXmlWriter {
                         int notesInBeat = beat.getNotes().size();
                         Log.d("MusicXML", "notes in beat: " + notesInBeat);
 
-                        String noteNames[] = new String[notesInBeat]; // Get names of notes at the current beat in the current bar. (will have to do some string manipulation to seperate)
-                        double noteLengths[] = new double[notesInBeat]; // Get the lengths of the notes in the current beat in the current bar (will have to do some string manipulation to seperate)
+                        String noteNames[] = new String[notesInBeat]; // Get names of notes at the current beat in the current bar. (will have to do some string manipulation to separate)
+                        double noteLengths[] = new double[notesInBeat]; // Get the lengths of the notes in the current beat in the current bar (will have to do some string manipulation to separate)
 
                         // Populate arrays
                         for (int n = 0; n < notesInBeat; n++) {
@@ -114,7 +114,7 @@ public class MusicXmlWriter {
 
                         }
 
-                        int alter = 0;
+                        int alter;
                         int octave = 0;
                         boolean accidental = false;
 
@@ -131,7 +131,7 @@ public class MusicXmlWriter {
                                 if (noteNames[n].toCharArray()[noteNameLength - 1] == '#' || noteNameLength == 3) {
                                     alter = -1;
                                     accidental = true;
-                                } else if (noteNames[n].toCharArray()[noteNameLength - 1] == 'b' || noteNameLength == 3) {
+                                } else if (noteNames[n].toCharArray()[noteNameLength - 1] == 'b') {
                                     alter = 1;
                                     accidental = true;
                                 } else {

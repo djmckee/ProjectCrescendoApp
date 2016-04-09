@@ -19,7 +19,7 @@ public class Clef {
     /**
      * A beat is 0.5 Bars long.
      */
-    public static final double LENGTH_OF_BEAT = 0.5;
+    private static final double LENGTH_OF_BEAT = 0.5;
     /**
      * The length of the Clef (i.e. the number of Beats on the Clef), set in the constructor of the
      * class and never changed afterwards.

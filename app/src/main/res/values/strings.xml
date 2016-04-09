@@ -15,6 +15,8 @@
     <string name="title_activity_playback">PlaybackActivity</string>
 
     <string name="title_activity_instructions">Instructions</string>
+    <string name="initialInstructionText">Welcome to Sonata! Press the \'+\' button on the left to select a tutorial...</string>
+    <string name="expression">"Expression: "</string>
 
     <!-- <string-array name="time_signature">
         <item>2/2</item>

@@ -63,10 +63,10 @@ public class SelectNoteLengthFragment extends DialogFragment implements
     /**
      * On load, this method inflates the fragment from XML.
      *
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
+     * @param inflater the layout inflater instance.
+     * @param container the view containing this fragment.
+     * @param savedInstanceState the state of any saved instance being inflated.
+     * @return the View inflated from the XML representation of this fragment.
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,7 +83,7 @@ public class SelectNoteLengthFragment extends DialogFragment implements
      * After the fragments XML has been loaded, this method populates the list view with the possible
      * lengths for the note that the user can select from.
      *
-     * @param savedInstanceState
+     * @param savedInstanceState the saved state of the fragment.
      */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -117,12 +117,12 @@ public class SelectNoteLengthFragment extends DialogFragment implements
     /**
      * When an length in the list of lengths is selected by the user, this method calls the listener
      * to let it know of the new selection, and then once this callback has been carried out it
-     * dismisses the lenght selection fragment from the screen.
+     * dismisses the length selection fragment from the screen.
      *
-     * @param parent
-     * @param view
-     * @param position
-     * @param id
+     * @param parent the ListView that the length is being selected from.
+     * @param view the ListView cell containing the length being selected by the user.
+     * @param position the position of the selection in the ListView.
+     * @param id the id of the row being selected.
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,

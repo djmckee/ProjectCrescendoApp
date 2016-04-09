@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -41,7 +41,7 @@ import uk.co.dolphin_com.sscore.ex.ScoreException;
  * <p>
  * Created by Dylan McKee on 22/02/2016.
  */
-public class PlaybackActivity extends ActionBarActivity {
+public class PlaybackActivity extends AppCompatActivity {
 
     /**
      * A key for the String containing the MusicXML encoded score as it is passed between activities.
@@ -50,7 +50,7 @@ public class PlaybackActivity extends ActionBarActivity {
     /**
      * A music player instance so that our composition can be played back.
      */
-    Player player;
+    private Player player;
     /**
      * The SeeScore view instance which displays the score.
      */
@@ -64,11 +64,6 @@ public class PlaybackActivity extends ActionBarActivity {
      * An SScore instance of the current musical score on display.
      */
     private SScore score;
-    /**
-     * A scroll view instance to contain our SeeScore score view and make it scrollable
-     * for longer scores/smaller screens.
-     */
-    private ScrollView scrollView;
     /**
      * A flag boolean variable to allow uploads of composition sharing to be cancelled.
      */
@@ -88,7 +83,7 @@ public class PlaybackActivity extends ActionBarActivity {
      * passed to this activity through the Intent pushing it, and instantiates the SeeScore
      * SDK for viewing of the musical score and for playback.
      *
-     * @param savedInstanceState
+     * @param savedInstanceState the state of the activity being created.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +141,11 @@ public class PlaybackActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_playback);
 
-        scrollView = (ScrollView) findViewById(R.id.scrollView1);
+        /*
+        A scroll view instance to contain our SeeScore score view and make it scrollable
+        for longer scores/smaller screens.
+        */
+        ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView1);
         scrollView.addView(seeScoreView);
 
         scrollView.setOnTouchListener(new View.OnTouchListener() {
@@ -306,7 +305,7 @@ public class PlaybackActivity extends ActionBarActivity {
     /**
      * This method sets up the SeeScore score viewer to display the current score.
      */
-    void setupScore() {
+    private void setupScore() {
         seeScoreView.setScore(score, 1.0f);
 
     }
@@ -315,7 +314,7 @@ public class PlaybackActivity extends ActionBarActivity {
      * This method toggles playback of the current score via the SeeScore SDK and updates the
      * UI in this activity accordingly.
      */
-    void playPauseButtonPressed() {
+    private void playPauseButtonPressed() {
         Log.d("PlaybackActivity", "Play pause pressed");
         // Invert current playback status
         playerIsPlaying = !playerIsPlaying;
@@ -367,7 +366,7 @@ public class PlaybackActivity extends ActionBarActivity {
     /**
      * Stops the playback of the current score in SeeScore, and resets the playback UI.
      */
-    void stopButtonPressed() {
+    private void stopButtonPressed() {
         Log.d("PlaybackActivity", "Playback stopped");
 
         // Stop playing.
@@ -389,7 +388,7 @@ public class PlaybackActivity extends ActionBarActivity {
     /**
      * Updates the play/pause button to reflect the current state of playback.
      */
-    void updatePlayButtonUI() {
+    private void updatePlayButtonUI() {
         final FloatingActionButton playPauseButton = (FloatingActionButton) findViewById(R.id.playPausePlaybackButton);
 
         if (playerIsPlaying) {
@@ -410,7 +409,7 @@ public class PlaybackActivity extends ActionBarActivity {
      * Android share intent to allow users to share the link to the MusicXML version of the
      * composition on Facebook, Twitter, and other social media.
      */
-    void shareComposition() {
+    private void shareComposition() {
         // Upload to our web API and get a link to share...
         final ProgressDialog loadingDialog = ProgressDialog.show(PlaybackActivity.this, "Uploading Composition", "Uploading composition...");
         loadingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);

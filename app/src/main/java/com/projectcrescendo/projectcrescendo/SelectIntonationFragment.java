@@ -60,10 +60,10 @@ public class SelectIntonationFragment extends DialogFragment implements
     /**
      * On load, this method inflates the fragment from XML.
      *
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
+     * @param inflater the layout inflater that inflates this fragment.
+     * @param container the view that contains this fragment.
+     * @param savedInstanceState a saved state of an existing instance of this fragment.
+     * @return the view containing this fragment, inflated from XML.
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,7 +80,7 @@ public class SelectIntonationFragment extends DialogFragment implements
      * After the fragments XML has been loaded, this method populates the list view with the possible
      * intonation choices for the current beat that the user can select from.
      *
-     * @param savedInstanceState
+     * @param savedInstanceState saved state data about this fragment, if any exists.
      */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -109,10 +109,10 @@ public class SelectIntonationFragment extends DialogFragment implements
      * to let it know of the new selection, and then once this callback has been carried out it
      * dismisses the intonation selection fragment from the screen.
      *
-     * @param parent
-     * @param view
-     * @param position
-     * @param id
+     * @param parent the ListView containing the intonations.
+     * @param view the cell containing the selected intonation.
+     * @param position the position of the cell/intonation that has been selected.
+     * @param id the id of the cell containing the selected intonation
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,

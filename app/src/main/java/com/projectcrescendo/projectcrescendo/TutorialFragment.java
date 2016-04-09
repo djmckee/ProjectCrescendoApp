@@ -48,7 +48,7 @@ public class TutorialFragment extends DialogFragment {
      * When the fragment is created, this method ensures that the UI elements are instantiated from
      * the XML and refreshes the notes list and intonation initially.
      *
-     * @param savedInstanceState
+     * @param savedInstanceState the state of the instance of the activity being created.
      */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

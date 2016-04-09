@@ -50,6 +50,9 @@ public class TimeSignatureManager {
                 } while (timeSigCursor.moveToNext());
 
             }
+
+            timeSigCursor.close();
+
         }
 
         databaseInstance.close();
