@@ -80,6 +80,11 @@ public class PlaybackActivity extends ActionBarActivity {
     private boolean playerIsPlaying = false;
 
     /**
+     * A placeholder in which to store the player's current playback bar, initialised to 0.
+     */
+    private int currentBar = 0;
+
+    /**
      * This method is ran on view creation and sets up the current score from the MusicXML
      * passed to this activity through the Intent pushing it, and instantiates the SeeScore
      * SDK for viewing of the musical score and for playback.
@@ -111,6 +116,25 @@ public class PlaybackActivity extends ActionBarActivity {
         }, new SeeScoreView.TapNotification() {
             @Override
             public void tap(int systemIndex, int partIndex, int barIndex, Component[] components) {
+                // This method implementation is based off of the SeeScore examples provide to us by
+                //  Dolphin Computing (Cambridge) Ltd.
+
+                currentBar = barIndex;
+
+                if (player != null) {
+                    boolean isPlaying = (player.state() == Player.State.Started);
+                    if (isPlaying) {
+                        player.pause();
+                        seeScoreView.setCursorAtBar(barIndex, SeeScoreView.CursorType.line, 200);
+                    }
+
+                    if (isPlaying) {
+                        player.startAt(barIndex, false);
+                    }
+
+                } else {
+                    seeScoreView.setCursorAtBar(barIndex, SeeScoreView.CursorType.box, 200);
+                }
 
             }
         });
@@ -184,18 +208,31 @@ public class PlaybackActivity extends ActionBarActivity {
                 public void event(int index, boolean countIn) {
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         public void run() {
-                            // TODO: Reset play button to show play rather than pause
+                            // Reset play button to show play rather than pause
                             playerIsPlaying = false;
+
+                            // Player needs to start at start again...
+                            currentBar = 0;
+                            seeScoreView.setCursorAtBar(currentBar, SeeScoreView.CursorType.line, 0);
+                            player.startAt(currentBar, true);
+
+                            updatePlayButtonUI();
+
                         }
                     });
                 }
             }, 0);
 
+            seeScoreView.setCursorAtBar(currentBar, SeeScoreView.CursorType.line, 0);
+            player.startAt(currentBar, true);
+
+            Log.d("PlaybackActivity", "Instantiated player with score; player = " + player);
+
         } catch (Player.PlayerException e) {
             e.printStackTrace();
             // Unable to create player...
             player = null;
-            Log.d("Playback activity", "unable to instantiate player!");
+            Log.d("PlaybackActivity", "unable to instantiate player!");
 
         }
 
@@ -272,10 +309,12 @@ public class PlaybackActivity extends ActionBarActivity {
      * UI in this activity accordingly.
      */
     void playPauseButtonPressed() {
+        Log.d("PlaybackActivity", "Play pause pressed");
         // Invert current playback status
         playerIsPlaying = !playerIsPlaying;
 
         if (player != null) {
+
             if (playerIsPlaying) {
                 // Play
 
@@ -283,13 +322,35 @@ public class PlaybackActivity extends ActionBarActivity {
                 if (player.state() == Player.State.Completed) {
                     // Reset then play
                     player.reset();
+
+                    // Reset player to start
+                    currentBar = 0;
+                    seeScoreView.setCursorAtBar(currentBar, SeeScoreView.CursorType.line, 0);
+                    player.startAt(currentBar, true);
+
+                    Log.d("PlaybackActivity", "Player reset");
+
                 }
 
+                seeScoreView.setCursorAtBar(currentBar, SeeScoreView.CursorType.line, 0);
+                player.startAt(currentBar, true);
+
                 player.resume();
+                Log.d("PlaybackActivity", "Player resumed");
+
+
             } else {
+                // Save current bar...
+                currentBar = player.currentBar();
+
                 // Pause
                 player.pause();
+                Log.d("PlaybackActivity", "Player paused");
+
             }
+        } else {
+            Log.d("PlaybackActivity", "Player is null");
+
         }
 
         updatePlayButtonUI();
@@ -300,8 +361,15 @@ public class PlaybackActivity extends ActionBarActivity {
      * Stops the playback of the current score in SeeScore, and resets the playback UI.
      */
     void stopButtonPressed() {
+        Log.d("PlaybackActivity", "Playback stopped");
+
         // Stop playing.
         playerIsPlaying = false;
+
+        // Reset player to start
+        currentBar = 0;
+        seeScoreView.setCursorAtBar(currentBar, SeeScoreView.CursorType.line, 0);
+        player.startAt(currentBar, true);
 
         if (player != null) {
             player.reset();
