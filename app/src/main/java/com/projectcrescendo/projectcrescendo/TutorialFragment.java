@@ -23,6 +23,8 @@ public class TutorialFragment extends DialogFragment {
     private String tutorialText;
     private TextView tutorialTextView;
 
+
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         return inflater.inflate(R.layout.tutorial_fragment,
@@ -44,9 +46,9 @@ public class TutorialFragment extends DialogFragment {
         }
 
 
-        Button closebutton = (Button) this.getView().findViewById(R.id.tutorial_Button);
+        Button closeButton = (Button) this.getView().findViewById(R.id.tutorial_Button);
 
-        closebutton.setOnClickListener(
+        closeButton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
                         getActivity().getFragmentManager().popBackStack();

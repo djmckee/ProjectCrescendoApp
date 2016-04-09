@@ -1,5 +1,6 @@
 package com.projectcrescendo.projectcrescendo;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.HorizontalScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.projectcrescendo.projectcrescendo.models.Beat;
 import com.projectcrescendo.projectcrescendo.models.Intonation;
@@ -105,6 +107,11 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
      * list stored within the database, and completed within this current activity.
      */
     private TutorialManager tutorialManager;
+
+    /**
+     * A label to hold a piece of instructional text from the Tutorial.
+     */
+    private TextView instructionalTextView;
 
     /**
      * Sets up the initial grid view and the time signature selection spinner UI on initial load of
@@ -241,6 +248,23 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
                 Intent intent = new Intent(TutorialActivity.this, PlaybackActivity.class);
                 intent.putExtra(PlaybackActivity.SCORE_STRING_KEY, musicXMLRepresentation);
                 startActivity(intent);
+
+            }
+        });
+
+
+        instructionalTextView = (TextView) findViewById(R.id.tutorialActivityInstructionText);
+
+        // Set the instructional text view to a default...
+        instructionalTextView.setText("Welcome to Sonata! Press the '+' button on the left to select a tutorial...");
+
+        // When the instructional text snippet is tapped, show it in full...
+        instructionalTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TutorialFragment tutorialFragment = new TutorialFragment();
+                tutorialFragment.setTutorialText((String) instructionalTextView.getText());
+                tutorialFragment.show(getSupportFragmentManager(), "Tutorial");
 
             }
         });
@@ -485,7 +509,8 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
             fragment.show(getSupportFragmentManager(), "Tutorial");
 
-            // TODO: Show instruction 1 in a text box, currently being added by Jordan?
+            // Show instruction 1 in a text box
+            instructionalTextView.setText(firstInstruction);
 
         }
 
@@ -499,6 +524,20 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
         return (tutorial != null);
     }
 
+    private void validateButtonClicked() {
+        // If we're at the last instruction, don't bother validating.
+        if (instructionIndex == tutorialManager.getTutorialsList().size()) {
+            return;
+        }
+
+        // Work out where to validate up to...
+        int validationLimit = tutorial.getTutorialPatternMatchIndex().get(instructionIndex);
+
+        // Do the validation check...
+        performTutorialCheck(validationLimit);
+
+    }
+
     /**
      * A method to check whether or not the current tutorial has been completed correctly up to the
      * beat number passed into this method (the 'limit' parameter).
@@ -507,6 +546,18 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
     private void performTutorialCheck(int limit) {
         // Don't bother checking if there's no tutorial present...
         if (!isInTutorialMode()) {
+            // TODO: Show error if user tries to validate tutorial without ever selecting a tutorial
+            new AlertDialog.Builder(this)
+                    .setTitle("Not in tutorial mode!")
+                    .setMessage("Please select a tutorial by pressing the + button, then validate once you've completed the tutorial steps.")
+                    .setPositiveButton("Okay", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return;
+        }
+
+        // If we're at the last instruction, don't bother validating.
+        if (instructionIndex == tutorialManager.getTutorialsList().size()) {
             return;
         }
 
@@ -540,17 +591,52 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
 
         }
 
-        // TODO: Return something or call some kind of correct/incorrect callback or method.
         if (lowerBarCorrect && upperBarCorrect) {
             // Tutorial Valid.
             Log.d("TutorialActivity", "Tutorial valid");
+
+            // Move to next instruction...
+            moveToNextTutorialStep();
 
         } else {
             // Tutorial Invalid.
             Log.d("TutorialActivity", "Tutorial invalid");
 
+            // Show error
+            new AlertDialog.Builder(this)
+                    .setTitle("That's not quite right!")
+                    .setMessage("Looks like your tutorial isn't quite right - please check against the last step and try again!")
+                    .setPositiveButton("Okay", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+
         }
 
+
+    }
+
+    private void moveToNextTutorialStep() {
+        // Increment tutorial instruction counter
+        instructionIndex++;
+
+        String fragmentText;
+
+        // If we're at the last instruction, show congratulation message
+        if (instructionIndex == tutorialManager.getTutorialsList().size()) {
+            // Show congratulatory fragment!
+            fragmentText = "Congratulations! You've completed the " + tutorial.getTitle() + " tutorial!";
+
+        } else {
+            // Go to next step...
+            fragmentText = tutorial.getInstructions().get(instructionIndex);
+
+        }
+
+        instructionalTextView.setText(fragmentText);
+
+        TutorialFragment tutorialFragment = new TutorialFragment();
+        tutorialFragment.setTutorialText(fragmentText);
+        tutorialFragment.show(getSupportFragmentManager(), "Tutorial");
 
     }
 
