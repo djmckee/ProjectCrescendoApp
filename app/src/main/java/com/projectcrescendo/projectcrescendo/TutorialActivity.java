@@ -255,6 +255,10 @@ public class TutorialActivity extends ActionBarActivity implements NoteGridViewA
             }
         });
 
+
+        FloatingActionButton verificationButton = (FloatingActionButton) findViewById(R.id.verify);
+
+
         tutorialManager = new TutorialManager(this);
         List<Tutorial> tutorials = tutorialManager.getTutorialsList();
 
