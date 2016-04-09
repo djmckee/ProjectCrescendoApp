@@ -18,7 +18,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="left|top"
-        fab:fab_icon="@drawable/play"
+        fab:fab_icon="@drawable/fab_play"
         fab:fab_colorNormal="@color/green"
         fab:fab_addButtonColorPressed="@color/light_green"
         android:layout_alignParentTop="true"
