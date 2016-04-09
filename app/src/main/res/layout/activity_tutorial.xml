@@ -99,32 +99,7 @@
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/instruction">
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/tutorial_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/white"
-            fab:fab_colorPressed="@color/white_pressed"
-            fab:fab_title="Tutorial 3"
-            fab:fab_size="mini"/>
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/tutorial_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/white"
-            fab:fab_colorPressed="@color/white_pressed"
-            fab:fab_title="Tutorial 2"
-            fab:fab_size="mini"/>
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/tutorial_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/white"
-            fab:fab_colorPressed="@color/white_pressed"
-            fab:fab_title="Tutorial 1"
-            fab:fab_size="mini"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
