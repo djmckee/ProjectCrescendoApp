@@ -12,7 +12,9 @@ import uk.co.dolphin_com.sscore.playdata.UserTempo;
 public class CrescendoUserTempo implements UserTempo {
 
     /**
-     * Returns the current tempo in beats per minute.
+     * Returns the current tempo in beats per minute. We could make user tempo variable in future,
+     * but for now just keeping it at a mid piano tempo; I looked up tempo values at
+     * http://www.enjoy-your-piano.com/how-to-read-music-tempo-dynamics.html
      *
      * @return the current tempo for playback, in beats per minute.
      */

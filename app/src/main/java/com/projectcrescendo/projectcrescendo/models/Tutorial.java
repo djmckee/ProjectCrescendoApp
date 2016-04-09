@@ -182,5 +182,47 @@ public class Tutorial {
 
     }
 
+    /**
+     * Checks whether or not the object 'o' passed to this method is equal in type and in terms of
+     * being logically equal to this Tutorial instance.
+     *
+     * @param o the object to compare to this Tutorial instance.
+     * @return a boolean indicating whether or not 'o' is equal to this exact Tutorial instance.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tutorial)) return false;
+
+        Tutorial tutorial = (Tutorial) o;
+
+        if (getTitle() != null ? !getTitle().equals(tutorial.getTitle()) : tutorial.getTitle() != null)
+            return false;
+        if (getInstructions() != null ? !getInstructions().equals(tutorial.getInstructions()) : tutorial.getInstructions() != null)
+            return false;
+        if (getPrePopulatedBeats() != null ? !getPrePopulatedBeats().equals(tutorial.getPrePopulatedBeats()) : tutorial.getPrePopulatedBeats() != null)
+            return false;
+        if (getValidBeats() != null ? !getValidBeats().equals(tutorial.getValidBeats()) : tutorial.getValidBeats() != null)
+            return false;
+        return getTutorialPatternMatchIndex() != null ? getTutorialPatternMatchIndex().equals(tutorial.getTutorialPatternMatchIndex()) : tutorial.getTutorialPatternMatchIndex() == null;
+
+    }
+
+    /**
+     * Returns an integer that contains a hash of the fields of the current Tutorial instance,
+     * allowing for a simple check for equality.
+     * @return an integer representing the field values of the current Tutorial instance.
+     */
+    @Override
+    public int hashCode() {
+        int result = getTitle() != null ? getTitle().hashCode() : 0;
+        result = 31 * result + (getInstructions() != null ? getInstructions().hashCode() : 0);
+        result = 31 * result + (getPrePopulatedBeats() != null ? getPrePopulatedBeats().hashCode() : 0);
+        result = 31 * result + (getValidBeats() != null ? getValidBeats().hashCode() : 0);
+        result = 31 * result + (getTutorialPatternMatchIndex() != null ? getTutorialPatternMatchIndex().hashCode() : 0);
+        return result;
+    }
+
+
 
 }

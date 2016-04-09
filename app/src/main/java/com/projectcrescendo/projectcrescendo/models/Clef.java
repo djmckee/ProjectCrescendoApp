@@ -128,4 +128,51 @@ public class Clef {
 
     }
 
+    /**
+     * Checks whether or not the object 'o' passed to this method is equal in type and in terms of
+     * being logically equal to this Clef instance.
+     *
+     * @param o the object to compare to this Clef instance.
+     * @return a boolean indicating whether or not 'o' is equal to this exact Clef instance.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Clef)) return false;
+
+        Clef clef = (Clef) o;
+
+        if (lengthOfClef != clef.lengthOfClef) return false;
+        if (barLength != clef.barLength) return false;
+        return getBars() != null ? getBars().equals(clef.getBars()) : clef.getBars() == null;
+
+    }
+
+    /**
+     * Returns an integer that contains a hash to uniquely identify instances of the Clef object,
+     * and returns a hash number. If the instances are logically equal, the hashes will be the same.
+     *
+     * @return an integer containing a hash that represents this Clef instance.
+     */
+    @Override
+    public int hashCode() {
+        int result = lengthOfClef;
+        result = 31 * result + barLength;
+        result = 31 * result + (getBars() != null ? getBars().hashCode() : 0);
+        return result;
+    }
+
+    /**
+     * Returns a human readable string representation of the current clef.
+     * @return a human readable string representation of the current clef.
+     */
+    @Override
+    public String toString() {
+        return "Clef{" +
+                "lengthOfClef=" + lengthOfClef +
+                ", barLength=" + barLength +
+                ", bars=" + bars +
+                '}';
+    }
+
 }

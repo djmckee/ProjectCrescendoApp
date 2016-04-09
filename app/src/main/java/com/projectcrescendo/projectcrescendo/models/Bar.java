@@ -67,5 +67,44 @@ public class Bar {
 
     }
 
+    /**
+     * Checks whether or not the object 'o' passed to this method is equal in type and in terms of
+     * being logically equal to this Bar instance.
+     *
+     * @param o the object to compare to this Bar instance.
+     * @return a boolean indicating whether or not 'o' is equal to this exact Bar instance.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Bar)) return false;
+
+        Bar bar = (Bar) o;
+
+        return getBeats() != null ? getBeats().equals(bar.getBeats()) : bar.getBeats() == null;
+
+    }
+
+    /**
+     * Returns an integer that contains a hash to uniquely identify instances of the Bar object,
+     * and returns a hash number. If the instances are logically equal, the hashes will be the same.
+     *
+     * @return an integer containing a hash that represents this Bar instance.
+     */
+    @Override
+    public int hashCode() {
+        return getBeats() != null ? getBeats().hashCode() : 0;
+    }
+
+    /**
+     * Returns a human readable string representation of the current bar.
+     * @return a human readable string representation of the current bar; detailing beats.
+     */
+    @Override
+    public String toString() {
+        return "Bar{" +
+                "beats=" + beats +
+                '}';
+    }
 
 }

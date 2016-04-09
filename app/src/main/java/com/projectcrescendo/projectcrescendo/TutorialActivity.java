@@ -104,7 +104,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
     /**
      * Sets up the initial grid view and the time signature selection spinner UI on initial load of
-     * the activity.
+     * the activity, along with the tutorial selection menu, and the creation of a new blank stave.
      *
      * @param savedInstanceState not used in our implementation.
      */
@@ -629,6 +629,10 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
     }
 
 
+    /**
+     * A convenience method to reduce code duplication. Displays a simple 'Not in tutorial mode'
+     * error message in a standard Android Alert Dialog.
+     */
     private void showNoTutorialError() {
         // Show error if user tries to validate tutorial without ever selecting a tutorial
         new AlertDialog.Builder(this)
@@ -639,6 +643,11 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
                 .show();
     }
 
+    /**
+     * A method that moves the user on to the next tutorial step. To be called when the user is in
+     * tutorial mode and has successfully completed and validated their current tutorial step,
+     * so as to let them move on to the next one.
+     */
     private void moveToNextTutorialStep() {
         // Increment tutorial instruction counter
         instructionIndex++;
