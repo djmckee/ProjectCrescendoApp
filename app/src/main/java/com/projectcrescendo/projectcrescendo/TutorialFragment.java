@@ -39,7 +39,16 @@ public class TutorialFragment extends DialogFragment {
      * @return an inflated version of this fragment's XML layout.
      */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Button closeButton = (Button) this.getView().findViewById(R.id.tutorial_Button);
 
+        closeButton.setOnClickListener(
+                new Button.OnClickListener() {
+                    public void onClick(View v) {
+                        getActivity().finish();
+
+                    }
+                }
+        );
         return inflater.inflate(R.layout.tutorial_fragment,
                 container, false);
     }
@@ -48,7 +57,7 @@ public class TutorialFragment extends DialogFragment {
      * When the fragment is created, this method ensures that the UI elements are instantiated from
      * the XML and refreshes the notes list and intonation initially.
      *
-     * @param savedInstanceState the state of the instance of the activity being created.
+     * @param savedInstanceState
      */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -58,17 +67,15 @@ public class TutorialFragment extends DialogFragment {
             tutorialTextView.setText(tutorialText);
         }
 
-
         Button closeButton = (Button) this.getView().findViewById(R.id.tutorial_Button);
-
         closeButton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
-                        getActivity().getFragmentManager().popBackStack();
+                        getActivity().finish();
+
                     }
                 }
         );
-
     }
 
     /**
