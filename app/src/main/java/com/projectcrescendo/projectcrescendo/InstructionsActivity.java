@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
  * show instructions of the app
  * Created by Ambrose Suen on 26/3/2016.
  */
-public class Instructions extends AppCompatActivity {
+public class InstructionsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

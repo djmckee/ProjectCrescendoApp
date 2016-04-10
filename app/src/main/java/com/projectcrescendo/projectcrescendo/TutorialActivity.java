@@ -264,7 +264,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
             @Override
             public void onClick(View v) {
                 Log.d("TutorialActivity", "instruction button tapped");
-                Intent intent = new Intent(TutorialActivity.this, Instructions.class);
+                Intent intent = new Intent(TutorialActivity.this, InstructionsActivity.class);
                 startActivity(intent);
             }
         });
