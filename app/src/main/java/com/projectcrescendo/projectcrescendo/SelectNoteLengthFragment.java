@@ -15,6 +15,7 @@ import com.projectcrescendo.projectcrescendo.models.Note;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * An interface to handle callbacks from the SelectNoteLengthFragment.
@@ -96,7 +97,7 @@ public class SelectNoteLengthFragment extends DialogFragment implements
         double[] possibleLengths = Note.VALID_NOTE_LENGTHS;
 
         for (double length : possibleLengths) {
-            String lengthString = String.format("%.1f", length);
+            String lengthString = String.format(Locale.UK, "%.1f", length);
             lengthStrings.add(lengthString);
         }
 

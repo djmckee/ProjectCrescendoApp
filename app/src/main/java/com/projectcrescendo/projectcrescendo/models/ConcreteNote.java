@@ -189,8 +189,7 @@ public class ConcreteNote implements Note {
         ConcreteNote that = (ConcreteNote) o;
 
         if (Double.compare(that.getLength(), getLength()) != 0) return false;
-        if (!getPitch().equals(that.getPitch())) return false;
-        return getAccidental() == that.getAccidental() && getIntonation() == that.getIntonation() && getDynamic() == that.getDynamic();
+        return getPitch().equals(that.getPitch()) && getAccidental() == that.getAccidental() && getIntonation() == that.getIntonation() && getDynamic() == that.getDynamic();
 
     }
 

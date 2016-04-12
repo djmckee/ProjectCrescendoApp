@@ -6,7 +6,7 @@
 package uk.co.dolphin_com.sscore;
 
 import android.graphics.RectF;
-import uk.co.dolphin_com.sscore.Point;
+
 import uk.co.dolphin_com.sscore.ex.ScoreException;
 
 /**
@@ -24,40 +24,32 @@ import uk.co.dolphin_com.sscore.ex.ScoreException;
  */
 public class SSystem {
 
+	private final long nativePointer;
+	private final long nativeSc;
+	private final int dpi;
+
+	private SSystem(long nativePointer, long nativeSc, int dpi) {
+		this.nativePointer = nativePointer;
+		this.nativeSc = nativeSc;
+		this.dpi = dpi;
+	}
+
 	/**
 	 * Get the index of this system from the top of the score.
 	 * <p>Index 0 is the topmost.
-	 * 
+	 *
 	 * @return the index of this system
 	 */
 	public native int index();
 
 	/**
-	 * define a range of bars which the system includes
-	 */
-	public static class BarRange {
-		
-		public final int startBarIndex;
-		public final int numBars;
-
-        public boolean containsBar(int barIndex) {
-            return barIndex >= startBarIndex && barIndex < startBarIndex + numBars;
-        }
-
-        private BarRange(int s, int n) {
-			startBarIndex = s;
-			numBars = n;
-		}
-	}
-
-	/**
 	 * Get the start bar index and number of bars for this system.
-	 * 
+	 *
 	 * @return the start bar and number of bars
 	 */
 	public native BarRange getBarRange();
 
-    public boolean containsBar(int barIndex)
+	public boolean containsBar(int barIndex)
     {
         return getBarRange().containsBar(barIndex);
 
@@ -65,14 +57,14 @@ public class SSystem {
 
 	/**
 	 * Get the bounding box of this system.
-	 * 
+	 *
 	 * @return the bounds
 	 */
 	public native Size bounds();
 
 	/**
 	 * Draw this system at the given point.
-	 * 
+	 *
 	 * @param canvas the Canvas
 	 * @param am the AssetManager for loading fonts from assets
 	 * @param tl the top left point to draw this system in the Canvas
@@ -83,10 +75,10 @@ public class SSystem {
 			android.content.res.AssetManager am,
 			Point tl,
 			float magnification);
-	
+
 	/**
 	 * Draw the system allowing optional colouring of particular items/components in the layout
-	 * 
+	 *
 	 * @param canvas the Canvas
 	 * @param am the AssetManager for loading fonts from assets
 	 * @param tl the top left point to draw this system in th Canvas
@@ -102,7 +94,7 @@ public class SSystem {
 
 	/**
 	 * Get the cursor rectangle for a particular system and bar
-	 * 
+	 *
 	 * @param canvas a canvas for measurement
 	 * @param barIndex the index of the bar in the system
 	 * @return the cursor info
@@ -111,7 +103,7 @@ public class SSystem {
 
 	/**
 	 * get the part index of the part enclosing the given y coordinate in this system
-	 * 
+	 *
 	 * @param ypos the y coord
 	 * @return the part index
 	 */
@@ -119,7 +111,7 @@ public class SSystem {
 
 	/**
 	 * get the bar index of the bar enclosing the given x coordinate in this system
-	 * 
+	 *
 	 * @param xpos the x coord
 	 * @return the bar index
 	 */
@@ -127,15 +119,15 @@ public class SSystem {
 
 	/**
 	 * get the default vertical spacing to the next system
-	 * 
+	 *
 	 * @return the default spacing
 	 */
 	public native float getDefaultSpacing();
-	
+
 	/**
 	 * Get an array of components which intersect a given a point in this system
 	 * <p>contents licence is required
-	 * 
+	 *
 	 * @param p the point
 	 * @return array of intersecting Component
 	 */
@@ -144,7 +136,7 @@ public class SSystem {
 	/**
 	 * Get an array of layout components which belong to a particular score item in this system
 	 * <p>contents licence is required
-	 * 
+	 *
 	 * @param item_h the unique identifier for an item (eg note) in the score
 	 * @return array of Component
 	 */
@@ -157,15 +149,23 @@ public class SSystem {
 	 * @param item_h
 	 * @return the bounds of (all components of) the item
 	 */
-	public native RectF getBoundsForItem(int item_h) throws ScoreException;;
+	public native RectF getBoundsForItem(int item_h) throws ScoreException;
 
-	private SSystem(long nativePointer, long nativeSc, int dpi)
-	{
-		this.nativePointer = nativePointer;
-		this.nativeSc = nativeSc;
-		this.dpi = dpi;
+	/**
+	 * define a range of bars which the system includes
+	 */
+	public static class BarRange {
+
+		public final int startBarIndex;
+		public final int numBars;
+
+		private BarRange(int s, int n) {
+			startBarIndex = s;
+			numBars = n;
+		}
+
+		public boolean containsBar(int barIndex) {
+			return barIndex >= startBarIndex && barIndex < startBarIndex + numBars;
+		}
 	}
-	private final long nativePointer;
-	private final long nativeSc;
-	private final int dpi;
 }

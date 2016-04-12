@@ -17,5 +17,5 @@ public interface LayoutCallback
 	 * @param sys the new SSystem
 	 * @return false to abort the layout
 	 */
-	public boolean addSystem(SSystem sys);
+	boolean addSystem(SSystem sys);
 }

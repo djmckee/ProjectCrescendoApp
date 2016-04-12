@@ -27,34 +27,16 @@ import uk.co.dolphin_com.sscore.playdata.UserTempo;
 public class Player {
 
     private static final int kDefaultTempoBPM = 80;
-
-    /**
-     * An exception from the Player
-     */
-    public static class PlayerException extends Exception
-    {
-        PlayerException(String detailMessage)
-        {
-            super(detailMessage);
-        }
-    }
-
-    /**
-     * the state of the Player
-     */
-    public enum State
-    {
-        NotStarted, Started, Paused, Stopped, Completed
-    }
-
-    /**
-     * The state of the MediaPlayer
-     * there is a chart of these states in the MediaPlayer documentation
-     */
-    public enum MediaPlayerState
-    {
-        Null,Idle,Initialized,Prepared,Started,Stopped,PlaybackCompleted,Paused,Error
-    }
+    private State state = State.NotStarted;
+    private MediaPlayerState mediaPlayerState;
+    private PlayData playData;
+    private MediaPlayer mediaPlayer;
+    private Dispatcher dispatcher;
+    private int currentBar;
+    private String midiFilePath;
+    private UserTempo userTempo;
+    private TempoType tempoType;
+    private boolean playNotes;
 
     /**
      * Construct the Player
@@ -94,6 +76,30 @@ public class Player {
             scaleMidiFileTempo();
             mediaPlayer = createMediaPlayer(context, new File(midiFilePath));
          }
+    }
+
+    private static boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state);
+    }
+
+    private static File getDocumentsDir(Context context) throws PlayerException {
+        File documentsDir;
+        if (isExternalStorageWritable()) {
+            documentsDir = new File(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_MUSIC), "SeeScoreAndroid");
+            if (!documentsDir.exists()) {
+                if (!documentsDir.mkdirs())
+                    throw new PlayerException("cannot create directory " + documentsDir);
+            }
+        } else {
+            documentsDir = new File(context.getDir("SeeScoreAndroid", 0), "SeeScoreAndroid");
+            if (!documentsDir.exists()) {
+                if (!documentsDir.mkdirs())
+                    throw new PlayerException("cannot create directory " + documentsDir);
+            }
+        }
+        return documentsDir;
     }
 
     /**
@@ -302,29 +308,6 @@ public class Player {
         }
     }
 
-    private static boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        return Environment.MEDIA_MOUNTED.equals(state);
-    }
-    private static File getDocumentsDir(Context context) throws PlayerException {
-        File documentsDir;
-        if (isExternalStorageWritable()) {
-            documentsDir = new File(Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_MUSIC), "SeeScoreAndroid");
-            if (!documentsDir.exists()) {
-                if (!documentsDir.mkdirs())
-                    throw new PlayerException("cannot create directory " + documentsDir);
-            }
-        } else {
-            documentsDir = new File(context.getDir("SeeScoreAndroid", 0), "SeeScoreAndroid");
-            if (!documentsDir.exists()) {
-                if (!documentsDir.mkdirs())
-                    throw new PlayerException("cannot create directory " + documentsDir);
-            }
-        }
-        return documentsDir;
-    }
-
     private MediaPlayer createMediaPlayer(Context context, File midiFile)  throws PlayerException
     {
         MediaPlayer mp = MediaPlayer.create(context, Uri.fromFile(midiFile));
@@ -433,15 +416,29 @@ public class Player {
         }
     }
 
-    private State state = State.NotStarted;
-    private MediaPlayerState mediaPlayerState;
-    private PlayData playData;
-    private MediaPlayer mediaPlayer;
-    private Dispatcher dispatcher;
-    private int currentBar;
-    private String midiFilePath;
-    private UserTempo userTempo;
-    private static enum TempoType {absolute, scaled}
-    private TempoType tempoType;
-    private boolean playNotes;
+    /**
+     * the state of the Player
+     */
+    public enum State {
+        NotStarted, Started, Paused, Stopped, Completed
+    }
+
+    /**
+     * The state of the MediaPlayer
+     * there is a chart of these states in the MediaPlayer documentation
+     */
+    public enum MediaPlayerState {
+        Null, Idle, Initialized, Prepared, Started, Stopped, PlaybackCompleted, Paused, Error
+    }
+
+    private enum TempoType {absolute, scaled}
+
+    /**
+     * An exception from the Player
+     */
+    public static class PlayerException extends Exception {
+        PlayerException(String detailMessage) {
+            super(detailMessage);
+        }
+    }
 }
