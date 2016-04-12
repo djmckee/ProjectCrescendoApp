@@ -171,9 +171,9 @@ public class PlaybackActivity extends AppCompatActivity {
             // Show error report to user
 
             new AlertDialog.Builder(PlaybackActivity.this)
-                    .setTitle("Playback error")
-                    .setMessage("Sorry, it looks like your composition could not be played back. Please check it over and try again...")
-                    .setPositiveButton("Okay", null)
+                    .setTitle(R.string.playback_error_title)
+                    .setMessage(R.string.playback_error_message)
+                    .setPositiveButton(R.string.okay, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
 
@@ -411,7 +411,7 @@ public class PlaybackActivity extends AppCompatActivity {
      */
     private void shareComposition() {
         // Upload to our web API and get a link to share...
-        final ProgressDialog loadingDialog = ProgressDialog.show(PlaybackActivity.this, "Uploading Composition", "Uploading composition...");
+        final ProgressDialog loadingDialog = ProgressDialog.show(PlaybackActivity.this, getString(R.string.upload_loading_title), getString(R.string.upload_loading_subtitle));
         loadingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loadingDialog.setCancelable(true);
 
@@ -438,16 +438,16 @@ public class PlaybackActivity extends AppCompatActivity {
 
                 // If we haven't been cancelled, share it...
                 if (shouldContinueSharing) {
-                    String textToShare = "I'm learning music with Sonata! Check out my latest Sonata composition at " + uploadUrl;
+                    String textToShare = getString(R.string.composition_share_text) + uploadUrl;
 
                     // Looked up the android 'share intent' at http://code.tutsplus.com/tutorials/android-sdk-implement-a-share-intent--mobile-8433
                     Intent shareIntent = new Intent(Intent.ACTION_SEND);
                     shareIntent.setType("text/plain");
 
-                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My latest Sonata Composition");
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.composition_share_title));
                     shareIntent.putExtra(Intent.EXTRA_TEXT, textToShare);
 
-                    startActivity(Intent.createChooser(shareIntent, "Share composition"));
+                    startActivity(Intent.createChooser(shareIntent, getString(R.string.share_screen_title)));
 
                 }
 
@@ -464,9 +464,9 @@ public class PlaybackActivity extends AppCompatActivity {
                 if (shouldContinueSharing) {
                     // Display error...
                     new AlertDialog.Builder(PlaybackActivity.this)
-                            .setTitle("Sharing failed")
-                            .setMessage("Sorry, it looks like sharing of your composition failed, please check your internet connection and try again...")
-                            .setPositiveButton("Okay", null)
+                            .setTitle(R.string.sharing_error_message_title)
+                            .setMessage(R.string.sharing_error_message_text)
+                            .setPositiveButton(R.string.okay, null)
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
                 }
