@@ -39,16 +39,7 @@ public class TutorialFragment extends DialogFragment {
      * @return an inflated version of this fragment's XML layout.
      */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Button closeButton = (Button) this.getView().findViewById(R.id.tutorial_Button);
 
-        closeButton.setOnClickListener(
-                new Button.OnClickListener() {
-                    public void onClick(View v) {
-                        getActivity().finish();
-
-                    }
-                }
-        );
         return inflater.inflate(R.layout.tutorial_fragment,
                 container, false);
     }
@@ -71,8 +62,8 @@ public class TutorialFragment extends DialogFragment {
         closeButton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
-                        getActivity().finish();
 
+            getActivity().onBackPressed();
                     }
                 }
         );
