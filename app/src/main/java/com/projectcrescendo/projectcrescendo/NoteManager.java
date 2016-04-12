@@ -45,7 +45,7 @@ public class NoteManager {
             if (noteNameQueryCursor.moveToFirst()) {
                 // I looked up the use of 'moveToNext' and 'getColumnIndex' at http://examples.javacodegeeks.com/android/core/database/android-cursor-example/
                 do {
-                    String noteName = noteNameQueryCursor.getString(noteNameQueryCursor.getColumnIndex("name"));
+                    String noteName = noteNameQueryCursor.getString(noteNameQueryCursor.getColumnIndex(SQLQueries.NOTE_ENTIRETY_NAME_COLUMN));
 
                     noteNames.add(noteName);
 

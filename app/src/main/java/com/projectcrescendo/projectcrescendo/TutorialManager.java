@@ -45,9 +45,9 @@ public class TutorialManager {
             if (tutorialsQueryCursor.moveToFirst()) {
                 // I looked up the use of 'moveToNext' and 'getColumnIndex' at http://examples.javacodegeeks.com/android/core/database/android-cursor-example/
                 do {
-                    String title = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex("title"));
+                    String title = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex(SQLQueries.TUTORIAL_ENTIRETY_TITLE_COLUMN));
 
-                    String instructionsJsonText = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex("instructions"));
+                    String instructionsJsonText = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex(SQLQueries.TUTORIAL_ENTIRETY_INSTRUCTIONS_COLUMN));
                     List<String> instructionsList = new ArrayList<String>();
 
                     List<Integer> tutorialPoints = new ArrayList<Integer>();
@@ -81,7 +81,7 @@ public class TutorialManager {
 
                     }
 
-                    String validNoteGridJsonText = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex("valid_grid_representation"));
+                    String validNoteGridJsonText = tutorialsQueryCursor.getString(tutorialsQueryCursor.getColumnIndex(SQLQueries.TUTORIAL_ENTIRETY_VALID_GRID_COLUMN));
 
                     try {
                         JSONArray jsonStringArray = new JSONArray(validNoteGridJsonText);

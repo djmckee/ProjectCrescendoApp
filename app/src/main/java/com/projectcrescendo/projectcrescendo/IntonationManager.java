@@ -45,7 +45,7 @@ public class IntonationManager {
             if (intonationQueryCursor.moveToFirst()) {
                 // I looked up the use of 'moveToNext' and 'getColumnIndex' at http://examples.javacodegeeks.com/android/core/database/android-cursor-example/
                 do {
-                    String noteName = intonationQueryCursor.getString(intonationQueryCursor.getColumnIndex("name"));
+                    String noteName = intonationQueryCursor.getString(intonationQueryCursor.getColumnIndex(SQLQueries.INTONATION_ENTIRETY_NAME_COLUMN));
 
                     intonationNames.add(noteName);
 
