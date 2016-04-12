@@ -36,7 +36,7 @@ public class NoteManager {
     public List<String> getNoteNames() {
         SQLiteDatabase databaseInstance = databaseManager.getReadableDatabase();
 
-        Cursor noteNameQueryCursor = databaseInstance.rawQuery("SELECT * FROM note_names", null);
+        Cursor noteNameQueryCursor = databaseInstance.rawQuery(SQLQueries.SELECT_ALL_NOTE_NAMES, null);
 
         List<String> noteNames = new ArrayList<String>();
 
