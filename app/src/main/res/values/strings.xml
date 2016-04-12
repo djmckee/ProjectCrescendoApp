@@ -32,7 +32,7 @@
     <string name="playback_error_title">Playback error</string>
     <string name="playback_error_message">Sorry, it looks like your composition could not be played back. Please check it over and try again…</string>
     <string name="share_screen_title">Share composition</string>
-    <string name="add_note_length">%s - length: %.2f</string>
+    <string name="add_note_length" formatted="false">%s - length: %.2f</string>
     <string name="add_note_button_text">Add new note +</string>
     <string name="enter_note_name_title">Enter note name</string>
     <string name="select_note_length">Select note length</string>
