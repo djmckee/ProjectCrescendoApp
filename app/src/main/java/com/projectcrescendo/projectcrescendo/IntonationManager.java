@@ -37,7 +37,7 @@ public class IntonationManager {
     public List<String> getIntonationNames() {
         SQLiteDatabase databaseInstance = databaseManager.getReadableDatabase();
 
-        Cursor intonationQueryCursor = databaseInstance.rawQuery("SELECT * FROM intonation", null);
+        Cursor intonationQueryCursor = databaseInstance.rawQuery(SQLQueries.SELECT_ALL_INTONATIONS, null);
 
         List<String> intonationNames = new ArrayList<String>();
 

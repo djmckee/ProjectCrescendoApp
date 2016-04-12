@@ -33,7 +33,7 @@ public class TimeSignatureManager {
         final DatabaseManager databaseManager = new DatabaseManager(context);
         SQLiteDatabase databaseInstance = databaseManager.getReadableDatabase();
 
-        Cursor timeSigCursor = databaseInstance.rawQuery("SELECT * FROM time_signature", null);
+        Cursor timeSigCursor = databaseInstance.rawQuery(SQLQueries.SELECT_ALL_TIME_SIGNATURES, null);
 
         // Are there time signatures?
         if (timeSigCursor != null) {

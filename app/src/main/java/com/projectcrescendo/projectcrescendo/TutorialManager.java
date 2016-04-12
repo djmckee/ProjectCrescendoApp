@@ -38,7 +38,7 @@ public class TutorialManager {
         final DatabaseManager databaseManager = new DatabaseManager(context);
         SQLiteDatabase databaseInstance = databaseManager.getReadableDatabase();
 
-        Cursor tutorialsQueryCursor = databaseInstance.rawQuery("SELECT * FROM tutorials", null);
+        Cursor tutorialsQueryCursor = databaseInstance.rawQuery(SQLQueries.SELECT_ALL_TUTORIALS, null);
 
         // Are there tutorials?
         if (tutorialsQueryCursor != null) {
