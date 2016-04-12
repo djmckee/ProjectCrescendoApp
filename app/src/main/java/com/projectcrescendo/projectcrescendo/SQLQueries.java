@@ -9,7 +9,7 @@ package com.projectcrescendo.projectcrescendo;
  * <p>
  * Created by Dylan McKee on 12/04/16.
  */
-public class SQLQueries {
+public final class SQLQueries {
     /**
      * Select all Intonation entireties from the intonation table.
      */
