@@ -15,7 +15,7 @@
     <string name="title_activity_playback">PlaybackActivity</string>
 
     <string name="title_activity_instructions">Instructions</string>
-    <string name="initialInstructionText">Welcome to Sonata! Press the \'+\' button on the left to select a tutorial...</string>
+    <string name="initialInstructionText">Welcome to Sonata! Press the \'+\' button on the left to select a tutorial…</string>
     <string name="expression">"Expression: "</string>
     <string name="invalid_tutorial_error_title">That\'s not quite right!</string>
     <string name="invalid_tutorial_error_message">Looks like your tutorial isn\'t quite right - please check against the last step and try again!</string>
@@ -26,18 +26,18 @@
     <string name="composition_share_title">My latest Sonata Composition</string>
     <string name="composition_share_text">"I'm learning music with Sonata! Check out my latest Sonata composition at "</string>
     <string name="sharing_error_message_title">Sharing failed</string>
-    <string name="sharing_error_message_text">Sorry, it looks like sharing of your composition failed, please check your internet connection and try again...</string>
+    <string name="sharing_error_message_text">Sorry, it looks like sharing of your composition failed, please check your internet connection and try again…</string>
     <string name="upload_loading_title">Uploading Composition</string>
-    <string name="upload_loading_subtitle">Uploading composition...</string>
+    <string name="upload_loading_subtitle">Uploading composition…</string>
     <string name="playback_error_title">Playback error</string>
-    <string name="playback_error_message">Sorry, it looks like your composition could not be played back. Please check it over and try again...</string>
+    <string name="playback_error_message">Sorry, it looks like your composition could not be played back. Please check it over and try again…</string>
     <string name="share_screen_title">Share composition</string>
     <string name="add_note_length">%s - length: %.2f</string>
     <string name="add_note_button_text">Add new note +</string>
     <string name="enter_note_name_title">Enter note name</string>
     <string name="select_note_length">Select note length</string>
     <string name="invalid_note_error_title">Invalid note!</string>
-    <string name="invalid_note_error_message">Not a valid note name - please try again with a valid note name...</string>
+    <string name="invalid_note_error_message">Not a valid note name - please try again with a valid note name…</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
     <string name="note_delete_confirmation_message">Are you sure you want to delete note \'</string>
