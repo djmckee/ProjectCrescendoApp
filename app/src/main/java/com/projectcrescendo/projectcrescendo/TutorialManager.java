@@ -58,11 +58,11 @@ public class TutorialManager {
                         for (int i = 0; i < jsonStringArray.length(); i++) {
                             JSONObject tutorialObject = jsonStringArray.getJSONObject(i);
 
-                            String tutorialString = tutorialObject.getString("instruction_text");
+                            String tutorialString = tutorialObject.getString(JSONSchema.TUTORIAL_INSTRUCTIONS_FIELD);
 
                             instructionsList.add(tutorialString);
 
-                            int tutorialBreakpoint = tutorialObject.getInt("pattern_match_index");
+                            int tutorialBreakpoint = tutorialObject.getInt(JSONSchema.TUTORIAL_MATCH_INDEX_FIELD);
 
                             tutorialPoints.add(tutorialBreakpoint);
 
@@ -91,13 +91,13 @@ public class TutorialManager {
 
                             JSONObject gridItem = jsonStringArray.getJSONObject(i);
 
-                            JSONArray gridItemNotes = gridItem.getJSONArray("notes");
+                            JSONArray gridItemNotes = gridItem.getJSONArray(JSONSchema.TUTORIAL_NOTES_ARRAY_FIELD);
                             for (int j = 0; j < gridItemNotes.length(); j++) {
                                 JSONObject noteItem = gridItemNotes.getJSONObject(j);
 
-                                String notePitch = noteItem.getString("name");
-                                double noteLength = noteItem.getDouble("length");
-                                boolean isPrePopulated = noteItem.optBoolean("is_prepopulated");
+                                String notePitch = noteItem.getString(JSONSchema.NOTE_NAME_FIELD);
+                                double noteLength = noteItem.getDouble(JSONSchema.NOTE_LENGTH_FIELD);
+                                boolean isPrePopulated = noteItem.optBoolean(JSONSchema.NOTE_PREPOPULATED_FIELD);
 
                                 Note note = new ConcreteNote(notePitch);
 
@@ -111,7 +111,7 @@ public class TutorialManager {
 
                             }
 
-                            String intonationString = gridItem.getString("expression");
+                            String intonationString = gridItem.getString(JSONSchema.BEAT_INTONATION_FIELD);
                             Intonation beatIntonation = Intonation.getIntonationWithName(intonationString);
                             requiredBeat.setIntonation(beatIntonation);
                             prePopulatedBeat.setIntonation(beatIntonation);
