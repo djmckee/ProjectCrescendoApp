@@ -41,8 +41,8 @@ public class TimeSignatureManager {
                 // I looked up the use of 'moveToNext' and 'getColumnIndex' at http://examples.javacodegeeks.com/android/core/database/android-cursor-example/
                 do {
 
-                    int numerator = timeSigCursor.getInt(timeSigCursor.getColumnIndex("first"));
-                    int denominator = timeSigCursor.getInt(timeSigCursor.getColumnIndex("second"));
+                    int numerator = timeSigCursor.getInt(timeSigCursor.getColumnIndex(SQLQueries.TIME_SIGNATURE_ENTIRETY_FIRST_COLUMN));
+                    int denominator = timeSigCursor.getInt(timeSigCursor.getColumnIndex(SQLQueries.TIME_SIGNATURE_ENTIRETY_SECOND_COLUMN));
 
                     timeSignatureNumerators.add(numerator);
                     timeSignatureDenominator.add(denominator);
