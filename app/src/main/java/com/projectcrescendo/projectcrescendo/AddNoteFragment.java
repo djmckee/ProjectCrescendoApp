@@ -25,6 +25,9 @@ import java.util.List;
  * An interface to allow the AddNoteFragment to communicate changes from its UI (such as note
  * additions/removals and intonation changes) back to the TutorialActivity instance that presented
  * the fragment UI.
+ * <p>
+ * Created by Dylan McKee on 22/02/2016.
+ *
  */
 interface AddNoteFragmentListener {
     /**
