@@ -10,7 +10,7 @@ package com.projectcrescendo.projectcrescendo;
  * <p>
  * Created by Dylan McKee on 12/04/16.
  */
-public class JSONSchema {
+public final class JSONSchema {
     /**
      * The name of the field containing instruction text entries within our JSON encoded tutorials.
      */
