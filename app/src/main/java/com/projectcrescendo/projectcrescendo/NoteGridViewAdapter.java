@@ -59,21 +59,14 @@ public class NoteGridViewAdapter extends BaseAdapter {
      * A string array containing the grid items to display.
      */
     private final String[] arrayOfGridItems;
-
-    /**
-     * The context of the activity presenting the grid.
-     */
-    private final Context context;
-
-    /**
-     * A callback listener to provide callbacks when the cells in the grid are tapped.
-     */
-    private NoteGridViewAdapterListener adapterListener;
-
     /**
      * The height of the screen that the grid is presented on, in pixels.
      */
     private final double screenHeight;
+    /**
+     * A callback listener to provide callbacks when the cells in the grid are tapped.
+     */
+    private NoteGridViewAdapterListener adapterListener;
 
     /**
      * Constructs a NoteGridViewAdapter.
@@ -83,7 +76,9 @@ public class NoteGridViewAdapter extends BaseAdapter {
      */
     public NoteGridViewAdapter(Activity presentedActivity, String[] arrayOfGridItems) {
         this.arrayOfGridItems = arrayOfGridItems;
-        context = presentedActivity;
+
+        // The context of the activity presenting the grid.
+        Context context = presentedActivity;
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 

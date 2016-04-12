@@ -22,6 +22,7 @@ import com.projectcrescendo.projectcrescendo.models.Tutorial;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * The tutorial activity contains the grid and is where the user completes the tutorial by adding
@@ -137,12 +138,12 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         List<String> timeSignatureDenominatorStrings = new ArrayList<String>();
 
         for (int numerator : timeSignatureNumerators) {
-            String stringValue = String.format("%d", numerator);
+            String stringValue = String.format(Locale.UK, "%d", numerator);
             timeSignatureNumeratorStrings.add(stringValue);
         }
 
         for (int denominator : timeSignatureDenominators) {
-            String stringValue = String.format("%d", denominator);
+            String stringValue = String.format(Locale.UK, "%d", denominator);
             timeSignatureDenominatorStrings.add(stringValue);
         }
 
@@ -527,8 +528,13 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
     /**
      * Returns true if the user is currently completing a Tutorial in this TutorialActivity.
      *
+     * Warning suppressed here because 'is in tutorial mode' is the natural language way of
+     * answering the question that this method answers, so I do not want to invert it for the sake
+     * of clarity.
+     *
      * @return a boolean indicating whether or not the user is currently completing a Tutorial.
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean isInTutorialMode() {
         return (tutorial != null);
     }

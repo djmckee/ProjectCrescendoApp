@@ -4,28 +4,23 @@
  */
 package uk.co.dolphin_com.seescoreandroid;
 
-import uk.co.dolphin_com.sscore.BarGroup;
-import uk.co.dolphin_com.sscore.Component;
-import uk.co.dolphin_com.sscore.CursorRect;
-import uk.co.dolphin_com.sscore.Item;
-import uk.co.dolphin_com.sscore.PartName;
-import uk.co.dolphin_com.sscore.Point;
-import uk.co.dolphin_com.sscore.RenderItem;
-import uk.co.dolphin_com.sscore.RenderItem.Colour;
-import uk.co.dolphin_com.sscore.SScore;
-import uk.co.dolphin_com.sscore.SSystem;
-import uk.co.dolphin_com.sscore.TimedItem;
-import uk.co.dolphin_com.sscore.ex.ScoreException;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.MotionEvent;
 import android.view.View;
+
+import uk.co.dolphin_com.sscore.Component;
+import uk.co.dolphin_com.sscore.CursorRect;
+import uk.co.dolphin_com.sscore.Point;
+import uk.co.dolphin_com.sscore.RenderItem;
+import uk.co.dolphin_com.sscore.RenderItem.Colour;
+import uk.co.dolphin_com.sscore.SScore;
+import uk.co.dolphin_com.sscore.SSystem;
+import uk.co.dolphin_com.sscore.ex.ScoreException;
 
 /**
  * The SystemView is a {@link View} which displays a single {@link SSystem}.
@@ -33,24 +28,27 @@ import android.view.View;
  */
 public class SystemView extends View {
 
-    /**
-     * type of cursor
-     */
-    static enum CursorType
-    {
-        /** no cursor */
-        none,
-
-        /** vertical line cursor */
-        line,
-
-        /** rectangular cursor around bar */
-        box
-    }
-
+	private SScore score;
+	private SSystem system;
+	private AssetManager assetManager;
+	private Point tl;
+	private Paint backgroundPaint;
+	private RectF backgroundPaintRect;
+	private boolean drawItemRect;
+	private RectF tappedItemRect;
+	private Paint tappedItemPaint;
+	private Paint barRectPaint;
+	private float zoomingMag;
+	private RenderItem[] renderItems;
+	private Rect viewRect;
+	private boolean isZooming = false;
+	private int cursorBarIndex;
+	private CursorType cursorType = CursorType.none;
+	private float cursor_xpos = 0;
+	private SeeScoreView.TapNotification tapNotify;
 	/**
 	 * construct the SystemView
-	 * 
+	 *
 	 * @param context the Context
 	 * @param score the score
 	 * @param sys the system
@@ -144,7 +142,7 @@ public class SystemView extends View {
     }
 
 	/** request a special colouring for a particular item in this System
-	 * 
+	 *
 	 * @param item_h the unique identifier for the item
 	 */
 	public void colourItem(int item_h)
@@ -160,7 +158,7 @@ public class SystemView extends View {
 		{
 			renderItems = null;
 		}
-		invalidate();		
+		invalidate();
 	}
 
     /**
@@ -175,7 +173,7 @@ public class SystemView extends View {
 		float h = system.bounds().height;
 		setMeasuredDimension((int)w,(int)h);
 	}
-	
+
 	/**
 	 * called by android to draw the View
      * @param canvas the canvas
@@ -239,7 +237,7 @@ public class SystemView extends View {
 		setBottom((int) (viewRect.bottom * zoom));
 		invalidate();
 	}
-	
+
 	/**
 	 * send touch events to the tap handler
      * NOTE: We really need to filter out the pinch zoom events and scroll events so these aren't seen as taps
@@ -263,22 +261,21 @@ public class SystemView extends View {
 		return false;
 	}
 
-	private SScore score;
-	private SSystem system;
-	private AssetManager assetManager;
-	private Point tl;
-	private Paint backgroundPaint;
-	private RectF backgroundPaintRect;
-	private boolean drawItemRect;
-	private RectF tappedItemRect;
-	private Paint tappedItemPaint;
-	private Paint barRectPaint;
-	private float zoomingMag;
-	private RenderItem[] renderItems;
-	private Rect viewRect;
-	private boolean isZooming = false;
-	private int cursorBarIndex;
-    private CursorType cursorType = CursorType.none;
-    private float cursor_xpos = 0;
-    private SeeScoreView.TapNotification tapNotify;
+	/**
+	 * type of cursor
+	 */
+	enum CursorType {
+		/**
+		 * no cursor
+		 */
+		none,
+
+		/**
+		 * vertical line cursor
+		 */
+		line,
+
+		/** rectangular cursor around bar */
+		box
+	}
 }

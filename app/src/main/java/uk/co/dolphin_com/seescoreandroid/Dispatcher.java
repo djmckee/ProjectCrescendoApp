@@ -10,7 +10,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import uk.co.dolphin_com.sscore.playdata.Bar;
-import uk.co.dolphin_com.sscore.playdata.BarIterator;
 import uk.co.dolphin_com.sscore.playdata.Note;
 import uk.co.dolphin_com.sscore.playdata.Part;
 import uk.co.dolphin_com.sscore.playdata.PlayData;
@@ -20,61 +19,15 @@ import uk.co.dolphin_com.sscore.playdata.PlayData;
  */
 public class Dispatcher {
 
-    /**
-     * the state of the dispatcher
-     */
-    public static enum State { Started, Stopped }
-
-    /**
-     * a generic handler for bar start, beat and end
-     */
-    public interface EventHandler {
-        /**
-         * called at the event for bar start, beat and end
-         * @param index bar index for bar change handler, beat index for beat handler, and unused for endHandler
-         * @param countIn is true for count-in bar(s)
-         */
-        public void event(int index, boolean countIn);
-    }
-
-    /**
-     * a handler for notes starting
-     */
-    public interface NoteEventHandler {
-        /**
-         * called for each note/chord starting
-         * @param notes note or list of notes in chord starting
-         */
-        public void startNotes(List<Note> notes);
-    }
-
-    /**
-     * wrapper for an event handler to convey the delay time
-     */
-    static class EventHandlerWrapper
-    {
-        EventHandlerWrapper(EventHandler eventHandler, int delay_ms)
-        {
-            this.eventHandler = eventHandler;
-            this.delay_ms = delay_ms;
-        }
-        EventHandler eventHandler;
-        int delay_ms;
-    }
-
-    /**
-     * wrapper for a note event handler to convey the delay time
-     */
-    static class NoteEventHandlerWrapper
-    {
-        NoteEventHandlerWrapper(NoteEventHandler eventHandler, int delay_ms)
-        {
-            this.eventHandler = eventHandler;
-            this.delay_ms = delay_ms;
-        }
-        NoteEventHandler eventHandler;
-        int delay_ms;
-    }
+    private State state = State.Stopped;
+    private PlayData playData;
+    private Timer localTimer;
+    private EventHandlerWrapper barStartHandler;
+    private EventHandlerWrapper beatHandler;
+    private EventHandlerWrapper endHandler;
+    private NoteEventHandlerWrapper noteHandler;
+    private int lastBarStart;
+    private Runnable playEndHandler;
 
     /**
      * construct the Dispatcher
@@ -174,6 +127,7 @@ public class Dispatcher {
             }, cal.getTime());
         }
     }
+
     private void scheduleNotesForBar(final Bar bar, final Date barStartTime) {
         if (noteHandler != null && !bar.countIn){
             List<Note> notes = allNotesInBar(bar);
@@ -356,14 +310,62 @@ public class Dispatcher {
         return localTimer;
     }
 
-    private State state = State.Stopped;
-    private PlayData playData;
-    private Timer localTimer;
-    private EventHandlerWrapper barStartHandler;
-    private EventHandlerWrapper beatHandler;
-    private EventHandlerWrapper endHandler;
-    private NoteEventHandlerWrapper noteHandler;
-    private int lastBarStart;
-    private Runnable playEndHandler;
+    /**
+     * the state of the dispatcher
+     */
+    public enum State {
+        Started, Stopped
+    }
+
+    /**
+     * a generic handler for bar start, beat and end
+     */
+    public interface EventHandler {
+        /**
+         * called at the event for bar start, beat and end
+         *
+         * @param index   bar index for bar change handler, beat index for beat handler, and unused for endHandler
+         * @param countIn is true for count-in bar(s)
+         */
+        void event(int index, boolean countIn);
+    }
+
+    /**
+     * a handler for notes starting
+     */
+    public interface NoteEventHandler {
+        /**
+         * called for each note/chord starting
+         *
+         * @param notes note or list of notes in chord starting
+         */
+        void startNotes(List<Note> notes);
+    }
+
+    /**
+     * wrapper for an event handler to convey the delay time
+     */
+    static class EventHandlerWrapper {
+        EventHandler eventHandler;
+        int delay_ms;
+
+        EventHandlerWrapper(EventHandler eventHandler, int delay_ms) {
+            this.eventHandler = eventHandler;
+            this.delay_ms = delay_ms;
+        }
+    }
+
+    /**
+     * wrapper for a note event handler to convey the delay time
+     */
+    static class NoteEventHandlerWrapper {
+        NoteEventHandler eventHandler;
+        int delay_ms;
+
+        NoteEventHandlerWrapper(NoteEventHandler eventHandler, int delay_ms) {
+            this.eventHandler = eventHandler;
+            this.delay_ms = delay_ms;
+        }
+    }
 }
 

@@ -10,83 +10,88 @@ package uk.co.dolphin_com.sscore;
  */
 public class LoadWarning {
 
-	public static enum W
-	{
-		/**
-		 *  no warning !
-		 */
-		none,
-		
-		/**
-		 * <accidental> or <stem> elements are not defined in the file and will be reconstructed by SeeScore
-		 */
-		missingelement,
-		
-		/**
-		 * different parts do not have the same number of bars (measures)
-		 */
-	    measurecount,
-	    
-	    /**
-	     * a note has the wrong number of beams defined for the note type
-	     */
-	    beamcount,
-	    
-	    /**
-	     * beam/slur/tie/tuplet.. 2nd start without stop
-	     */
-	    unexpectedStart,
-	    
-	    /**
-	     * beam/slur continue without start
-	     */
-	    unexpectedContinue,
-	    
-	    /**
-	     * beam/slur/tie/tuplet stop without start
-	     */
-	    unexpectedStop,
-	    
-	    /**
-	     * beam/slur/tied/tuplet unclosed at end of score/measure
-	     */
-	    unclosed
-	}
-
-	/**
-	 * Define the type of element with the problem
-	 */
-	public static enum E
-	{
-	    none,
-	    beam,
-	    slur,
-	    tied,
-	    tuplet,
-	    part,
-		accidental,
-		stem
-	};
-
 	/**
 	 * The warning type
 	 */
 	public final W warning;
-	
 	/**
 	 * The index of the part containing the problem -- -1 for all parts
 	 */
 	public final int partIndex;
-	
 	/**
 	 * The index of the bar containing the problem -- -1 for all bars
 	 */
 	public final int barIndex;
-	
 	/**
 	 * The type of element which has a problem
 	 */
 	public final E element;
+
+	private LoadWarning() {
+		warning = W.none;
+		element = E.none;
+		partIndex = 0;
+		barIndex = 0;
+	}
+
+	private LoadWarning(int w, int p, int b, int e) {
+		switch (w) {
+			default:
+			case 0:
+				warning = W.none;
+				break;
+			case 1:
+				warning = W.missingelement;
+				break;
+			case 2:
+				warning = W.measurecount;
+				break;
+			case 3:
+				warning = W.beamcount;
+				break;
+			case 4:
+				warning = W.unexpectedStart;
+				break;
+			case 5:
+				warning = W.unexpectedContinue;
+				break;
+			case 6:
+				warning = W.unexpectedStop;
+				break;
+			case 7:
+				warning = W.unclosed;
+				break;
+		}
+		switch (e) {
+			default:
+			case 0:
+				element = E.none;
+				break;
+			case 1:
+				element = E.beam;
+				break;
+			case 2:
+				element = E.slur;
+				break;
+			case 3:
+				element = E.tied;
+				break;
+			case 4:
+				element = E.tuplet;
+				break;
+			case 5:
+				element = E.part;
+				break;
+			case 6:
+				element = E.accidental;
+				break;
+			case 7:
+				element = E.stem;
+				break;
+		}
+		partIndex = p;
+		barIndex = b;
+	}
 
 	public String toString()
 	{
@@ -121,40 +126,60 @@ public class LoadWarning {
 	}
 
 
-	private LoadWarning()
+	public enum W
 	{
-		warning = W.none;
-		element = E.none;
-		partIndex = 0;
-		barIndex = 0;
+		/**
+		 * no warning !
+		 */
+		none,
+
+		/**
+		 * <accidental> or <stem> elements are not defined in the file and will be reconstructed by SeeScore
+		 */
+		missingelement,
+
+		/**
+		 * different parts do not have the same number of bars (measures)
+		 */
+		measurecount,
+
+		/**
+		 * a note has the wrong number of beams defined for the note type
+		 */
+		beamcount,
+
+		/**
+		 * beam/slur/tie/tuplet.. 2nd start without stop
+		 */
+		unexpectedStart,
+
+		/**
+		 * beam/slur continue without start
+		 */
+		unexpectedContinue,
+
+		/**
+		 * beam/slur/tie/tuplet stop without start
+		 */
+		unexpectedStop,
+
+		/**
+		 * beam/slur/tied/tuplet unclosed at end of score/measure
+		 */
+		unclosed
 	}
-	private LoadWarning(int w, int p, int b, int e)
-	{
-		switch (w)
-		{
-		default:
-		case 0: warning = W.none;break;
-		case 1: warning = W.missingelement;break;
-		case 2: warning = W.measurecount;break;
-		case 3: warning = W.beamcount;break;
-		case 4: warning = W.unexpectedStart;break;
-		case 5: warning = W.unexpectedContinue;break;
-		case 6: warning = W.unexpectedStop;break;
-		case 7: warning = W.unclosed;break;
-		}
-		switch (e)
-		{
-		default:
-		case 0: element = E.none;break;
-		case 1: element = E.beam;break;
-		case 2: element = E.slur;break;
-		case 3: element = E.tied;break;
-		case 4: element = E.tuplet;break;
-		case 5: element = E.part;break;
-		case 6: element = E.accidental;break;
-		case 7: element = E.stem;break;
-		}
-		partIndex = p;
-		barIndex = b;
+
+	/**
+	 * Define the type of element with the problem
+	 */
+	public enum E {
+		none,
+		beam,
+		slur,
+		tied,
+	    tuplet,
+	    part,
+		accidental,
+		stem
 	}
 }

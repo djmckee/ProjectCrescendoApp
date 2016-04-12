@@ -4,21 +4,6 @@
  */
 package uk.co.dolphin_com.seescoreandroid;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import uk.co.dolphin_com.sscore.Component;
-import uk.co.dolphin_com.sscore.LayoutCallback;
-import uk.co.dolphin_com.sscore.LayoutOptions;
-import uk.co.dolphin_com.sscore.SScore;
-import uk.co.dolphin_com.sscore.SSystem;
-import uk.co.dolphin_com.sscore.SSystem.BarRange;
-import uk.co.dolphin_com.sscore.SSystemList;
-import uk.co.dolphin_com.sscore.Size;
-import uk.co.dolphin_com.sscore.ex.NoPartsException;
-import uk.co.dolphin_com.sscore.ex.ScoreException;
-import uk.co.dolphin_com.sscore.playdata.Note;
-
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.res.AssetManager;
@@ -37,65 +22,56 @@ import android.view.ViewParent;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import uk.co.dolphin_com.sscore.Component;
+import uk.co.dolphin_com.sscore.LayoutCallback;
+import uk.co.dolphin_com.sscore.LayoutOptions;
+import uk.co.dolphin_com.sscore.SScore;
+import uk.co.dolphin_com.sscore.SSystem;
+import uk.co.dolphin_com.sscore.SSystem.BarRange;
+import uk.co.dolphin_com.sscore.SSystemList;
+import uk.co.dolphin_com.sscore.Size;
+import uk.co.dolphin_com.sscore.ex.NoPartsException;
+import uk.co.dolphin_com.sscore.ex.ScoreException;
+import uk.co.dolphin_com.sscore.playdata.Note;
+
 /**
  * SeeScoreView manages layout of a {@link SScore} and placement of {@link SystemView}s into a scrolling View.
  */
 public class SeeScoreView extends LinearLayout  {
 
     /**
-     * The type of cursor, a vertical line or a rectangle around a bar
+     * the margin between the edge of the screen and the edge of the layout
      */
-    public static enum CursorType
-    {
-        line, box
-    }
-
-    /**
-     * for notification of zoom change
-     */
-    public interface ZoomNotification
-    {
-        /**
-         * called on notification of zoom
-         * @param scale the new zoom scale
-         */
-        void zoom(float scale);
-    }
-
-    /**
-     * for notification of a tap in the view
-     */
-    public interface TapNotification
-    {
-        /**
-         * called on notification of a user tap on a system with information about what was tapped
-         * @param systemIndex the index of the system tapped (0 is the top system)
-         * @param partIndex the 0-based part index of the part tapped
-         * @param barIndex the 0-based bar index of the bar tapped
-         * @param components the components tapped
-         */
-        void tap(int systemIndex, int partIndex, int barIndex, Component[] components);
-    }
-
+    static final float kMargin = 10;
     /**
      * autoscroll centres the current playing bar around here
      */
     private static final float kWindowPlayingCentreFractionFromTop = 0.333F;
-
     /**
      * the minimum magnification
      */
     private static final float kMinMag = 0.2F;
-
     /**
      * the maximum magnification
      */
     private static final float kMaxMag = 3.F;
-
-    /**
-     * the margin between the edge of the screen and the edge of the layout
-     */
-    static final float kMargin = 10;
+    private SScore score;
+    private AssetManager assetManager;
+    private int displayDPI;
+    private SSystemList systems;
+    private float magnification;
+    private LayoutThread layoutThread;
+    private float screenHeight;
+    private boolean isAbortingLayout = false;
+    private float startPinchFingerSpacing;
+    private boolean isZooming = false;
+    private ArrayList<SystemView> views = new ArrayList<SystemView>();
+    private ZoomNotification zoomNotify;
+    private TapNotification tapNotify;
+    private Runnable layoutCompletionHandler;
 
     /**
      * construct the SeeScore scrollable View
@@ -343,80 +319,6 @@ public class SeeScoreView extends LinearLayout  {
     }
 
     /**
-     * A Thread to perform a complete (abortable) layout of the entire score which
-     * may take unlimited time, but periodically updates the UI whenever a new laid-out system
-     * is ready to add to the display
-     */
-    private class LayoutThread extends Thread
-    {
-        LayoutThread(float displayHeight)
-        {
-            super("LayoutThread");
-            this.displayHeight = displayHeight;
-            aborting = false;
-            views.clear();
-        }
-
-        /**
-         *  set the abort flag so that the layout thread will stop ASAP
-         */
-        public void abort()
-        {
-            aborting = true;
-        }
-
-        public void run()
-        {
-            if (aborting)
-                return;
-            Canvas canvas = new Canvas();
-            int numParts = score.numParts();
-            boolean[] parts = new boolean[numParts];
-            for (int i = 0; i < numParts; ++i)
-            {
-                parts[i] = true;
-            }
-            LayoutOptions opt = new LayoutOptions();
-            if (displayHeight > 100
-                    && !aborting)
-            {
-                try
-                {
-                    score.layout(canvas, assetManager, displayDPI, getWidth() - 2*kMargin, displayHeight, parts,
-                            new LayoutCallback(){
-                                public boolean addSystem(SSystem sys)
-                                {
-                                    if (!aborting)
-                                        SeeScoreView.this.addSystem(sys);
-                                    return !aborting; // return false to abort layout
-                                }
-                            },
-                            magnification,opt);
-                }
-                catch (NoPartsException e)
-                {
-                    Log.w("sscore", "layout no parts error");
-                }
-                catch (ScoreException e)
-                {
-                    Log.w("sscore", "layout error:" + e);
-                }
-            }
-            if (SeeScoreView.this.layoutCompletionHandler != null) {
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-
-                    public void run() {
-                        SeeScoreView.this.layoutCompletionHandler.run();
-                    }
-                });
-            }
-        }
-
-        private boolean aborting;
-        private float displayHeight;
-    }
-
-    /**
      *  abort the layout and notify completion of abort on the main thread through the Runnable argument
      *
      * @param thenRunnable run() is executed when abort is complete on the main thread
@@ -572,18 +474,99 @@ public class SeeScoreView extends LinearLayout  {
         return false;
     }
 
-    private SScore score;
-    private AssetManager assetManager;
-    private int displayDPI;
-    private SSystemList systems;
-    private float magnification;
-    private LayoutThread layoutThread;
-    private float screenHeight;
-    private boolean isAbortingLayout = false;
-    private float startPinchFingerSpacing;
-    private boolean isZooming = false;
-    private ArrayList<SystemView> views = new ArrayList<SystemView>();
-    private ZoomNotification zoomNotify;
-    private TapNotification tapNotify;
-    private Runnable layoutCompletionHandler;
+    /**
+     * The type of cursor, a vertical line or a rectangle around a bar
+     */
+    public enum CursorType {
+        line, box
+    }
+
+    /**
+     * for notification of zoom change
+     */
+    public interface ZoomNotification {
+        /**
+         * called on notification of zoom
+         *
+         * @param scale the new zoom scale
+         */
+        void zoom(float scale);
+    }
+
+    /**
+     * for notification of a tap in the view
+     */
+    public interface TapNotification {
+        /**
+         * called on notification of a user tap on a system with information about what was tapped
+         *
+         * @param systemIndex the index of the system tapped (0 is the top system)
+         * @param partIndex   the 0-based part index of the part tapped
+         * @param barIndex    the 0-based bar index of the bar tapped
+         * @param components  the components tapped
+         */
+        void tap(int systemIndex, int partIndex, int barIndex, Component[] components);
+    }
+
+    /**
+     * A Thread to perform a complete (abortable) layout of the entire score which
+     * may take unlimited time, but periodically updates the UI whenever a new laid-out system
+     * is ready to add to the display
+     */
+    private class LayoutThread extends Thread {
+        private boolean aborting;
+        private float displayHeight;
+
+        LayoutThread(float displayHeight) {
+            super("LayoutThread");
+            this.displayHeight = displayHeight;
+            aborting = false;
+            views.clear();
+        }
+
+        /**
+         * set the abort flag so that the layout thread will stop ASAP
+         */
+        public void abort() {
+            aborting = true;
+        }
+
+        public void run() {
+            if (aborting)
+                return;
+            Canvas canvas = new Canvas();
+            int numParts = score.numParts();
+            boolean[] parts = new boolean[numParts];
+            for (int i = 0; i < numParts; ++i) {
+                parts[i] = true;
+            }
+            LayoutOptions opt = new LayoutOptions();
+            if (displayHeight > 100
+                    && !aborting) {
+                try {
+                    score.layout(canvas, assetManager, displayDPI, getWidth() - 2 * kMargin, displayHeight, parts,
+                            new LayoutCallback() {
+                                public boolean addSystem(SSystem sys) {
+                                    if (!aborting)
+                                        SeeScoreView.this.addSystem(sys);
+                                    return !aborting; // return false to abort layout
+                                }
+                            },
+                            magnification, opt);
+                } catch (NoPartsException e) {
+                    Log.w("sscore", "layout no parts error");
+                } catch (ScoreException e) {
+                    Log.w("sscore", "layout error:" + e);
+                }
+            }
+            if (SeeScoreView.this.layoutCompletionHandler != null) {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+
+                    public void run() {
+                        SeeScoreView.this.layoutCompletionHandler.run();
+                    }
+                });
+            }
+        }
+    }
 }

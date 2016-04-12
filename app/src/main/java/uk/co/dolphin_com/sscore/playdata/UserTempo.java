@@ -16,7 +16,7 @@ public interface UserTempo
 	 * 
 	 * @return the user-defined tempo [10 .. 360]
 	 */
-	public int getUserTempo();
+	int getUserTempo();
 
 	/**
 	 * Get a user-defined scaling for tempo values defined in the score.
@@ -24,5 +24,5 @@ public interface UserTempo
 	 * 
 	 * @return the user-defined scaling for the tempo [0.1 .. 10]
 	 */
-	public float getUserTempoScaling();
+	float getUserTempoScaling();
 }

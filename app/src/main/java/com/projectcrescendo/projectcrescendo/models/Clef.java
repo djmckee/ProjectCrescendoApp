@@ -143,8 +143,7 @@ public class Clef {
         Clef clef = (Clef) o;
 
         if (lengthOfClef != clef.lengthOfClef) return false;
-        if (barLength != clef.barLength) return false;
-        return getBars() != null ? getBars().equals(clef.getBars()) : clef.getBars() == null;
+        return barLength == clef.barLength && (getBars() != null ? getBars().equals(clef.getBars()) : clef.getBars() == null);
 
     }
 

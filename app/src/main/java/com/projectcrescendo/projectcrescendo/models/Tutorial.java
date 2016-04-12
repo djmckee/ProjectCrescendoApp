@@ -202,9 +202,7 @@ public class Tutorial {
             return false;
         if (getPrePopulatedBeats() != null ? !getPrePopulatedBeats().equals(tutorial.getPrePopulatedBeats()) : tutorial.getPrePopulatedBeats() != null)
             return false;
-        if (getValidBeats() != null ? !getValidBeats().equals(tutorial.getValidBeats()) : tutorial.getValidBeats() != null)
-            return false;
-        return getTutorialPatternMatchIndex() != null ? getTutorialPatternMatchIndex().equals(tutorial.getTutorialPatternMatchIndex()) : tutorial.getTutorialPatternMatchIndex() == null;
+        return getValidBeats() != null ? getValidBeats().equals(tutorial.getValidBeats()) : tutorial.getValidBeats() == null && (getTutorialPatternMatchIndex() != null ? getTutorialPatternMatchIndex().equals(tutorial.getTutorialPatternMatchIndex()) : tutorial.getTutorialPatternMatchIndex() == null);
 
     }
 

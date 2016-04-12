@@ -174,7 +174,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
      * Sets the intonation button text to whatever the currently selected intonation's name is.
      */
     private void refreshIntonation() {
-        intonationButton.setText(getString(R.string.expression) + getCurrentIntonation());
+        intonationButton.setText(String.format("%s%s", getString(R.string.expression), getCurrentIntonation()));
     }
 
     /**
