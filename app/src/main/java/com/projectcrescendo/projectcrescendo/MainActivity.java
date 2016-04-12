@@ -45,10 +45,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        NoteManager noteManager = new NoteManager(this);
-        Log.d("Debug", "note names: " + noteManager.getNoteNames());
-
-
         FloatingActionButton startTutorials = (FloatingActionButton) findViewById(R.id.startTutorialsButton);
         startTutorials.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

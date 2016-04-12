@@ -163,7 +163,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
         selectIntonationFragment.setListener(this);
 
-        selectIntonationFragment.show(getActivity().getFragmentManager(), "Add intonation");
+        selectIntonationFragment.show(getActivity().getFragmentManager(), getString(R.string.add_intonation_title));
 
     }
 
@@ -187,7 +187,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         for (Note note : getNotesForCurrentBeat()) {
             Log.d("AddNoteFragment", "note = " + note.toString());
 
-            String title = String.format("%s - length: %.2f", note.getPitch(), note.getLength());
+            String title = String.format(getString(R.string.add_note_length), note.getPitch(), note.getLength());
 
             noteTitleList.add(title);
 
@@ -195,7 +195,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
         // If there's less than 5 notes in the bar; add the option to add a note too...
         if (getNotesForCurrentBeat().size() < 5) {
-            noteTitleList.add("Add new note +");
+            noteTitleList.add(getString(R.string.add_note_button_text));
         }
 
         ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(this.getActivity(), R.layout.note_list_row, noteTitleList);
@@ -219,7 +219,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         // Get the note name...
         AlertDialog.Builder inputDialog = new AlertDialog.Builder(getActivity());
 
-        inputDialog.setTitle("Enter note name");
+        inputDialog.setTitle(R.string.enter_note_name_title);
         final AutoCompleteTextView inputTextView = new AutoCompleteTextView(getActivity());
 
         List<String> noteNameStrings = new NoteManager(getActivity()).getNoteNames();
@@ -233,7 +233,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
 
         inputDialog.setView(inputTextView);
 
-        inputDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+        inputDialog.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int buttonId) {
                 // Get user input string
@@ -291,15 +291,15 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
                         }
                     });
 
-                    selectNoteLengthFragment.show(getActivity().getFragmentManager(), "Select note length");
+                    selectNoteLengthFragment.show(getActivity().getFragmentManager(), getString(R.string.select_note_length));
 
 
                 } else {
                     // Display error message...
                     new AlertDialog.Builder(getActivity())
-                            .setTitle("Invalid note!")
-                            .setMessage("Not a valid note name - please try again with a valid note name...")
-                            .setPositiveButton("Okay", null)
+                            .setTitle(R.string.invalid_note_error_title)
+                            .setMessage(R.string.invalid_note_error_message)
+                            .setPositiveButton(R.string.okay, null)
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
 
@@ -309,7 +309,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
             }
         });
 
-        inputDialog.setNegativeButton("Cancel", null);
+        inputDialog.setNegativeButton(R.string.cancel, null);
 
         inputDialog.create().show();
 
@@ -373,9 +373,9 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
         final Note selectedNote = notesForCurrentBeat.get(position);
 
         AlertDialog.Builder lengthInputDialog = new AlertDialog.Builder(getActivity());
-        lengthInputDialog.setTitle("Are you sure you want to delete note '" + selectedNote.getPitch() + "'?");
+        lengthInputDialog.setTitle(getString(R.string.note_delete_confirmation_message) + selectedNote.getPitch() + getString(R.string.question_mark));
 
-        lengthInputDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        lengthInputDialog.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int buttonId) {
                 // Tell the listener...
@@ -388,7 +388,7 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
             }
         });
 
-        lengthInputDialog.setNegativeButton("Cancel", null);
+        lengthInputDialog.setNegativeButton(R.string.cancel, null);
 
         lengthInputDialog.show();
 

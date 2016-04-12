@@ -617,9 +617,9 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
             // Show error
             new AlertDialog.Builder(this)
-                    .setTitle("That's not quite right!")
-                    .setMessage("Looks like your tutorial isn't quite right - please check against the last step and try again!")
-                    .setPositiveButton("Okay", null)
+                    .setTitle(R.string.invalid_tutorial_error_title)
+                    .setMessage(R.string.invalid_tutorial_error_message)
+                    .setPositiveButton(R.string.okay, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
 
@@ -636,9 +636,9 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
     private void showNoTutorialError() {
         // Show error if user tries to validate tutorial without ever selecting a tutorial
         new AlertDialog.Builder(this)
-                .setTitle("Not in tutorial mode!")
-                .setMessage("Please select a tutorial by pressing the + button, then validate once you've completed the tutorial steps.")
-                .setPositiveButton("Okay", null)
+                .setTitle(R.string.no_tutorial_error_title)
+                .setMessage(R.string.no_tutorial_error_message)
+                .setPositiveButton(R.string.okay, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
@@ -657,7 +657,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         // If we're at the last instruction, show congratulation message
         if (instructionIndex == tutorialManager.getTutorialsList().size()) {
             // Show congratulatory fragment!
-            fragmentText = "Congratulations! You've completed the " + tutorial.getTitle() + " tutorial!";
+            fragmentText = String.format(getString(R.string.tutorial_complete_message), tutorial.getTitle());
 
         } else {
             // Go to next step...
