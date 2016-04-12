@@ -5,19 +5,19 @@
 
     <RelativeLayout
         android:id="@+id/RelativeLayout01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textSize="20px"
+        android:textSize="50px"
         android:id="@+id/tutorial_Text_View"
         android:layout_gravity="center_horizontal"
-        android:layout_above="@+id/tutorial_Button"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+
 
         />
 
@@ -25,11 +25,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ok"
+        android:layout_below="@+id/tutorial_Text_View"
         android:id="@+id/tutorial_Button"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="25dp"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/tutorial_Text_View" />
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="false"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
 </ScrollView>
