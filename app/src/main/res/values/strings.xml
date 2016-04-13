@@ -46,6 +46,8 @@
     <string name="save_choice_save">Save current composition</string>
     <string name="save_choice_open">Open existing composition</string>
     <string name="save_choice_title">Save or Open Composition?</string>
+    <string name="save_composition_loading_title">Saving Composition</string>
+    <string name="save_composition_loading_message">Saving your current composition, please wait...</string>
 
     <!-- <string-array name="time_signature">
         <item>2/2</item>

@@ -703,7 +703,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
                     // Save the current composition to the SQLite Database.
 
                     // Show loading UI...
-                    ProgressDialog loadingDialog = ProgressDialog.show(TutorialActivity.this, "Saving", "Saving your current composition, please wait...");
+                    ProgressDialog loadingDialog = ProgressDialog.show(TutorialActivity.this, getString(R.string.save_composition_loading_title), getString(R.string.save_composition_loading_message));
                     loadingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
                     loadingDialog.setCancelable(false);
