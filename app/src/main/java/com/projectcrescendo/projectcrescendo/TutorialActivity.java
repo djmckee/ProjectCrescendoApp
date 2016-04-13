@@ -741,6 +741,40 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
                 } else if (item == 1) {
                     // Show saved compositions and allow the user to open one.
+
+                    // Show loading UI...
+                    ProgressDialog loadingDialog = ProgressDialog.show(TutorialActivity.this, getString(R.string.open_dialog_title), getString(R.string.open_dialog_message));
+                    loadingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+                    loadingDialog.setCancelable(false);
+
+
+                    // Create stave database manager instance to do the opening...
+                    StaveManager staveManager = new StaveManager(TutorialActivity.this);
+
+                    // Get a list of staves...
+                    List<Stave> savedCompositions = staveManager.getSavedStaves();
+
+                    // Synchronous save complete; hide loading dialog
+                    loadingDialog.hide();
+
+                    // Did they load properly?
+                    if (savedCompositions == null) {
+                        // Opening failed, display error...
+                        new AlertDialog.Builder(TutorialActivity.this)
+                                .setTitle("Loading saved compositions failed")
+                                .setMessage("Could not load saved compositions at this time, sorry!")
+                                .setPositiveButton(R.string.okay, null)
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+
+                        // Don't bother continuing trying to open nothing, there's likely a null pointer exception waiting to happen here.
+                        return;
+                    }
+
+                    // TODO: Display list in some kinda fragment...
+
+
                 }
 
             }
