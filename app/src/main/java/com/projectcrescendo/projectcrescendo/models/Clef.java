@@ -30,6 +30,7 @@ public class Clef {
      * initially set to a default value of 4.
      */
     private int barLength = 4;
+
     /**
      * A list containing the Bars on the Clef.
      */
@@ -109,6 +110,14 @@ public class Clef {
      */
     public List<Bar> getBars() {
         return bars;
+    }
+
+    /**
+     * Set the bars List to a new list of bars for the current Clef.
+     * @param bars the new list of Bar objects for this clef.
+     */
+    public void setBars(List<Bar> bars) {
+        this.bars = bars;
     }
 
     /**

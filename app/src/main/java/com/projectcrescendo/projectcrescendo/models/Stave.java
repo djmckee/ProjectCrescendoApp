@@ -46,6 +46,16 @@ public class Stave {
     private int timeSignatureDenominator = 4;
 
     /**
+     * An ID of the Stave instance if it has been read in from the database; defaults to -1 until set.
+     */
+    private int id;
+
+    /**
+     * A name for the Stave instance if it has been read in from the database.
+     */
+    private String name;
+
+    /**
      * Returns the upper clef on the stave.
      *
      * @return the upper Clef of the Stave.
@@ -153,4 +163,42 @@ public class Stave {
                 ", timeSignatureDenominator=" + timeSignatureDenominator +
                 '}';
     }
+
+    /**
+     * Returns the ID of the stave in the app's database, if one exists.
+     * Otherwise, returns -1 if the current stave instance has not been read in from the database.
+     *
+     * @return the database ID of the current stave.
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Sets the ID of the current stave instance if it has been read in from a database.
+     *
+     * @param id the database ID of the current stave.
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * Returns the name of the current stave from the app's database, if set.
+     *
+     * @return the name of the current stave instance.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Set the name for the current stave instance.
+     *
+     * @param name the name for the current stave instance.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
 }
