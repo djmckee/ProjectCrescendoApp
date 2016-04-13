@@ -257,7 +257,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
             public void onClick(View v) {
                 TutorialFragment tutorialFragment = new TutorialFragment();
                 tutorialFragment.setTutorialText((String) instructionalTextView.getText());
-                tutorialFragment.show(getSupportFragmentManager(), "Tutorial");
+                tutorialFragment.show(getSupportFragmentManager(), getString(R.string.tutorial_fragment_title));
 
             }
         });
@@ -518,7 +518,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
             fragment.setTutorialText(firstInstruction);
 
-            fragment.show(getSupportFragmentManager(), "Tutorial");
+            fragment.show(getSupportFragmentManager(), getString(R.string.tutorial_fragment_title));
 
             // Show instruction 1 in a text box
             instructionalTextView.setText(firstInstruction);
@@ -677,7 +677,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
         TutorialFragment tutorialFragment = new TutorialFragment();
         tutorialFragment.setTutorialText(fragmentText);
-        tutorialFragment.show(getSupportFragmentManager(), "Tutorial");
+        tutorialFragment.show(getSupportFragmentManager(), getString(R.string.tutorial_fragment_title));
 
     }
 
@@ -772,7 +772,29 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
                         return;
                     }
 
-                    // TODO: Display list in some kinda fragment...
+                    // Present a modal that allows the user to select a composition to open from the saved compositions list...
+
+                    OpenCompositionFragment openCompositionFragment = new OpenCompositionFragment();
+
+                    openCompositionFragment.setCompositions(savedCompositions);
+
+                    openCompositionFragment.setListener(new OpenCompositionFragmentCallbackListener() {
+                        @Override
+                        public void compositionSelectedFromFragment(OpenCompositionFragment fragment, Stave newComposition) {
+                            // Stave selected!!! Load it in and reload UI...
+                            stave = newComposition;
+
+                            // Cancel tutorial mode too...
+                            tutorial = null;
+                            instructionIndex = -1;
+                            instructionalTextView.setText(R.string.save_loaded_text);
+
+                            refreshGrid();
+
+                        }
+                    });
+
+                    openCompositionFragment.show(getFragmentManager(), getString(R.string.open_fragment_title));
 
 
                 }

@@ -56,6 +56,9 @@
     <string name="open_dialog_message">Loading Compositions...</string>
     <string name="compostions_opening_error_title">Loading saved compositions failed</string>
     <string name="compostions_opening_error_message">Could not load saved compositions at this time, sorry!</string>
+    <string name="tutorial_fragment_title">Tutorial</string>
+    <string name="save_loaded_text">Loaded saved composition</string>
+    <string name="open_fragment_title">Open Composition</string>
 
     <!-- <string-array name="time_signature">
         <item>2/2</item>
