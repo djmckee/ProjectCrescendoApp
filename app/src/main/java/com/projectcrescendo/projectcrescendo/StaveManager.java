@@ -24,7 +24,7 @@ import java.util.Locale;
  * <p/>
  * Created by Dylan McKee on 12/04/16.
  */
-public class StaveManager {
+class StaveManager {
 
     /**
      * The date format to use in the titling of new saved Staves.

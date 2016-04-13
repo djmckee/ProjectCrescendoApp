@@ -198,9 +198,7 @@ public class Tutorial {
 
         if (getTitle() != null ? !getTitle().equals(tutorial.getTitle()) : tutorial.getTitle() != null)
             return false;
-        if (getInstructions() != null ? !getInstructions().equals(tutorial.getInstructions()) : tutorial.getInstructions() != null)
-            return false;
-        return getPrePopulatedBeats() != null ? getPrePopulatedBeats().equals(tutorial.getPrePopulatedBeats()) : tutorial.getPrePopulatedBeats() == null && (getValidBeats() != null ? getValidBeats().equals(tutorial.getValidBeats()) : tutorial.getValidBeats() == null && (getTutorialPatternMatchIndex() != null ? getTutorialPatternMatchIndex().equals(tutorial.getTutorialPatternMatchIndex()) : tutorial.getTutorialPatternMatchIndex() == null));
+        return getInstructions() != null ? getInstructions().equals(tutorial.getInstructions()) : tutorial.getInstructions() == null && (getPrePopulatedBeats() != null ? getPrePopulatedBeats().equals(tutorial.getPrePopulatedBeats()) : tutorial.getPrePopulatedBeats() == null && (getValidBeats() != null ? getValidBeats().equals(tutorial.getValidBeats()) : tutorial.getValidBeats() == null && (getTutorialPatternMatchIndex() != null ? getTutorialPatternMatchIndex().equals(tutorial.getTutorialPatternMatchIndex()) : tutorial.getTutorialPatternMatchIndex() == null)));
 
     }
 

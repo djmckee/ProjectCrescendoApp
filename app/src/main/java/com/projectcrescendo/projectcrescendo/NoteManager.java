@@ -11,7 +11,7 @@ import java.util.List;
  * A class to instantiate notes from the SQL Database.
  * Created by Dylan McKee on 18/02/16.
  */
-public class NoteManager {
+class NoteManager {
 
     /**
      * The SQLite database manager.
