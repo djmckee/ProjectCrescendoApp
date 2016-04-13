@@ -36,7 +36,7 @@ interface NoteGridViewAdapterListener {
  * <p>
  * Created by Alexander on 23/02/2016.
  */
-public class NoteGridViewAdapter extends BaseAdapter {
+class NoteGridViewAdapter extends BaseAdapter {
 
     /**
      * The margin between the top of the screen and the grid, in dp.
@@ -77,11 +77,7 @@ public class NoteGridViewAdapter extends BaseAdapter {
     public NoteGridViewAdapter(Activity presentedActivity, String[] arrayOfGridItems) {
         this.arrayOfGridItems = arrayOfGridItems;
 
-        // The context of the activity presenting the grid.
-        Context context = presentedActivity;
-
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        inflater = (LayoutInflater) presentedActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // Getting screen size as per https://stackoverflow.com/questions/6520718/how-to-get-screen-width-and-height
         Point displaySize = new Point();

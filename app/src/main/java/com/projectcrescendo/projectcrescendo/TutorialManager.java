@@ -23,7 +23,7 @@ import java.util.List;
  * <p>
  * Created by Dylan McKee on 10/12/15.
  */
-public class TutorialManager {
+class TutorialManager {
 
     /**
      * The list of tutorials.

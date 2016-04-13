@@ -130,8 +130,7 @@ public class Stave {
 
         Stave stave = (Stave) o;
 
-        if (getTimeSignatureNumerator() != stave.getTimeSignatureNumerator()) return false;
-        return getTimeSignatureDenominator() == stave.getTimeSignatureDenominator() && (getUpperClef() != null ? getUpperClef().equals(stave.getUpperClef()) : stave.getUpperClef() == null && (getLowerClef() != null ? getLowerClef().equals(stave.getLowerClef()) : stave.getLowerClef() == null));
+        return getTimeSignatureNumerator() == stave.getTimeSignatureNumerator() && getTimeSignatureDenominator() == stave.getTimeSignatureDenominator() && (getUpperClef() != null ? getUpperClef().equals(stave.getUpperClef()) : stave.getUpperClef() == null && (getLowerClef() != null ? getLowerClef().equals(stave.getLowerClef()) : stave.getLowerClef() == null));
 
     }
 

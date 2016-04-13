@@ -10,7 +10,7 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
  * (https://github.com/jgilfelt/android-sqlite-asset-helper) on the 15/02/2016.
  * Created by Dylan McKee on 15/02/16.
  */
-public class DatabaseManager extends SQLiteAssetHelper {
+class DatabaseManager extends SQLiteAssetHelper {
 
     /**
      * The name of the SQLite database, as in the Assets directory.
