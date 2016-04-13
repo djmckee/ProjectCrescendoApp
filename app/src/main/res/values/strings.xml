@@ -43,6 +43,9 @@
     <string name="note_delete_confirmation_message">Are you sure you want to delete note \'</string>
     <string name="add_intonation_title">Add intonation</string>
     <string name="question_mark">\'?</string>
+    <string name="save_choice_save">Save current composition</string>
+    <string name="save_choice_open">Open existing composition</string>
+    <string name="save_choice_title">Save or Open Composition?</string>
 
     <!-- <string-array name="time_signature">
         <item>2/2</item>
