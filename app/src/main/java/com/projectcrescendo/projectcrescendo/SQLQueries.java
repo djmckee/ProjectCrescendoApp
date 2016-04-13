@@ -175,15 +175,49 @@ public final class SQLQueries {
      */
     public static final String BEAT_NUMBER_COLUMN = "number";
 
-
+    /**
+     * The name of the bar id column of the Beat entirety.
+     */
     public static final String BEAT_BAR_ID_COLUMN = "bar_id";
+
+    /**
+     * The name of the dynamic id column of the Beat entirety.
+     */
     public static final String BEAT_DYNAMIC_COLUMN = "dynamic_id";
-    public static final String NOTE_NAMES_NAME_ID_COLUMN = "id";
+
+    /**
+     * The name of the name id column of the Note entirety.
+     */
     public static final String NOTE_NAME_ID_COLUMN = "name_id";
+
+    /**
+     * The name of the intonation id column of the Note entirety.
+     */
     public static final String NOTE_INTONATION_ID_COLUMN = "intonation_id";
+
+    /**
+     * The name of the beat id column of the Note entirety.
+     */
     public static final String NOTE_BEAT_ID_COLUMN = "beat_id";
+
+    /**
+     * The name of the length column of the Note entirety.
+     */
     public static final String NOTE_LENGTH_COLUMN = "length";
+
+    /**
+     * The name of the id column of the Note Names table.
+     */
+    public static final String NOTE_NAMES_NAME_ID_COLUMN = "id";
+
+    /**
+     * The name of the name column of the Note Names table.
+     */
     public static final String NOTE_NAMES_NAME_COLUMN = "name";
+
+    /**
+     * The clause to be used during deletion of a Stave by ID.
+     */
     public static final String STAVE_DELETE_WHERE_CLAUSE = STAVE_ID_COLUMN + "=";
 
 

@@ -35,6 +35,11 @@ public class StaveManager {
      */
     private final static int MAX_NOTES_PER_BEAT = 8;
     /**
+     * The default Dynamic for a bar being saved.
+     */
+    private final static int DEFAULT_DYNAMIC_ID = 3;
+
+    /**
      * The SQLite database manager.
      */
     private final DatabaseManager databaseManager;
@@ -139,7 +144,7 @@ public class StaveManager {
                         for (Beat beat : currentBar.getBeats()) {
                             ContentValues beatValues = new ContentValues();
                             int beatIndex = currentBar.getBeats().indexOf(beat);
-                            int dynamicIndex = 3;
+                            int dynamicIndex = DEFAULT_DYNAMIC_ID;
                             beatValues.put(SQLQueries.BEAT_NUMBER_COLUMN, beatIndex);
                             beatValues.put(SQLQueries.BEAT_DYNAMIC_COLUMN, dynamicIndex);
 
