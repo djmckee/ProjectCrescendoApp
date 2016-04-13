@@ -131,8 +131,7 @@ public class Stave {
         Stave stave = (Stave) o;
 
         if (getTimeSignatureNumerator() != stave.getTimeSignatureNumerator()) return false;
-        if (getTimeSignatureDenominator() != stave.getTimeSignatureDenominator()) return false;
-        return getUpperClef() != null ? getUpperClef().equals(stave.getUpperClef()) : stave.getUpperClef() == null && (getLowerClef() != null ? getLowerClef().equals(stave.getLowerClef()) : stave.getLowerClef() == null);
+        return getTimeSignatureDenominator() == stave.getTimeSignatureDenominator() && (getUpperClef() != null ? getUpperClef().equals(stave.getUpperClef()) : stave.getUpperClef() == null && (getLowerClef() != null ? getLowerClef().equals(stave.getLowerClef()) : stave.getLowerClef() == null));
 
     }
 
