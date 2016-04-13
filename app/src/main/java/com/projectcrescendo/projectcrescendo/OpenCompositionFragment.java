@@ -169,12 +169,22 @@ public class OpenCompositionFragment extends DialogFragment implements
         this.listener = listener;
     }
 
-    // TODO: Javadoc
+    /**
+     * Returns the array of saved compositions (i.e. Stave instances).
+     *
+     * @return a List of Stave instances displayed in this fragment for the user to select from.
+     */
     public List<Stave> getCompositions() {
 
         return compositions;
     }
 
+    /**
+     * Sets the list of compositions to open (i.e. Stave instances from the database) to whatever
+     * has been passed into this method.
+     *
+     * @param compositions a List of Stave instances that the user can select from to open.
+     */
     public void setCompositions(List<Stave> compositions) {
         this.compositions = compositions;
     }
