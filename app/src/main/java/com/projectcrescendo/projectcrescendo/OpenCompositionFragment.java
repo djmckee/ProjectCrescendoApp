@@ -1,0 +1,183 @@
+package com.projectcrescendo.projectcrescendo;
+
+import android.app.DialogFragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import com.projectcrescendo.projectcrescendo.models.Stave;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * An interface to handle callbacks from the OpenCompositionFragment.
+ * <p>
+ * Created by Dylan McKee on 23/03/2016
+ */
+interface OpenCompositionFragmentCallbackListener {
+    /**
+     * This method is called when the user has selected a composition, in the
+     * form of a Stave instance from the selection fragment list,
+     * and the list has dismissed itself from the screen.
+     *
+     * @param fragment       the composition selection fragment instance.
+     * @param newComposition the Stave that has been selected in the fragment.
+     */
+    void compositionSelectedFromFragment(OpenCompositionFragment fragment, Stave newComposition);
+
+}
+
+/**
+ * A fragment that contains a list of possible compositions to open so that the user can select a composition
+ * from the database. Once selected, the composition, in the form of a Stave instance, is relayed via a callback to the fragment that
+ * presented it via the OpenCompositionFragmentCallbackListener.
+ * <p>
+ * I looked at the tutorial at http://www.tutorialsbuzz.com/2014/06/android-dialogfragment-listview.html
+ * and used their examples in the creation of this fragment.
+ * <p>
+ * Created by Dylan McKee on 23/03/2016
+ */
+public class OpenCompositionFragment extends DialogFragment implements
+        OnItemClickListener {
+
+    /**
+     * A list view containing the possible compositions (Stave instances) for the beat that the user can select from.
+     */
+    private ListView compositionSelectionList;
+
+    /**
+     * A list of Stave instances (i.e. the compositions)
+     */
+    private List<Stave> compositions;
+
+    /**
+     * A callback listener that implements the OpenCompositionFragmentCallbackListener, so that
+     * the fragment/activity presenting this fragment can receive a callback and know when the
+     * composition (in the form of a Stave instance) has been selected.
+     */
+    private OpenCompositionFragmentCallbackListener listener;
+
+    /**
+     * On load, this method inflates the fragment from XML.
+     *
+     * @param inflater           the layout inflater that inflates this fragment.
+     * @param container          the view that contains this fragment.
+     * @param savedInstanceState a saved state of an existing instance of this fragment.
+     * @return the view containing this fragment, inflated from XML.
+     */
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_open_composition, null, false);
+        compositionSelectionList = (ListView) view.findViewById(R.id.savedCompositionSelectionList);
+
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        return view;
+    }
+
+    /**
+     * After the fragments XML has been loaded, this method populates the list view with the possible
+     * composition choices from the database.
+     *
+     * @param savedInstanceState saved state data about this fragment, if any exists.
+     */
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+
+        super.onActivityCreated(savedInstanceState);
+
+
+        List<String> compositionNames = new ArrayList<String>();
+
+        // Loop through the Stave instances, adding their names to the list (if present...)
+        for (Stave composition : compositions) {
+            String name = composition.getName();
+
+            if (name == null) {
+                // Untitled, use fallback to prevent obvious crash.
+                name = "Untitled Composition";
+            }
+
+            compositionNames.add(name);
+
+        }
+
+
+        // Convert from list to array as per solution from https://stackoverflow.com/questions/9572795/convert-list-to-array-in-java
+        String[] namesArray = new String[compositionNames.size()];
+        compositionNames.toArray(namesArray);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_list_item_1, namesArray);
+
+
+        compositionSelectionList.setAdapter(adapter);
+
+        compositionSelectionList.setOnItemClickListener(this);
+
+    }
+
+    /**
+     * When an intonation in the list of intonations is selected by the user, this method calls the listener
+     * to let it know of the new selection, and then once this callback has been carried out it
+     * dismisses the intonation selection fragment from the screen.
+     *
+     * @param parent   the ListView containing the intonations.
+     * @param view     the cell containing the selected intonation.
+     * @param position the position of the cell/intonation that has been selected.
+     * @param id       the id of the cell containing the selected intonation
+     */
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position,
+                            long id) {
+
+        // Tell the TutorialActivity about it!
+        Stave selectedComposition = compositions.get(position);
+
+        if (listener != null) {
+            listener.compositionSelectedFromFragment(this, selectedComposition);
+        }
+
+        // Looked up the following line at https://stackoverflow.com/questions/5901298/how-to-get-a-fragment-to-remove-itself-i-e-its-equivalent-of-finish
+        getActivity().getFragmentManager().beginTransaction().remove(this).commit();
+
+    }
+
+    /**
+     * Returns the callback listener.
+     *
+     * @return the callback listener.
+     */
+    public OpenCompositionFragmentCallbackListener getListener() {
+        return listener;
+    }
+
+    /**
+     * Sets the callback listener
+     *
+     * @param listener the callback listener that is presenting this fragment
+     */
+    public void setListener(OpenCompositionFragmentCallbackListener listener) {
+        this.listener = listener;
+    }
+
+    // TODO: Javadoc
+    public List<Stave> getCompositions() {
+
+        return compositions;
+    }
+
+    public void setCompositions(List<Stave> compositions) {
+        this.compositions = compositions;
+    }
+
+
+}
