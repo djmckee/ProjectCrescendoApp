@@ -48,6 +48,10 @@
     <string name="save_choice_title">Save or Open Composition?</string>
     <string name="save_composition_loading_title">Saving Composition</string>
     <string name="save_composition_loading_message">Saving your current composition, please wait...</string>
+    <string name="composition_save_success_title">Composition Saved!</string>
+    <string name="composition_save_success_message">Your composition has been saved!</string>
+    <string name="composition_save_fail_title">Composition Save Failed</string>
+    <string name="composition_save_fail_message">Sorry, your composition could not be saved right now. Please try again.</string>
 
     <!-- <string-array name="time_signature">
         <item>2/2</item>
