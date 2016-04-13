@@ -54,6 +54,8 @@
     <string name="composition_save_fail_message">Sorry, your composition could not be saved right now. Please try again.</string>
     <string name="open_dialog_title">Loading Compositions</string>
     <string name="open_dialog_message">Loading Compositions...</string>
+    <string name="compostions_opening_error_title">Loading saved compositions failed</string>
+    <string name="compostions_opening_error_message">Could not load saved compositions at this time, sorry!</string>
 
     <!-- <string-array name="time_signature">
         <item>2/2</item>
