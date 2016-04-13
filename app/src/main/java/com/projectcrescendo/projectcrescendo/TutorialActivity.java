@@ -689,7 +689,8 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         // I looked up the AlertDialog Builder at http://rajeshvijayakumar.blogspot.co.uk/2013/04/alert-dialog-dialog-with-item-list.html
         CharSequence[] alertChoiceTitles = {
                 getString(R.string.save_choice_save),
-                getString(R.string.save_choice_open)
+                getString(R.string.save_choice_open),
+                getString(R.string.cancel)
         };
 
         // Create alert dialog with choices
@@ -698,6 +699,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         alertDialogBuilder.setItems(alertChoiceTitles, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int item) {
+
 
                 if (item == 0) {
                     // Save the current composition to the SQLite Database.
@@ -708,15 +710,36 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
                     loadingDialog.setCancelable(false);
 
-                    // Do save...
+                    // Create stave database manager instance to do the save
                     StaveManager staveManager = new StaveManager(TutorialActivity.this);
-                    staveManager.writeStaveToDatabase(stave);
+
+                    // Do save...
+                    boolean saved = staveManager.writeStaveToDatabase(stave);
 
                     // Synchronous save complete; hide loading dialog
                     loadingDialog.hide();
 
+                    // Did the save work?
+                    if (saved) {
+                        // Save success - show success message
+                        new AlertDialog.Builder(TutorialActivity.this)
+                                .setTitle(R.string.composition_save_success_title)
+                                .setMessage(R.string.composition_save_success_message)
+                                .setPositiveButton(R.string.okay, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                    } else {
+                        // Save failed miserably; show error.
+                        new AlertDialog.Builder(TutorialActivity.this)
+                                .setTitle(R.string.composition_save_fail_title)
+                                .setMessage(R.string.composition_save_fail_message)
+                                .setPositiveButton(R.string.okay, null)
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                    }
 
-                } else {
+
+                } else if (item == 1) {
                     // Show saved compositions and allow the user to open one.
                 }
 
