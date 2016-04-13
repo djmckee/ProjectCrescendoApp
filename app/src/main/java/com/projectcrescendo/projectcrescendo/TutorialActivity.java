@@ -784,6 +784,15 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
                             // Stave selected!!! Load it in and reload UI...
                             stave = newComposition;
 
+                            // Set time signature spinners for newly loaded stave...
+                            int numeratorIndex = timeSignatureNumerators.indexOf(stave.getTimeSignatureNumerator());
+                            int denominatorIndex = timeSignatureDenominators.indexOf(stave.getTimeSignatureDenominator());
+
+                            leftTimeSignatureNumeratorSpinner.setSelection(numeratorIndex);
+                            rightTimeSignatureNumeratorSpinner.setSelection(numeratorIndex);
+                            leftTimeSignatureDenominatorSpinner.setSelection(denominatorIndex);
+                            rightTimeSignatureDenominatorSpinner.setSelection(denominatorIndex);
+
                             // Cancel tutorial mode too...
                             tutorial = null;
                             instructionIndex = -1;

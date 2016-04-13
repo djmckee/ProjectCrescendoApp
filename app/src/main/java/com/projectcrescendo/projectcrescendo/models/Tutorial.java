@@ -200,9 +200,7 @@ public class Tutorial {
             return false;
         if (getInstructions() != null ? !getInstructions().equals(tutorial.getInstructions()) : tutorial.getInstructions() != null)
             return false;
-        if (getPrePopulatedBeats() != null ? !getPrePopulatedBeats().equals(tutorial.getPrePopulatedBeats()) : tutorial.getPrePopulatedBeats() != null)
-            return false;
-        return getValidBeats() != null ? getValidBeats().equals(tutorial.getValidBeats()) : tutorial.getValidBeats() == null && (getTutorialPatternMatchIndex() != null ? getTutorialPatternMatchIndex().equals(tutorial.getTutorialPatternMatchIndex()) : tutorial.getTutorialPatternMatchIndex() == null);
+        return getPrePopulatedBeats() != null ? getPrePopulatedBeats().equals(tutorial.getPrePopulatedBeats()) : tutorial.getPrePopulatedBeats() == null && (getValidBeats() != null ? getValidBeats().equals(tutorial.getValidBeats()) : tutorial.getValidBeats() == null && (getTutorialPatternMatchIndex() != null ? getTutorialPatternMatchIndex().equals(tutorial.getTutorialPatternMatchIndex()) : tutorial.getTutorialPatternMatchIndex() == null));
 
     }
 
