@@ -1,6 +1,8 @@
 package com.projectcrescendo.projectcrescendo;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -527,7 +529,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
     /**
      * Returns true if the user is currently completing a Tutorial in this TutorialActivity.
-     *
+     * <p>
      * Warning suppressed here because 'is in tutorial mode' is the natural language way of
      * answering the question that this method answers, so I do not want to invert it for the sake
      * of clarity.
@@ -676,6 +678,55 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         TutorialFragment tutorialFragment = new TutorialFragment();
         tutorialFragment.setTutorialText(fragmentText);
         tutorialFragment.show(getSupportFragmentManager(), "Tutorial");
+
+    }
+
+    /**
+     * A method called when the save/open button is tapped. Displays an alert asking the user
+     * whether they want to save or open a composition (i.e. a Stave).
+     */
+    private void saveOrOpenButtonTapped() {
+        // I looked up the AlertDialog Builder at http://rajeshvijayakumar.blogspot.co.uk/2013/04/alert-dialog-dialog-with-item-list.html
+        CharSequence[] alertChoiceTitles = {
+                getString(R.string.save_choice_save),
+                getString(R.string.save_choice_open)
+        };
+
+        // Create alert dialog with choices
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle(R.string.save_choice_title);
+        alertDialogBuilder.setItems(alertChoiceTitles, new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int item) {
+
+                if (item == 0) {
+                    // Save the current composition to the SQLite Database.
+
+                    // Show loading UI...
+                    ProgressDialog loadingDialog = ProgressDialog.show(TutorialActivity.this, "Saving", "Saving your current composition, please wait...");
+                    loadingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+                    loadingDialog.setCancelable(false);
+
+                    // Do save...
+                    StaveManager staveManager = new StaveManager(TutorialActivity.this);
+                    staveManager.writeStaveToDatabase(stave);
+
+                    // Synchronous save complete; hide loading dialog
+                    loadingDialog.hide();
+
+
+                } else {
+                    // Show saved compositions and allow the user to open one.
+                }
+
+            }
+
+        });
+
+        // Add choices to an alert and show it...
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
 
     }
 
