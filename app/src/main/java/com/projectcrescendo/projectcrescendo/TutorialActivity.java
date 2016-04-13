@@ -762,8 +762,8 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
                     if (savedCompositions == null) {
                         // Opening failed, display error...
                         new AlertDialog.Builder(TutorialActivity.this)
-                                .setTitle("Loading saved compositions failed")
-                                .setMessage("Could not load saved compositions at this time, sorry!")
+                                .setTitle(R.string.compostions_opening_error_title)
+                                .setMessage(R.string.compostions_opening_error_message)
                                 .setPositiveButton(R.string.okay, null)
                                 .setIcon(android.R.drawable.ic_dialog_alert)
                                 .show();
