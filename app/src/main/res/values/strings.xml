@@ -59,6 +59,11 @@
     <string name="tutorial_fragment_title">Tutorial</string>
     <string name="save_loaded_text">Loaded saved composition</string>
     <string name="open_fragment_title">Open Composition</string>
+    <string name="delete_composition_title">Delete composition \'</string>
+    <string name="composition_deletion_error_message">Composition deletion failed. Please try again.</string>
+    <string name="composition_deletion_error_title">Deletion Failed</string>
+    <string name="composition_delete_success_title">Composition deleted</string>
+    <string name="composition_delete_success_message">Your composition was deleted successfully.</string>
 
     <!-- <string-array name="time_signature">
         <item>2/2</item>
