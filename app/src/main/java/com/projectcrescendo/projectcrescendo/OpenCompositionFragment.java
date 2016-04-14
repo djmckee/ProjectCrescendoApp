@@ -35,7 +35,14 @@ interface OpenCompositionFragmentCallbackListener {
      */
     void compositionSelectedFromFragment(OpenCompositionFragment fragment, Stave newComposition);
 
-    // TODO: Javadoc
+    /**
+     * This method is called when the user has selected a composition to be deleted in the fragment
+     * by long-pressing on it, the fragment has confirmed the deletion intent, and the fragment
+     * has dismissed itself from the screen.
+     *
+     * @param fragment            the composition selection fragment instance.
+     * @param compositionToDelete the Stave instance that has been marked for deletion.
+     */
     void compositionMarkedForDeletionFromFragment(OpenCompositionFragment fragment, Stave compositionToDelete);
 
 }
@@ -180,15 +187,16 @@ public class OpenCompositionFragment extends DialogFragment implements
             @Override
             public void onClick(DialogInterface dialog, int buttonId) {
                 // Tell the listener and close this fragment...
-                if (listener != null) {
-                    // Tell the listener about the deletion...
-                    listener.compositionMarkedForDeletionFromFragment(OpenCompositionFragment.this, selectedComposition);
-                }
 
                 // Close the fragment...
                 // Looked up the following line at https://stackoverflow.com/questions/5901298/how-to-get-a-fragment-to-remove-itself-i-e-its-equivalent-of-finish
                 getActivity().getFragmentManager().beginTransaction().remove(OpenCompositionFragment.this).commit();
 
+
+                if (listener != null) {
+                    // Tell the listener about the deletion...
+                    listener.compositionMarkedForDeletionFromFragment(OpenCompositionFragment.this, selectedComposition);
+                }
 
             }
         });
