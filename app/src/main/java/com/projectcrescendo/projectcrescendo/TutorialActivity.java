@@ -750,7 +750,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
 
                     // Create stave database manager instance to do the opening...
-                    StaveManager staveManager = new StaveManager(TutorialActivity.this);
+                    final StaveManager staveManager = new StaveManager(TutorialActivity.this);
 
                     // Get a list of staves...
                     List<Stave> savedCompositions = staveManager.getSavedStaves();
@@ -799,6 +799,32 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
                             instructionalTextView.setText(R.string.save_loaded_text);
 
                             refreshGrid();
+
+                        }
+
+                        @Override
+                        public void compositionMarkedForDeletionFromFragment(OpenCompositionFragment fragment, Stave compositionToDelete) {
+                            // Delete the composition...
+                            boolean deleted = staveManager.deleteStaveFromDatabase(compositionToDelete);
+
+                            // Did it delete?
+                            if (deleted) {
+                                // Show success message
+                                new AlertDialog.Builder(TutorialActivity.this)
+                                        .setTitle(R.string.composition_delete_success_title)
+                                        .setMessage(R.string.composition_delete_success_message)
+                                        .setPositiveButton(R.string.okay, null)
+                                        .setIcon(android.R.drawable.ic_dialog_info)
+                                        .show();
+                            } else {
+                                // Show error
+                                new AlertDialog.Builder(TutorialActivity.this)
+                                        .setTitle(R.string.composition_deletion_error_title)
+                                        .setMessage(R.string.composition_deletion_error_message)
+                                        .setPositiveButton(R.string.okay, null)
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .show();
+                            }
 
                         }
                     });

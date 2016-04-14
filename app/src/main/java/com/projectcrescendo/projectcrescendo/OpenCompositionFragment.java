@@ -1,6 +1,8 @@
 package com.projectcrescendo.projectcrescendo;
 
+import android.app.AlertDialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -32,6 +35,9 @@ interface OpenCompositionFragmentCallbackListener {
      */
     void compositionSelectedFromFragment(OpenCompositionFragment fragment, Stave newComposition);
 
+    // TODO: Javadoc
+    void compositionMarkedForDeletionFromFragment(OpenCompositionFragment fragment, Stave compositionToDelete);
+
 }
 
 /**
@@ -45,7 +51,7 @@ interface OpenCompositionFragmentCallbackListener {
  * Created by Dylan McKee on 23/03/2016
  */
 public class OpenCompositionFragment extends DialogFragment implements
-        OnItemClickListener {
+        OnItemClickListener, OnItemLongClickListener {
 
     /**
      * A list view containing the possible compositions (Stave instances) for the beat that the user can select from.
@@ -122,6 +128,7 @@ public class OpenCompositionFragment extends DialogFragment implements
         compositionSelectionList.setAdapter(adapter);
 
         compositionSelectionList.setOnItemClickListener(this);
+        compositionSelectionList.setOnItemLongClickListener(this);
 
     }
 
@@ -150,6 +157,49 @@ public class OpenCompositionFragment extends DialogFragment implements
         getActivity().getFragmentManager().beginTransaction().remove(this).commit();
 
     }
+
+    /**
+     * This method is called when an item in the compositions list is long pressed. If it's a valid composition,
+     * the user is then asked if they'd like to delete it from the database.
+     *
+     * @param parent   the ListView containing the compositions.
+     * @param view     the cell containing the selected composition.
+     * @param position the position of the selected composition in the list.
+     * @param id       the ID of the cell containing the selected composition in the list.
+     * @return a boolean indicating whether the currently selected composition can be long pressed
+     * and marked for deletion, or not.
+     */
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        final Stave selectedComposition = compositions.get(position);
+
+        AlertDialog.Builder lengthInputDialog = new AlertDialog.Builder(getActivity());
+        lengthInputDialog.setTitle(getString(R.string.delete_composition_title) + selectedComposition.getName() + getString(R.string.question_mark));
+
+        lengthInputDialog.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int buttonId) {
+                // Tell the listener and close this fragment...
+                if (listener != null) {
+                    // Tell the listener about the deletion...
+                    listener.compositionMarkedForDeletionFromFragment(OpenCompositionFragment.this, selectedComposition);
+                }
+
+                // Close the fragment...
+                // Looked up the following line at https://stackoverflow.com/questions/5901298/how-to-get-a-fragment-to-remove-itself-i-e-its-equivalent-of-finish
+                getActivity().getFragmentManager().beginTransaction().remove(OpenCompositionFragment.this).commit();
+
+
+            }
+        });
+
+        lengthInputDialog.setNegativeButton(R.string.cancel, null);
+
+        lengthInputDialog.show();
+
+        return true;
+    }
+
 
     /**
      * Returns the callback listener.
