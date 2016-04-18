@@ -64,6 +64,7 @@
     <string name="composition_deletion_error_title">Deletion Failed</string>
     <string name="composition_delete_success_title">Composition deleted</string>
     <string name="composition_delete_success_message">Your composition was deleted successfully.</string>
+    <string name="playback_player_error_text">Sorry, Audio Playback is not working for this composition. Please try again.</string>
 
     <!-- <string-array name="time_signature">
         <item>2/2</item>
