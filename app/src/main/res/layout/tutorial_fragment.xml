@@ -1,35 +1,42 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ScrollView01"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/RelativeLayout01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tutorial_header"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerHorizontal="true"
+            android:text=""
+            android:textSize="60px"
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="20px"
-        android:id="@+id/tutorial_Text_View"
-        android:layout_gravity="center_horizontal"
-        android:layout_above="@+id/tutorial_Button"
-        android:layout_centerHorizontal="true"
+            />
 
-        />
+        <TextView
+            android:id="@+id/tutorial_Text_View"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/tutorial_header"
+            android:layout_centerHorizontal="true"
+            android:text=""
+            android:textSize="40px"
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ok"
-        android:id="@+id/tutorial_Button"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="25dp"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/tutorial_Text_View" />
+            />
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/tutorial_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tutorial_Text_View"
+            android:layout_centerHorizontal="true"
+            android:text="Ok" />
+
+    </RelativeLayout>
 </ScrollView>

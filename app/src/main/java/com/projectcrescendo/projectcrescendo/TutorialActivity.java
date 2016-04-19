@@ -257,6 +257,8 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
             public void onClick(View v) {
                 TutorialFragment tutorialFragment = new TutorialFragment();
                 tutorialFragment.setTutorialText((String) instructionalTextView.getText());
+                tutorialFragment.setHeaderText("What to do");
+
                 tutorialFragment.show(getSupportFragmentManager(), getString(R.string.tutorial_fragment_title));
 
             }
@@ -517,6 +519,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
             TutorialFragment fragment = new TutorialFragment();
 
             fragment.setTutorialText(firstInstruction);
+            fragment.setHeaderText("What to do...");
 
             fragment.show(getSupportFragmentManager(), getString(R.string.tutorial_fragment_title));
 
@@ -677,6 +680,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
         TutorialFragment tutorialFragment = new TutorialFragment();
         tutorialFragment.setTutorialText(fragmentText);
+        tutorialFragment.setHeaderText("Well done!");
         tutorialFragment.show(getSupportFragmentManager(), getString(R.string.tutorial_fragment_title));
 
     }
