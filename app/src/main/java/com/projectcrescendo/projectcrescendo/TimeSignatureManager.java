@@ -13,7 +13,7 @@ import java.util.List;
  * <p>
  * Created by Dylan McKee on 10/12/15.
  */
-public class TimeSignatureManager {
+class TimeSignatureManager {
 
     /**
      * The list of time signature numerators.

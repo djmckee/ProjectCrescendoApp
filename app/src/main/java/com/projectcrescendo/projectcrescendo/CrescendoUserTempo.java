@@ -9,7 +9,7 @@ import uk.co.dolphin_com.sscore.playdata.UserTempo;
  * <p>
  * Created by Dylan McKee on 01/03/16.
  */
-public class CrescendoUserTempo implements UserTempo {
+class CrescendoUserTempo implements UserTempo {
 
     /**
      * Returns the current tempo in beats per minute. We could make user tempo variable in future,

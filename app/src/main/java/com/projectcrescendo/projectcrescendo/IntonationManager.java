@@ -12,7 +12,7 @@ import java.util.List;
  * <p>
  * Created by Dylan McKee on 23/02/16.
  */
-public class IntonationManager {
+class IntonationManager {
 
     /**
      * The SQLite database manager.

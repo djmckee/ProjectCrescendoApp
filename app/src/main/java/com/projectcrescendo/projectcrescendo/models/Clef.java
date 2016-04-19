@@ -30,6 +30,7 @@ public class Clef {
      * initially set to a default value of 4.
      */
     private int barLength = 4;
+
     /**
      * A list containing the Bars on the Clef.
      */
@@ -112,6 +113,14 @@ public class Clef {
     }
 
     /**
+     * Set the bars List to a new list of bars for the current Clef.
+     * @param bars the new list of Bar objects for this clef.
+     */
+    public void setBars(List<Bar> bars) {
+        this.bars = bars;
+    }
+
+    /**
      * Returns a list containing all of the Beats on all of the Bars on the current Clef, in
      * sequential order.
      *
@@ -142,8 +151,7 @@ public class Clef {
 
         Clef clef = (Clef) o;
 
-        if (lengthOfClef != clef.lengthOfClef) return false;
-        return barLength == clef.barLength && (getBars() != null ? getBars().equals(clef.getBars()) : clef.getBars() == null);
+        return lengthOfClef == clef.lengthOfClef && barLength == clef.barLength && (getBars() != null ? getBars().equals(clef.getBars()) : clef.getBars() == null);
 
     }
 

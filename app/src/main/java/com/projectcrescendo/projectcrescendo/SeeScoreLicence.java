@@ -35,7 +35,7 @@ import uk.co.dolphin_com.sscore.SScoreKey;
  * The licence key to enable features in SeeScoreLib supplied by Dolphin Computing
  */
 
-public class SeeScoreLicence {
+class SeeScoreLicence {
     // licence keys: draw, contents, transpose, play_data, item_colour, multipart, android, midi_out
     private static final int[] keycap = {***REMOVED***};
     private static final int[] keycode = {***REMOVED***};
