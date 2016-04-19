@@ -34,7 +34,8 @@ interface NoteGridViewAdapterListener {
  * A Grid View Adapter to allow us to use the GridView in the TutorialActivity to display a list
  * of notes.
  * <p>
- * Created by Alexander on 23/02/2016.
+ * Created by Jordan on 23/02/2016.
+ * Modified by Dylan and Alex.
  */
 class NoteGridViewAdapter extends BaseAdapter {
 
@@ -47,7 +48,7 @@ class NoteGridViewAdapter extends BaseAdapter {
      * An array containing colour resources to use as grid background colours.
      */
     private static final int[] GRID_COLOUR_RESOURCES = {R.color.red,
-            R.color.pink, R.color.purple, R.color.deepPurple,
+            R.color.pink, R.color.purple, R.color.deep_purple,
             R.color.indigo, R.color.blue, R.color.material_deep_teal_500};
 
     /**
