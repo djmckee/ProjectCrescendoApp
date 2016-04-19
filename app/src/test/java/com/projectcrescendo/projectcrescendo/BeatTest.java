@@ -26,6 +26,9 @@ public class BeatTest {
     private static ConcreteNote noteA1;
     private static ConcreteNote noteB1;
 
+    /**
+     * Constructs test environment framework before testing
+     */
     @BeforeClass
     public static void constructTestEnv() {
         System.out.println("Constructing test environment...");
@@ -36,6 +39,9 @@ public class BeatTest {
         noteB1 = new ConcreteNote("B1");
     }
 
+    /**
+     * Removes test environment framework after testing
+     */
     @AfterClass
     public static void dismantleTestEnv() {
         listOfNotes = null;
@@ -45,6 +51,10 @@ public class BeatTest {
         System.out.println("Testing complete.");
     }
 
+    /**
+     * Reassembles test environment before test
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
         // Construct a test-beat
@@ -53,6 +63,10 @@ public class BeatTest {
         testBeat.setNotes(listOfNotes);
     }
 
+    /**
+     * Disassembles test environment after test
+     * @throws Exception
+     */
     @After
     public void tearDown() throws Exception {
         // Empty all notes from test-beat
@@ -60,24 +74,40 @@ public class BeatTest {
         testBeat.setNotes(listOfNotes);
     }
 
+    /**
+     * Tests getNotes() method. Passes if correct list of Notes is returned.
+     * @throws Exception
+     */
     @Test
     public void testGetNotes() throws Exception {
         // Passes if returned List is equal to the listOfNotes List
         Assert.assertEquals(listOfNotes, testBeat.getNotes());
     }
 
+    /**
+     * Tests setNotes() method. Passes if Notes are successfully added to list.
+     * @throws Exception
+     */
     @Test
     public void testSetNotes() throws Exception {
         // Passes if the number of notes in the test-beat is equal to the number of notes set.
         Assert.assertEquals(2, testBeat.getNotes().size());
     }
 
+    /**
+     * Tests getIntonation() method. Passes if correct Intonation is returned.
+     * @throws Exception
+     */
     @Test
     public void testGetIntonation() throws Exception {
         // Passes if returned Intonation is equal to the default Intonation
         Assert.assertEquals(Intonation.Accent, testBeat.getIntonation());
     }
 
+    /**
+     * Tests setIntonation() method. Passes if Intonation is set successfully.
+     * @throws Exception
+     */
     @Test
     public void testSetIntonation() throws Exception {
         // Passes if returned Intonation is equal to the Intonation which was set
@@ -85,6 +115,10 @@ public class BeatTest {
         Assert.assertEquals(Intonation.Legato, testBeat.getIntonation());
     }
 
+    /**
+     * Tests gridStringRepresentation() method. Passes if correct string is returned.
+     * @throws Exception
+     */
     @Test
     public void testGridStringRepresentation() throws Exception {
         // Passes if returned string is equal to "\nA1\nB1"
