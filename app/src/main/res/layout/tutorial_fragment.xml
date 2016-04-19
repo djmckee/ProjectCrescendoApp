@@ -14,7 +14,7 @@
             android:layout_height="fill_parent"
             android:layout_centerHorizontal="true"
             android:text=""
-            android:textSize="60dp"
+            android:textSize="40dp"
 
             />
 
@@ -25,7 +25,7 @@
             android:layout_below="@+id/tutorial_header"
             android:layout_centerHorizontal="true"
             android:text=""
-            android:textSize="50dp"
+            android:textSize="25dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             />
