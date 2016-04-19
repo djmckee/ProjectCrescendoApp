@@ -13,7 +13,7 @@ import android.widget.TextView;
  * This class displays tutorial text to the user, allowing them to view the instructional text
  * explaining to them what they should do at this point in the tutorial to progress further.
  * It is presented by the TutorialActivity.
- * <p>
+ * <p/>
  * Created by Jordan on 08/03/2016.
  */
 public class TutorialFragment extends DialogFragment {
@@ -29,6 +29,12 @@ public class TutorialFragment extends DialogFragment {
      */
     private TextView tutorialTextView;
 
+    /**
+     * The Textview which contains header for tutorial Text
+     */
+    private TextView tutorialHeaderTextView;
+
+    private String tutorialHeadertext;
 
     /**
      * Inflates this view from the XML Layout.
@@ -40,6 +46,7 @@ public class TutorialFragment extends DialogFragment {
      */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+
         return inflater.inflate(R.layout.tutorial_fragment,
                 container, false);
     }
@@ -48,26 +55,37 @@ public class TutorialFragment extends DialogFragment {
      * When the fragment is created, this method ensures that the UI elements are instantiated from
      * the XML and refreshes the notes list and intonation initially.
      *
-     * @param savedInstanceState a saved state of an existing instance of this fragment.
+     * @param savedInstanceState
      */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         tutorialTextView = (TextView) this.getView().findViewById(R.id.tutorial_Text_View);
+        tutorialHeaderTextView = (TextView) this.getView().findViewById(R.id.tutorial_header);
+
+
         if (tutorialText != null) {
             tutorialTextView.setText(tutorialText);
+        }
+
+        if (tutorialHeadertext != null) {
+            tutorialHeaderTextView.setText(tutorialHeadertext);
         }
 
         Button closeButton = (Button) this.getView().findViewById(R.id.tutorial_Button);
         closeButton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
-
-            getActivity().onBackPressed();
+                        closefragment();
                     }
-                }
-        );
+                });
+
     }
+
+    private void closefragment() {
+        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+    }
+    /** removes fragment and returns to main activity **/
 
     /**
      * Returns the tutorial text that is displayed within this fragment.
@@ -91,5 +109,19 @@ public class TutorialFragment extends DialogFragment {
         }
 
     }
+
+    public String getHeaderText() {
+        return tutorialHeadertext;
+    }
+
+    public void setHeaderText(String headerText) {
+        this.tutorialHeadertext = headerText;
+
+        if (tutorialHeaderTextView != null) {
+            tutorialHeaderTextView.setText(headerText);
+        }
+
+    }
+
 
 }
