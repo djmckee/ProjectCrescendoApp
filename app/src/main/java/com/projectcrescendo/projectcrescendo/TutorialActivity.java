@@ -227,7 +227,9 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
             }
         });
 
-
+        /**
+         * Add a floating action button to convert the grid into musicXML for playback and share
+         */
         FloatingActionButton exportButton = (FloatingActionButton) findViewById(R.id.export);
         exportButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -264,6 +266,11 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
             }
         });
 
+
+        /**
+         * Add a floating action button to open the instruction page
+         * for showing the basic functions of different buttons to the user
+         */
         FloatingActionButton instructionButton = (FloatingActionButton) findViewById(R.id.instruction);
         instructionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -274,7 +281,11 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
             }
         });
 
+        FloatingActionButton save_openButton = (FloatingActionButton) findViewById(R.id.save_and_open);
 
+        /**
+         * Add a floating action button to do verification once the user follow the tutorial steps for inputting predefined values to the grid
+         */
         FloatingActionButton verificationButton = (FloatingActionButton) findViewById(R.id.verify);
 
         verificationButton.setOnClickListener(new View.OnClickListener() {
@@ -298,6 +309,9 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
         tutorials = placeholderList;
 
+        /**
+         * Add a floating action menu to store floating action buttons for different tutorials
+         */
         final FloatingActionsMenu tutorialSelectionMenu = (FloatingActionsMenu) findViewById(R.id.sonata_tutorial);
 
         // Create a menu item for each tutorial...

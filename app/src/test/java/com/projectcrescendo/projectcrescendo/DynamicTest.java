@@ -14,12 +14,18 @@ import org.junit.Test;
  */
 public class DynamicTest {
 
+    /**
+     * Constructs test environment framework before testing
+     */
     @BeforeClass
     public static void constructTestEnv() {
         System.out.println("Constructing test environment...");
         // No field variable initialisation required by this test
     }
 
+    /**
+     * Removes test environment framework after testing
+     */
     @AfterClass
     public static void dismantleTestEnv() {
         // No field variable nullification required by this test
@@ -28,8 +34,12 @@ public class DynamicTest {
 
     // No setups and tear downs required by this test class
 
+    /**
+     * Tests getDynamicWithID() method. Passes if correct Dynamic is returned.
+     * @throws Exception
+     */
     @Test
-    public void testGetADynamicWithID() throws Exception {
+    public void testGetDynamicWithID() throws Exception {
         // Passes if returned Dynamic is equal to the Dynamic with ID 3 in crescendo.db (MezzoPiano)
         Assert.assertEquals(Dynamic.MezzoPiano, Dynamic.getDynamicWithID(3));
     }
