@@ -47,7 +47,7 @@ class NoteGridViewAdapter extends BaseAdapter {
      * An array containing colour resources to use as grid background colours.
      */
     private static final int[] GRID_COLOUR_RESOURCES = {R.color.red,
-            R.color.pink, R.color.purple, R.color.deepPurple,
+            R.color.pink, R.color.purple, R.color.deep_purple,
             R.color.indigo, R.color.blue, R.color.material_deep_teal_500};
 
     /**
