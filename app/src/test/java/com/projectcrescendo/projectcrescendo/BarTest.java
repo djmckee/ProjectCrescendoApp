@@ -27,6 +27,9 @@ public class BarTest {
     private static ConcreteNote noteA1;
     private static ConcreteNote noteB1;
 
+    /**
+     * Constructs test environment framework before testing
+     */
     @BeforeClass
      public static void constructTestEnv() {
         System.out.println("Constructing test environment...");
@@ -38,6 +41,9 @@ public class BarTest {
         noteB1 = new ConcreteNote("B1");
     }
 
+    /**
+     * Removes test environment framework after testing
+     */
     @AfterClass
     public static void dismantleTestEnv() {
         listOfNotes = null;
@@ -49,6 +55,10 @@ public class BarTest {
         System.out.println("Testing complete.");
     }
 
+    /**
+     * Reassembles test environment before test
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
         // Construct a test-beat
@@ -60,6 +70,10 @@ public class BarTest {
         testBar.addBeat(testBeat);
     }
 
+    /**
+     * Disassembles test environment after test
+     * @throws Exception
+     */
     @After
     public void tearDown() throws Exception {
         // Empty all notes from the test-beat.
@@ -70,18 +84,30 @@ public class BarTest {
         testBar = new Bar();
     }
 
+    /**
+     * Tests addBeat() method. Passes if a Beat is successfully added to list of Beats.
+     * @throws Exception
+     */
     @Test
     public void testAddBeat() throws Exception {
         // Passes if there is 1 item in the list of beats (Only test-beat should be in list).
         Assert.assertEquals(1, testBar.getBeats().size());
     }
 
+    /**
+     * Tests getBeat() method. Passes if correct Beat is returned.
+     * @throws Exception
+     */
     @Test
     public void testGetBeats() throws Exception {
         // Passes if test-beat is in the returned list.
         Assert.assertTrue(testBar.getBeats().contains(testBeat));
     }
 
+    /**
+     * Tests getAllNotesOnBar() method. Passes if a list of the correct size is returned.
+     * @throws Exception
+     */
     @Test
     public void testGetAllNotesOnBar() throws Exception {
         // Passes if returned List is of size 2 (should only contain noteA1 and noteB1)
