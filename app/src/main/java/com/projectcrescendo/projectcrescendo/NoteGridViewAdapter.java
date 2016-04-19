@@ -34,7 +34,8 @@ interface NoteGridViewAdapterListener {
  * A Grid View Adapter to allow us to use the GridView in the TutorialActivity to display a list
  * of notes.
  * <p>
- * Created by Alexander on 23/02/2016.
+ * Created by Jordan on 23/02/2016.
+ * Modified by Dylan and Alex.
  */
 class NoteGridViewAdapter extends BaseAdapter {
 
