@@ -14,12 +14,18 @@ import org.junit.Test;
  */
 public class IntonationTest {
 
+    /**
+     * Constructs test environment framework before testing
+     */
     @BeforeClass
     public static void constructTestEnv() {
         System.out.println("Constructing test environment...");
         // No field variable initialisation required by this test
     }
 
+    /**
+     * Removes test environment framework after testing
+     */
     @AfterClass
     public static void dismantleTestEnv() {
         // No field variable nullification required by this test
@@ -28,6 +34,10 @@ public class IntonationTest {
 
     // No setups and tear downs required by this test class
 
+    /**
+     * Tests getIntonationWithID() method. Passes if correct Intonation is returned.
+     * @throws Exception
+     */
     @Test
     public void testGetIntonationWithID() throws Exception {
         // Passes if returned Intonation is equal to the Intonation with ID 5 in crescendo.db (Accelerando)

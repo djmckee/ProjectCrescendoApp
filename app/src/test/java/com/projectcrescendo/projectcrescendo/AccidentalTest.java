@@ -14,12 +14,18 @@ import org.junit.Test;
  */
 public class AccidentalTest {
 
+    /**
+     * Constructs test environment framework before testing
+     */
     @BeforeClass
     public static void constructTestEnv() {
         System.out.println("Constructing test environment...");
         // No field variable initialisation required by this test
     }
 
+    /**
+     * Removes test environment framework after testing
+     */
     @AfterClass
     public static void dismantleTestEnv() {
         // No field variable nullification required by this test
@@ -28,6 +34,10 @@ public class AccidentalTest {
 
     // No setups and tear downs required by this test class
 
+    /**
+     * Tests getAccidentalWithID() method. Passes if correct ID is returned.
+     * @throws Exception
+     */
     @Test
     public void testGetAccidentalWithID() throws Exception {
         // Passes if returned Accidental is equal to the Accidental with ID 2 in crescendo.db (Natural)
