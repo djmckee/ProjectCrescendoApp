@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="A"
-            android:textColor="@color/deepPurple"
+            android:textColor="@color/deep_purple"
             android:layout_gravity="center_horizontal|top"
             android:textSize="100dp"
             android:textStyle="bold"
