@@ -240,6 +240,14 @@ public class PlaybackActivity extends AppCompatActivity {
             player = null;
             Log.d("PlaybackActivity", "unable to instantiate player!");
 
+            // Warn user about lack of playback...
+            new AlertDialog.Builder(PlaybackActivity.this)
+                    .setTitle(R.string.playback_error_title)
+                    .setMessage(R.string.playback_player_error_text)
+                    .setPositiveButton(R.string.okay, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+
         }
 
         final FloatingActionButton playPauseButton = (FloatingActionButton) findViewById(R.id.playPausePlaybackButton);

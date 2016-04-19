@@ -15,7 +15,7 @@ import com.projectcrescendo.projectcrescendo.models.Stave;
  * Created by Dylan McKee on 25/02/16.
  * Based on Pseudocode by Charlie Marcus.
  */
-public class MusicXmlWriter {
+class MusicXmlWriter {
 
     /**
      * A method that encodes the Stave instance passed to it into a valid MusicXML representation,

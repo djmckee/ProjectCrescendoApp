@@ -43,6 +43,28 @@
     <string name="note_delete_confirmation_message">Are you sure you want to delete note \'</string>
     <string name="add_intonation_title">Add intonation</string>
     <string name="question_mark">\'?</string>
+    <string name="save_choice_save">Save current composition</string>
+    <string name="save_choice_open">Open existing composition</string>
+    <string name="save_choice_title">Save or Open Composition?</string>
+    <string name="save_composition_loading_title">Saving Composition</string>
+    <string name="save_composition_loading_message">Saving your current composition, please wait...</string>
+    <string name="composition_save_success_title">Composition Saved!</string>
+    <string name="composition_save_success_message">Your composition has been saved!</string>
+    <string name="composition_save_fail_title">Composition Save Failed</string>
+    <string name="composition_save_fail_message">Sorry, your composition could not be saved right now. Please try again.</string>
+    <string name="open_dialog_title">Loading Compositions</string>
+    <string name="open_dialog_message">Loading Compositions...</string>
+    <string name="compostions_opening_error_title">Loading saved compositions failed</string>
+    <string name="compostions_opening_error_message">Could not load saved compositions at this time, sorry!</string>
+    <string name="tutorial_fragment_title">Tutorial</string>
+    <string name="save_loaded_text">Loaded saved composition</string>
+    <string name="open_fragment_title">Open Composition</string>
+    <string name="delete_composition_title">Delete composition \'</string>
+    <string name="composition_deletion_error_message">Composition deletion failed. Please try again.</string>
+    <string name="composition_deletion_error_title">Deletion Failed</string>
+    <string name="composition_delete_success_title">Composition deleted</string>
+    <string name="composition_delete_success_message">Your composition was deleted successfully.</string>
+    <string name="playback_player_error_text">Sorry, Audio Playback is not working for this composition. Please try again.</string>
 
     <!-- <string-array name="time_signature">
         <item>2/2</item>
