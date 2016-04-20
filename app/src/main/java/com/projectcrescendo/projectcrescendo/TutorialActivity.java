@@ -30,8 +30,8 @@ import java.util.Locale;
  * The tutorial activity contains the grid and is where the user completes the tutorial by adding
  * notes.
  * <p>
- * Created by Alex on 27/02/16.
- * Modified by Dylan, Ambrose and Jordan.
+ * Created by Dylan on 26/02/16.
+ * Modified by Alex, Ambrose and Jordan.
  */
 public class TutorialActivity extends AppCompatActivity implements NoteGridViewAdapterListener, AddNoteFragmentListener {
 
@@ -259,7 +259,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
             public void onClick(View v) {
                 TutorialFragment tutorialFragment = new TutorialFragment();
                 tutorialFragment.setTutorialText((String) instructionalTextView.getText());
-                tutorialFragment.setHeaderText("What to do");
+                tutorialFragment.setHeaderText(getString(R.string.instruction_header_title));
 
                 tutorialFragment.show(getSupportFragmentManager(), getString(R.string.tutorial_fragment_title));
 
@@ -281,10 +281,15 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
             }
         });
 
+        /**
+         * Add a floating action button to display the composition Open and Save UI.
+         */
         FloatingActionButton saveOpenButton = (FloatingActionButton) findViewById(R.id.save_and_open);
         saveOpenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("TutorialActivity", "save/open button tapped");
+
                 saveOrOpenButtonTapped();
             }
         });
@@ -331,7 +336,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
                 @Override
 
                 public void onClick(View v) {
-                    // Load relevant tutorial
+                    // Load relevant tutorial...
                     setTutorial(tutorial);
 
                     // Close the menu, tutorial has been loaded...
@@ -555,7 +560,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
             TutorialFragment fragment = new TutorialFragment();
 
             fragment.setTutorialText(firstInstruction);
-            fragment.setHeaderText("What to do...");
+            fragment.setHeaderText(getString(R.string.header_text_instruction));
 
             fragment.show(getSupportFragmentManager(), getString(R.string.tutorial_fragment_title));
 
@@ -747,12 +752,12 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         if (instructionIndex == size) {
             // Show congratulatory fragment!
             fragmentText = String.format(getString(R.string.tutorial_complete_message), tutorial.getTitle());
-            fragmentTitle = "Well done!";
+            fragmentTitle = getString(R.string.tutorial_complete_title);
 
         } else {
             // Go to next step...
             fragmentText = tutorial.getInstructions().get(instructionIndex);
-            fragmentTitle = "Next step...";
+            fragmentTitle = getString(R.string.tutorial_next_step_title);
 
         }
 
