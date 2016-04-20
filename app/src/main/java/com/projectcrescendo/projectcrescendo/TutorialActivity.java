@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import cz.msebera.android.httpclient.impl.execchain.TunnelRefusedException;
+
 /**
  * The tutorial activity contains the grid and is where the user completes the tutorial by adding
  * notes.
@@ -49,6 +51,11 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
      * The grid that contains the stave's beats.
      */
     private GridView gridView;
+
+    /**
+     * A Spinner to allow the user to select different tutorials
+     */
+    private Spinner sonataTutorialSpinner;
 
     /**
      * A Spinner to allow the user to select the time signature numerator for the current stave.
@@ -308,28 +315,54 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
 
         tutorialManager = new TutorialManager(this);
-        List<Tutorial> tutorials = tutorialManager.getTutorialsList();
+        final List<Tutorial> tutorials = tutorialManager.getTutorialsList();
 
-        // Invert the list so the first tutorial in the database appears at the top of the menu
+        /*// Invert the list so the first tutorial in the database appears at the top of the menu
         // This is due to the LIFO nature of the FloatingActionsMenu...
-        List<Tutorial> placeholderList = new ArrayList<Tutorial>();
-
+        final List<Tutorial> placeholderList = new ArrayList<Tutorial>();
         for (int i = tutorials.size() - 1; i >= 0; i--) {
             placeholderList.add(tutorials.get(i));
+        }*/
+
+        //Store every title of tutorial in the list and display them within the spinner
+        List<String> tutorialNames = new ArrayList<String>();
+        for (final Tutorial tutorial : tutorials){
+            tutorialNames.add(tutorial.getTitle());
         }
 
-        tutorials = placeholderList;
+        sonataTutorialSpinner = (Spinner) findViewById(R.id.sonata_tutorial);
 
-        /**
+        final ArrayAdapter<String> sonataTutorial = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tutorialNames);
+        sonataTutorial.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        sonataTutorialSpinner.setAdapter(sonataTutorial);
+
+        sonataTutorialSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("tutorialSpinner", "item selected!!!");
+                setTutorial(tutorials.get(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Log.d("tutorialSpinner", "no item selected!!!");
+            }
+        });
+
+    }
+
+        /*
          * Add a floating action menu to store floating action buttons for different tutorials
-         */
+         *
         final FloatingActionsMenu tutorialSelectionMenu = (FloatingActionsMenu) findViewById(R.id.sonata_tutorial);
 
         // Create a menu item for each tutorial...
         for (final Tutorial tutorial : tutorials) {
             FloatingActionButton tutorialSelectionButton = new FloatingActionButton(this);
-            tutorialSelectionButton.setColorNormal(R.color.white);
-            tutorialSelectionButton.setColorPressed(R.color.purple);
+            tutorialSelectionButton.setSize(FloatingActionButton.SIZE_MINI);
+            tutorialSelectionButton.setColorNormalResId(R.color.white);
+            tutorialSelectionButton.setColorPressed(R.color.white_pressed);
             tutorialSelectionButton.setTitle(tutorial.getTitle());
 
             tutorialSelectionButton.setOnClickListener(new View.OnClickListener() {
@@ -354,9 +387,8 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
             });
 
             tutorialSelectionMenu.addButton(tutorialSelectionButton);
-        }
+        }*/
 
-    }
 
 
     /**
