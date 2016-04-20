@@ -52,7 +52,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
     /**
      * A Spinner to allow the user to select different tutorials
      */
-    private Spinner sonataTutorialSpinner;
+    private Spinner tutorialSelectionSpinner;
 
     /**
      * A Spinner to allow the user to select the time signature numerator for the current stave.
@@ -333,14 +333,14 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
             tutorialNames.add(tutorial.getTitle());
         }
 
-        sonataTutorialSpinner = (Spinner) findViewById(R.id.sonata_tutorial);
+        tutorialSelectionSpinner = (Spinner) findViewById(R.id.sonata_tutorial);
 
         final ArrayAdapter<String> sonataTutorial = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tutorialNames);
         sonataTutorial.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        sonataTutorialSpinner.setAdapter(sonataTutorial);
+        tutorialSelectionSpinner.setAdapter(sonataTutorial);
 
-        sonataTutorialSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        tutorialSelectionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("tutorialSpinner", "item selected!!!");
