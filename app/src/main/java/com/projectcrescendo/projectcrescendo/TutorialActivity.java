@@ -281,7 +281,13 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
             }
         });
 
-        FloatingActionButton save_openButton = (FloatingActionButton) findViewById(R.id.save_and_open);
+        FloatingActionButton saveOpenButton = (FloatingActionButton) findViewById(R.id.save_and_open);
+        saveOpenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveOrOpenButtonTapped();
+            }
+        });
 
         /**
          * Add a floating action button to do verification once the user follow the tutorial steps for inputting predefined values to the grid
@@ -387,7 +393,6 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         Log.d("TutorialActivity", "position tapped: " + position);
         Log.d("TutorialActivity", "maxBarLength: " + maxBarLength);
 
-        // TODO: CHECK AND FIX!
         if (position < (maxBarLength - 1)) {
             // upper bar, take away max bar length to get true position
             Log.d("TutorialActivity", "upper bar");
@@ -593,6 +598,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         // Work out where to validate up to...
         int validationLimit = tutorial.getTutorialPatternMatchIndex().get(instructionIndex);
 
+        Log.d("ValidationLimit", "getTutorialPatternMatchIndex: " + tutorial.getTutorialPatternMatchIndex());
         Log.d("ValidationLimit", "gonna validate to: " + validationLimit);
 
         // Do the validation check...
@@ -633,11 +639,23 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         List<Beat> correctUpperBeats = tutorial.getValidBeatsForUpperClef();
         List<Beat> correctLowerBeats = tutorial.getValidBeatsForLowerClef();
         Log.d("TutorialValidation", "correctUpperBeats = " + correctUpperBeats);
+        Log.d("TutorialValidation", "correctLowerBeats = " + correctLowerBeats);
 
         // Perform a bounds check to ensure we don't overflow the array size.
-        if (limit > Stave.NUMBER_OF_BEATS) {
-            limit = Stave.NUMBER_OF_BEATS - 1;
+        if (limit > Stave.BEATS_PER_ROW) {
+            limit = Stave.BEATS_PER_ROW - 1;
         }
+
+        boolean oddLimit = false;
+
+        if (limit % 2 == 0) {
+            limit = limit / 2;
+        } else {
+            limit = limit / 2;
+            oddLimit = true;
+        }
+
+        Log.d("TutorialValidation", "limit = " + limit);
 
         // Check up to the desired limit
         for (int i = 0; i <= limit; i++) {
@@ -656,14 +674,18 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
                 upperBarCorrect = false;
             }
 
-            if (!lowerBeat.equals(desiredLowerBeat)) {
-                // Invalid lower bar.
-                lowerBarCorrect = false;
+            // Only check lower bar when the limit is an odd number, if this is the last box
+            boolean skipBottomRow = !oddLimit && i == limit;
+            if (!skipBottomRow) {
+                if (!lowerBeat.equals(desiredLowerBeat)) {
+                    // Invalid lower bar.
+                    lowerBarCorrect = false;
 
-                Log.d("TutorialValidation", "Lower Bar Failed at " + i);
-                Log.d("TutorialValidation", "Lower Bar Failed because " + lowerBeat + " != " + desiredLowerBeat);
-                Log.d("TutorialValidation", "Lower Bar Limit = " + limit);
+                    Log.d("TutorialValidation", "Lower Bar Failed at " + i);
+                    Log.d("TutorialValidation", "Lower Bar Failed because " + lowerBeat + " != " + desiredLowerBeat);
+                    Log.d("TutorialValidation", "Lower Bar Limit = " + limit);
 
+                }
             }
 
         }
