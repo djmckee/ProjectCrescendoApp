@@ -10,7 +10,8 @@ import java.util.List;
  * <p>
  * Created by Dylan McKee on 16/11/15.
  */
-public class Tutorial {
+public class Tutorial implements Cloneable {
+
     /**
      * The title of the current tutorial as a string.
      * The Tutorial title is only set once upon construction of the class, so can be made final.
@@ -215,6 +216,58 @@ public class Tutorial {
         result = 31 * result + (getValidBeats() != null ? getValidBeats().hashCode() : 0);
         result = 31 * result + (getTutorialPatternMatchIndex() != null ? getTutorialPatternMatchIndex().hashCode() : 0);
         return result;
+    }
+
+    /**
+     * Return a cloned instance of this tutorial, with the same content but a different memory address.
+     *
+     * @return a cloned Tutorial instance; logically identical but with a unique memory address.
+     * @throws CloneNotSupportedException
+     */
+    @Override
+    public Tutorial clone() throws CloneNotSupportedException {
+        List<String> clonedInstructions = new ArrayList<String>();
+
+        for (String string : getInstructions()) {
+            clonedInstructions.add(string);
+        }
+
+        List<Integer> clonedPatternMatchIndices = new ArrayList<Integer>();
+
+        for (int i : getTutorialPatternMatchIndex()) {
+            clonedPatternMatchIndices.add(i);
+        }
+
+
+        List<Beat> clonedValidBeats = new ArrayList<Beat>();
+
+        for (Beat beat : getValidBeats()) {
+            clonedValidBeats.add(beat.clone());
+        }
+
+        List<Beat> clonedPrepopulatedBeats = new ArrayList<Beat>();
+
+        for (Beat beat : getPrePopulatedBeats()) {
+            clonedPrepopulatedBeats.add(beat.clone());
+        }
+
+        Tutorial clonedTutorial = new Tutorial(this.getTitle(), clonedInstructions);
+
+        for (int i : clonedPatternMatchIndices) {
+            clonedTutorial.getTutorialPatternMatchIndex().add(i);
+
+        }
+
+        for (Beat beat : clonedValidBeats) {
+            clonedTutorial.getValidBeats().add(beat);
+        }
+
+        for (Beat beat : clonedPrepopulatedBeats) {
+            clonedTutorial.getPrePopulatedBeats().add(beat);
+        }
+
+        return clonedTutorial;
+
     }
 
 

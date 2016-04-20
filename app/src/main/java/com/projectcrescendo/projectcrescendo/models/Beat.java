@@ -7,7 +7,7 @@ import java.util.List;
  * A model class containing an Intonation, and a list of notes (with a range of 0-5).
  * Created by Dylan McKee on 25/02/16.
  */
-public class Beat {
+public class Beat implements Cloneable {
 
     /**
      * A list consisting of between 0 and 5 notes that belong in this beat.
@@ -130,5 +130,31 @@ public class Beat {
         result = 31 * result + (getIntonation() != null ? getIntonation().hashCode() : 0);
         return result;
     }
+
+    /**
+     * Return a cloned instance of this beat, with the same content but a different memory address.
+     *
+     * @return a cloned Beat instance; logically identical but with a unique memory address.
+     * @throws CloneNotSupportedException
+     */
+    @Override
+    public Beat clone() throws CloneNotSupportedException {
+        Beat clonedBeat = new Beat();
+        clonedBeat.setIntonation(this.getIntonation());
+
+        List<Note> clonedNotes = new ArrayList<Note>();
+
+        for (Note note : getNotes()) {
+            clonedNotes.add(note.clone());
+        }
+
+        clonedBeat.setNotes(clonedNotes);
+
+        return clonedBeat;
+
+    }
+
+
+
 
 }

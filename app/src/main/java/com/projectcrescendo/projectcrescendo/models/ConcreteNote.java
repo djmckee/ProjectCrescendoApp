@@ -4,7 +4,7 @@ package com.projectcrescendo.projectcrescendo.models;
  * The note class is a class to model a musical note. It implements NoteInterface.
  * Created by Dylan McKee on 16/11/15.
  */
-public class ConcreteNote implements Note {
+public class ConcreteNote implements Note, Cloneable {
 
     /**
      * The pitch of the note as a human readable String (e.g. 'C#')
@@ -208,6 +208,25 @@ public class ConcreteNote implements Note {
         temp = Double.doubleToLongBits(getLength());
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    /**
+     * Return a cloned instance of this Note, with the same content but a different memory address.
+     *
+     * @return a cloned Note instance; logically identical but with a unique memory address.
+     * @throws CloneNotSupportedException
+     */
+    @Override
+    public Note clone() throws CloneNotSupportedException {
+        Note clonedNote = new ConcreteNote(this.getPitch());
+        clonedNote.setLength(this.getLength());
+        clonedNote.addAccidental(this.getAccidental());
+        clonedNote.addIntonation(this.getIntonation());
+        clonedNote.setDynamic(this.getDynamic());
+        clonedNote.setLength(this.getLength());
+
+        return clonedNote;
+
     }
 
 }
