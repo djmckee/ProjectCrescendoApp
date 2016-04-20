@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ScrollView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
@@ -23,6 +25,7 @@ import uk.co.dolphin_com.sscore.LoadOptions;
 import uk.co.dolphin_com.sscore.LoadWarning;
 import uk.co.dolphin_com.sscore.SScore;
 import uk.co.dolphin_com.sscore.SScoreKey;
+import uk.co.dolphin_com.sscore.Tempo;
 import uk.co.dolphin_com.sscore.ex.ScoreException;
 
 /**
@@ -59,6 +62,12 @@ public class PlaybackActivity extends AppCompatActivity {
      * A String representation of the MusicXML encoded score, to be set via the Intent that
      * transitions into this activity.
      */
+    private static final int kMinTempoBPM = 30;
+    private static final int kMaxTempoBPM = 240;
+    private static final int kDefaultTempoBPM = 120;
+    private static final double kMinTempoScaling = 0.5;
+    private static final double kMaxTempoScaling = 2.0;
+    private static final double kDefaultTempoScaling = 1.0;
     private String musicXmlScore;
     /**
      * An SScore instance of the current musical score on display.
@@ -295,7 +304,114 @@ public class PlaybackActivity extends AppCompatActivity {
 
         // Ensure SeeScore displays the score that's been passed into this activity.
         setupScore();
+        setTempo(kDefaultTempoBPM);
+        SeekBar tempoSlider = (SeekBar) findViewById(R.id.tempoSlider);
+        tempoSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            /**
+             * called on moving the tempo slider. Updates the tempo text and the player tempo if playing
+             */
+            public void onProgressChanged(SeekBar seekBar, int sliderValCents, boolean b) {
+                if (b && score != null) {
+                    if (score.hasDefinedTempo()) {
+                        try {
+                            double scaling = sliderPercentToScaling(sliderValCents);
+                            Tempo tempo = score.tempoAtStart();
+                            setTempoText((int) (scaling * tempo.bpm + 0.5));
+                            if (player != null) {
+                                try {
+                                    player.updateTempo();
+                                } catch (Player.PlayerException ex) {
+                                    System.out.println("Failed to set player tempo " + ex);
+                                }
+                            }
+                        } catch (ScoreException ex) {
+                        }
+                    } else {
+                        setTempoText(sliderPercentToBPM(sliderValCents));
+                    }
+                } else {
+                    setTempoText(sliderPercentToBPM(sliderValCents));
+                }
+            }
 
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+    }
+    private void setTempoText(int tempoVal) {
+        TextView tempoText = (TextView) findViewById(R.id.tempoText);
+        tempoText.setText("" + tempoVal + " BPM");
+    }
+
+    private void setTempoSliderValPercent(int percent) {
+        SeekBar tempoSlider = (SeekBar) findViewById(R.id.tempoSlider);
+        tempoSlider.setProgress(percent);
+    }
+
+    private int getTempoSliderValPercent() {
+        SeekBar tempoSlider = (SeekBar) findViewById(R.id.tempoSlider);
+        return tempoSlider.getProgress();
+    }
+
+    private int scalingToBPM(double scaling, int nominalBPM) {
+        return  (int)(nominalBPM * scaling);
+    }
+
+    private int scalingToSliderPercent(double scaling) {
+        return (int)(0.5+(100 * ((scaling - kMinTempoScaling) / (kMaxTempoScaling - kMinTempoScaling))));
+    }
+
+    private double sliderPercentToScaling(int percent) {
+        return kMinTempoScaling + (percent/100.0) * (kMaxTempoScaling - kMinTempoScaling);
+    }
+
+    private int sliderPercentToBPM(int percent) {
+        return kMinTempoBPM + (int)((percent/100.0) * (kMaxTempoBPM - kMinTempoBPM));
+    }
+
+    private int bpmToSliderPercent(int bpm) {
+        return (int)(100.0 * (bpm - kMinTempoBPM) / (double)(kMaxTempoBPM - kMinTempoBPM));
+    }
+
+    private void setTempoScaling(double tempoScaling, int nominalBPM) {
+        setTempoSliderValPercent(scalingToSliderPercent(tempoScaling ));
+        setTempoText(scalingToBPM(tempoScaling, nominalBPM));
+    }
+
+    private void setTempo(int bpm) {
+        setTempoSliderValPercent(bpmToSliderPercent(bpm));
+        setTempoText(bpm);
+    }
+    /**
+     * This method is fired whenever the back button is pressed.
+     * It stops all playback
+     */
+    @Override
+    protected void onDestroy(){
+        Log.d("PlaybackActivity", "Playback stopped");
+
+        // Stop playing.
+        playerIsPlaying = false;
+
+        // Reset player to start
+        currentBar = 0;
+        seeScoreView.setCursorAtBar(currentBar, SeeScoreView.CursorType.line, 0);
+        player.startAt(currentBar, true);
+
+        if (player != null) {
+            player.reset();
+        }
+
+        updatePlayButtonUI();
+        super.onDestroy();
     }
 
     /**
