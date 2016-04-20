@@ -5,8 +5,8 @@
 
     <RelativeLayout
         android:id="@+id/RelativeLayout01"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="600dp"
+        android:layout_height="400dp">
 
         <TextView
             android:id="@+id/tutorial_header"
@@ -14,8 +14,7 @@
             android:layout_height="fill_parent"
             android:layout_centerHorizontal="true"
             android:text=""
-            android:textSize="60px"
-
+            android:textSize="40dp"
 
             />
 
@@ -26,8 +25,9 @@
             android:layout_below="@+id/tutorial_header"
             android:layout_centerHorizontal="true"
             android:text=""
-            android:textSize="40px"
-
+            android:textSize="25dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             />
 
         <Button
