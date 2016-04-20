@@ -70,6 +70,10 @@
     <string name="tutorial_complete_title">Well done!</string>
     <string name="tutorial_next_step_title">Next step...</string>
     <string name="blank" />
+    <string name="reset_stave_confirm_title">Reset stave?</string>
+    <string name="reset_stave_confirm_message">Are you sure you want to clear your current stave?</string>
+    <string name="tutorial_spinner_title">Tutorials</string>
+    <string name="free_to_play_title">Free play</string>
 
     <!-- <string-array name="time_signature">
         <item>2/2</item>
