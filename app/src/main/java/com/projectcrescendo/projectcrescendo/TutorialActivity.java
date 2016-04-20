@@ -320,15 +320,13 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         tutorialManager = new TutorialManager(this);
         final List<Tutorial> tutorials = tutorialManager.getTutorialsList();
 
-        /*// Invert the list so the first tutorial in the database appears at the top of the menu
-        // This is due to the LIFO nature of the FloatingActionsMenu...
-        final List<Tutorial> placeholderList = new ArrayList<Tutorial>();
-        for (int i = tutorials.size() - 1; i >= 0; i--) {
-            placeholderList.add(tutorials.get(i));
-        }*/
-
         // Store every title of tutorial in the list and display them within the spinner
+        // prefixing the list with a 'Select Tutorial' heading, and a 'Free to play' mode option...
         List<String> tutorialNames = new ArrayList<String>();
+
+        tutorialNames.add(getString(R.string.tutorial_spinner_title));
+        tutorialNames.add(getString(R.string.free_to_play_title));
+
         for (final Tutorial tutorial : tutorials){
             tutorialNames.add(tutorial.getTitle());
         }
@@ -344,6 +342,43 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("tutorialSpinner", "item selected!!!");
+
+                // if the selected item is the first, don't do anything
+                if (position == 0) {
+                    return;
+                }
+
+                if (position == 1) {
+                    // if the user selected free to play, and isn't currently in free to play mode,
+                    // reset the tutorial to nothing and put them in free to play mode
+                    if (isInTutorialMode()) {
+                        // Resetting stave no questions asked because they're leaving tutorial mode
+                        setTutorial(null);
+                    } else {
+                        // Ask if they want to reset the current free to play stave...
+                        AlertDialog.Builder resetStaveChoiceDialog = new AlertDialog.Builder(TutorialActivity.this);
+                        resetStaveChoiceDialog.setTitle(R.string.reset_stave_confirm_title);
+                        resetStaveChoiceDialog.setMessage(R.string.reset_stave_confirm_message);
+
+                        resetStaveChoiceDialog.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int buttonId) {
+                                // Reset stave...
+                                setTutorial(null);
+
+                            }
+                        });
+
+                        resetStaveChoiceDialog.setNegativeButton(R.string.cancel, null);
+
+                        resetStaveChoiceDialog.show();
+
+                    }
+
+                    return;
+                }
+
+
                 setTutorial(tutorials.get(position));
             }
 
@@ -354,45 +389,6 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         });
 
     }
-
-        /*
-         * Add a floating action menu to store floating action buttons for different tutorials
-         *
-        final FloatingActionsMenu tutorialSelectionMenu = (FloatingActionsMenu) findViewById(R.id.sonata_tutorial);
-
-        // Create a menu item for each tutorial...
-        for (final Tutorial tutorial : tutorials) {
-            FloatingActionButton tutorialSelectionButton = new FloatingActionButton(this);
-            tutorialSelectionButton.setSize(FloatingActionButton.SIZE_MINI);
-            tutorialSelectionButton.setColorNormalResId(R.color.white);
-            tutorialSelectionButton.setColorPressed(R.color.white_pressed);
-            tutorialSelectionButton.setTitle(tutorial.getTitle());
-
-            tutorialSelectionButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-
-                public void onClick(View v) {
-                    try {
-                        // Load relevant tutorial, cloning it to ensure a blank canvas each time...
-                        Tutorial clonedTutorial = tutorial.clone();
-                        setTutorial(clonedTutorial);
-
-                    } catch (CloneNotSupportedException cNE) {
-                        // Something went wrong, forget the clone...
-                        setTutorial(tutorial);
-
-                    }
-
-                    // Close the menu, tutorial has been loaded...
-                    tutorialSelectionMenu.collapse();
-
-                }
-            });
-
-            tutorialSelectionMenu.addButton(tutorialSelectionButton);
-        }*/
-
-
 
     /**
      * Updates the grid with the current stave's beats. To be performed after a notes is added or

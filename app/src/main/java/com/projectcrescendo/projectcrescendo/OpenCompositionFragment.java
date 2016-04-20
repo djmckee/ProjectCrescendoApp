@@ -180,10 +180,10 @@ public class OpenCompositionFragment extends DialogFragment implements
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         final Stave selectedComposition = compositions.get(position);
 
-        AlertDialog.Builder lengthInputDialog = new AlertDialog.Builder(getActivity());
-        lengthInputDialog.setTitle(getString(R.string.delete_composition_title) + selectedComposition.getName() + getString(R.string.question_mark));
+        AlertDialog.Builder deleteConfirmationDialog = new AlertDialog.Builder(getActivity());
+        deleteConfirmationDialog.setTitle(getString(R.string.delete_composition_title) + selectedComposition.getName() + getString(R.string.question_mark));
 
-        lengthInputDialog.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+        deleteConfirmationDialog.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int buttonId) {
                 // Tell the listener and close this fragment...
@@ -201,9 +201,9 @@ public class OpenCompositionFragment extends DialogFragment implements
             }
         });
 
-        lengthInputDialog.setNegativeButton(R.string.cancel, null);
+        deleteConfirmationDialog.setNegativeButton(R.string.cancel, null);
 
-        lengthInputDialog.show();
+        deleteConfirmationDialog.show();
 
         return true;
     }
