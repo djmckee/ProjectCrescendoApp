@@ -11,7 +11,7 @@ public class Stave {
      * The number of beats for the total Stave. Must be divisible by 4, 6 and 8 to be valid because
      * of possible Bar lengths.
      */
-    private static final int NUMBER_OF_BEATS = 384;
+    public static final int NUMBER_OF_BEATS = 384;
 
     /**
      * The number of Clefs in the current stave - always 2 for our purposes - because there's 2

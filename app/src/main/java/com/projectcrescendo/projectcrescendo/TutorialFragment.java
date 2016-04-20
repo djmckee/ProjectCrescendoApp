@@ -25,6 +25,11 @@ public class TutorialFragment extends DialogFragment {
     private String tutorialText;
 
     /**
+     * The text for the title label in this fragment.
+     */
+    private String tutorialHeaderText;
+
+    /**
      * The TextView that contains the tutorial text to display to the user in this fragment.
      */
     private TextView tutorialTextView;
@@ -33,8 +38,6 @@ public class TutorialFragment extends DialogFragment {
      * The Textview which contains header for tutorial Text
      */
     private TextView tutorialHeaderTextView;
-
-    private String tutorialHeadertext;
 
     /**
      * Inflates this view from the XML Layout.
@@ -68,24 +71,26 @@ public class TutorialFragment extends DialogFragment {
             tutorialTextView.setText(tutorialText);
         }
 
-        if (tutorialHeadertext != null) {
-            tutorialHeaderTextView.setText(tutorialHeadertext);
+        if (tutorialHeaderText != null) {
+            tutorialHeaderTextView.setText(tutorialHeaderText);
         }
 
         Button closeButton = (Button) this.getView().findViewById(R.id.tutorial_Button);
         closeButton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
-                        closefragment();
+                        closeFragment();
                     }
                 });
 
     }
 
-    private void closefragment() {
+    /**
+     * Removes fragment from screen and returns to the presenting activity.
+     */
+    private void closeFragment() {
         getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
     }
-    /** removes fragment and returns to main activity **/
 
     /**
      * Returns the tutorial text that is displayed within this fragment.
@@ -110,12 +115,22 @@ public class TutorialFragment extends DialogFragment {
 
     }
 
+    /**
+     * Returns the text contained within this fragment's title.
+     *
+     * @return a String containing the text within this fragment's title.
+     */
     public String getHeaderText() {
-        return tutorialHeadertext;
+        return tutorialHeaderText;
     }
 
+    /**
+     * Sets the text to display within this fragment's title label.
+     *
+     * @param headerText the text do display within this fragment's title label.
+     */
     public void setHeaderText(String headerText) {
-        this.tutorialHeadertext = headerText;
+        this.tutorialHeaderText = headerText;
 
         if (tutorialHeaderTextView != null) {
             tutorialHeaderTextView.setText(headerText);

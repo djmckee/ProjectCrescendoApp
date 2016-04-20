@@ -288,7 +288,13 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
             }
         });
 
-        FloatingActionButton save_openButton = (FloatingActionButton) findViewById(R.id.save_and_open);
+        FloatingActionButton saveOpenButton = (FloatingActionButton) findViewById(R.id.save_and_open);
+        saveOpenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveOrOpenButtonTapped();
+            }
+        });
 
         /**
          * Add a floating action button to do verification once the user follow the tutorial steps for inputting predefined values to the grid
@@ -380,14 +386,14 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         // Create a string array from the current stave's bars and beats...
         List<String> notesAsStringList = new ArrayList<String>();
 
-        // Add for lower stave
-        for (Beat beat : stave.getLowerClef().getBeats()) {
+        // Add for upper stave
+        for (Beat beat : stave.getUpperClef().getBeats()) {
             String notesForBeat = beat.gridStringRepresentation();
             notesAsStringList.add(notesForBeat);
         }
 
-        // Add for upper stave
-        for (Beat beat : stave.getUpperClef().getBeats()) {
+        // Add for lower stave
+        for (Beat beat : stave.getLowerClef().getBeats()) {
             String notesForBeat = beat.gridStringRepresentation();
             notesAsStringList.add(notesForBeat);
         }
@@ -419,18 +425,20 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         Log.d("TutorialActivity", "position tapped: " + position);
         Log.d("TutorialActivity", "maxBarLength: " + maxBarLength);
 
-        if (position > (maxBarLength - 1)) {
+        if (position < (maxBarLength - 1)) {
             // upper bar, take away max bar length to get true position
             Log.d("TutorialActivity", "upper bar");
 
-            int truePosition = position - maxBarLength;
-            currentBeat = stave.getUpperClef().getBeats().get(truePosition);
+            currentBeat = stave.getUpperClef().getBeats().get(position);
 
         } else {
             // lower bar
             Log.d("TutorialActivity", "lower bar");
 
-            currentBeat = stave.getLowerClef().getBeats().get(position);
+            int truePosition = position - maxBarLength;
+            Log.d("TutorialActivity", "truePosition tapped: " + truePosition);
+
+            currentBeat = stave.getLowerClef().getBeats().get(truePosition);
 
         }
 
@@ -463,6 +471,11 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
         // Refresh grid to reflect changes in UI
         refreshGrid();
+
+
+        Log.d("AddedNote", "Added note " + note + "; current upper bar = " + stave.getUpperClef().getBeats() + "; current lower bar = " + stave.getLowerClef().getBeats());
+        Log.d("AddedNote", "current lower bar = " + stave.getLowerClef().getBeats());
+        Log.d("AddedNote", "current upper bar = " + stave.getUpperClef().getBeats());
 
     }
 
@@ -535,11 +548,16 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         // Pre-load the stave with the tutorial's pre-filled notes...
         List<Beat> topPrefilledBeats = tutorial.getPrePopulatedBeatsForUpperClef();
         Log.d("TutorialActivity", "topPrefilledBeats = " + topPrefilledBeats);
+
         for (int i = 0; i < upperBeats.size(); i++) {
             Beat upperBeat = upperBeats.get(i);
-            Beat prefilledBeat = topPrefilledBeats.get(i);
-            upperBeat.setIntonation(prefilledBeat.getIntonation());
-            upperBeat.setNotes(prefilledBeat.getNotes());
+
+            if (i < topPrefilledBeats.size()) {
+                Beat prefilledBeat = topPrefilledBeats.get(i);
+                upperBeat.setIntonation(prefilledBeat.getIntonation());
+                upperBeat.setNotes(prefilledBeat.getNotes());
+            }
+
         }
 
 
@@ -548,9 +566,13 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
         for (int i = 0; i < lowerBeats.size(); i++) {
             Beat lowerBeat = lowerBeats.get(i);
-            Beat prefilledBeat = bottomPrefilledBeats.get(i);
-            lowerBeat.setIntonation(prefilledBeat.getIntonation());
-            lowerBeat.setNotes(prefilledBeat.getNotes());
+
+            if (i < bottomPrefilledBeats.size()) {
+                Beat prefilledBeat = bottomPrefilledBeats.get(i);
+                lowerBeat.setIntonation(prefilledBeat.getIntonation());
+                lowerBeat.setNotes(prefilledBeat.getNotes());
+            }
+
         }
 
         // Refresh the grid UI to reflect these stave changes...
@@ -591,6 +613,8 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
     }
 
     private void validateButtonClicked() {
+        Log.d("TutorialValidation", "Instruction " + instructionIndex);
+
         // Don't bother checking if there's no tutorial present...
         if (!isInTutorialMode()) {
             showNoTutorialError();
@@ -599,12 +623,15 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         }
 
         // If we're at the last instruction, don't bother validating.
-        if (instructionIndex == tutorialManager.getTutorialsList().size()) {
+        if (instructionIndex == tutorial.getInstructions().size()) {
             return;
         }
 
         // Work out where to validate up to...
         int validationLimit = tutorial.getTutorialPatternMatchIndex().get(instructionIndex);
+
+        Log.d("ValidationLimit", "getTutorialPatternMatchIndex: " + tutorial.getTutorialPatternMatchIndex());
+        Log.d("ValidationLimit", "gonna validate to: " + validationLimit);
 
         // Do the validation check...
         performTutorialCheck(validationLimit);
@@ -627,7 +654,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         }
 
         // If we're at the last instruction, don't bother validating.
-        if (instructionIndex == tutorialManager.getTutorialsList().size()) {
+        if (instructionIndex == tutorial.getInstructions().size()) {
             return;
         }
 
@@ -636,13 +663,34 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         boolean lowerBarCorrect = true;
 
         List<Beat> upperBeats = stave.getUpperClef().getBeats();
+
+        Log.d("TutorialValidation", "upperBeats = " + upperBeats);
+
         List<Beat> lowerBeats = stave.getLowerClef().getBeats();
 
         List<Beat> correctUpperBeats = tutorial.getValidBeatsForUpperClef();
         List<Beat> correctLowerBeats = tutorial.getValidBeatsForLowerClef();
+        Log.d("TutorialValidation", "correctUpperBeats = " + correctUpperBeats);
+        Log.d("TutorialValidation", "correctLowerBeats = " + correctLowerBeats);
+
+        // Perform a bounds check to ensure we don't overflow the array size.
+        if (limit > Stave.BEATS_PER_ROW) {
+            limit = Stave.BEATS_PER_ROW - 1;
+        }
+
+        boolean oddLimit = false;
+
+        if (limit % 2 == 0) {
+            limit = limit / 2;
+        } else {
+            limit = limit / 2;
+            oddLimit = true;
+        }
+
+        Log.d("TutorialValidation", "limit = " + limit);
 
         // Check up to the desired limit
-        for (int i = 0; i < limit; i++) {
+        for (int i = 0; i <= limit; i++) {
             Beat upperBeat = upperBeats.get(i);
             Beat lowerBeat = lowerBeats.get(i);
 
@@ -651,12 +699,25 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
             if (!upperBeat.equals(desiredUpperBeat)) {
                 // Invalid upper bar.
+                Log.d("TutorialValidation", "Upper Bar Failed at " + i);
+                Log.d("TutorialValidation", "Upper Bar Failed because " + upperBeat + " != " + desiredUpperBeat);
+                Log.d("TutorialValidation", "Upper Bar Limit = " + limit);
+
                 upperBarCorrect = false;
             }
 
-            if (!lowerBeat.equals(desiredLowerBeat)) {
-                // Invalid lower bar.
-                lowerBarCorrect = false;
+            // Only check lower bar when the limit is an odd number, if this is the last box
+            boolean skipBottomRow = !oddLimit && i == limit;
+            if (!skipBottomRow) {
+                if (!lowerBeat.equals(desiredLowerBeat)) {
+                    // Invalid lower bar.
+                    lowerBarCorrect = false;
+
+                    Log.d("TutorialValidation", "Lower Bar Failed at " + i);
+                    Log.d("TutorialValidation", "Lower Bar Failed because " + lowerBeat + " != " + desiredLowerBeat);
+                    Log.d("TutorialValidation", "Lower Bar Limit = " + limit);
+
+                }
             }
 
         }
@@ -710,15 +771,20 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         instructionIndex++;
 
         String fragmentText;
+        String fragmentTitle;
+
+        int size = tutorial.getInstructions().size();
 
         // If we're at the last instruction, show congratulation message
-        if (instructionIndex == tutorialManager.getTutorialsList().size()) {
+        if (instructionIndex == size) {
             // Show congratulatory fragment!
             fragmentText = String.format(getString(R.string.tutorial_complete_message), tutorial.getTitle());
+            fragmentTitle = "Well done!";
 
         } else {
             // Go to next step...
             fragmentText = tutorial.getInstructions().get(instructionIndex);
+            fragmentTitle = "Next step...";
 
         }
 
@@ -726,7 +792,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
         TutorialFragment tutorialFragment = new TutorialFragment();
         tutorialFragment.setTutorialText(fragmentText);
-        tutorialFragment.setHeaderText("Well done!");
+        tutorialFragment.setHeaderText(fragmentTitle);
         tutorialFragment.show(getSupportFragmentManager(), getString(R.string.tutorial_fragment_title));
 
     }
