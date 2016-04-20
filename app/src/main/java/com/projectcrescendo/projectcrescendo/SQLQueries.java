@@ -43,7 +43,7 @@ final class SQLQueries {
     /**
      * Select all notes with the specified beat ID.
      */
-    public static final String SELECT_NOTES_WITH_BEAT_ID = "SELECT * from beat WHERE beat_id = %d";
+    public static final String SELECT_NOTES_WITH_BEAT_ID = "SELECT * from notes WHERE beat_id = %d";
 
     /**
      * Select intonation with the specified intonation ID.

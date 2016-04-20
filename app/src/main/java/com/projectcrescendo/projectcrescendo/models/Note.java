@@ -12,7 +12,9 @@ package com.projectcrescendo.projectcrescendo.models;
  * How long the note should last (relative to the bar?) - (1.0 = a bar)
  * Pitch should be passed in constructor, if no dynamic is given one should be assumed (mf).
  * <p>
- * Originally created by Charlie Marcus, added to the app by Dylan McKee on 16/11/15.
+ * Originally created by Charlie Marcus.
+ * Modified by Dylan McKee.
+ *
  */
 public interface Note {
 
@@ -100,5 +102,13 @@ public interface Note {
      * @param l the length of the note
      */
     void setLength(double l);
+
+    /**
+     * Return a cloned instance of this Note, with the same content but a different memory address.
+     *
+     * @return a cloned Note instance; logically identical but with a unique memory address.
+     * @throws CloneNotSupportedException
+     */
+    Note clone() throws CloneNotSupportedException;
 
 }

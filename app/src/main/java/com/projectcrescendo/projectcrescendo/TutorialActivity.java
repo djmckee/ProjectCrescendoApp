@@ -336,8 +336,16 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
                 @Override
 
                 public void onClick(View v) {
-                    // Load relevant tutorial...
-                    setTutorial(tutorial);
+                    try {
+                        // Load relevant tutorial, cloning it to ensure a blank canvas each time...
+                        Tutorial clonedTutorial = tutorial.clone();
+                        setTutorial(clonedTutorial);
+
+                    } catch (CloneNotSupportedException cNE) {
+                        // Something went wrong, forget the clone...
+                        setTutorial(tutorial);
+
+                    }
 
                     // Close the menu, tutorial has been loaded...
                     tutorialSelectionMenu.collapse();
