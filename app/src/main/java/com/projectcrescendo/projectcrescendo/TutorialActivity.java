@@ -15,7 +15,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.projectcrescendo.projectcrescendo.models.Beat;
 import com.projectcrescendo.projectcrescendo.models.Intonation;
 import com.projectcrescendo.projectcrescendo.models.Note;
@@ -25,8 +24,6 @@ import com.projectcrescendo.projectcrescendo.models.Tutorial;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import cz.msebera.android.httpclient.impl.execchain.TunnelRefusedException;
 
 /**
  * The tutorial activity contains the grid and is where the user completes the tutorial by adding
@@ -264,11 +261,17 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         instructionalTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TutorialFragment tutorialFragment = new TutorialFragment();
-                tutorialFragment.setTutorialText((String) instructionalTextView.getText());
-                tutorialFragment.setHeaderText(getString(R.string.instruction_header_title));
+                // Get and show instructional text
+                String instructionalText = (String) instructionalTextView.getText();
 
-                tutorialFragment.show(getSupportFragmentManager(), getString(R.string.tutorial_fragment_title));
+                // Only show instructional text popover if there is instructional text to show...
+                if (instructionalText != null && instructionalText.length() > 0) {
+                    TutorialFragment tutorialFragment = new TutorialFragment();
+                    tutorialFragment.setTutorialText(instructionalText);
+                    tutorialFragment.setHeaderText(getString(R.string.instruction_header_title));
+
+                    tutorialFragment.show(getSupportFragmentManager(), getString(R.string.tutorial_fragment_title));
+                }
 
             }
         });
@@ -324,7 +327,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
             placeholderList.add(tutorials.get(i));
         }*/
 
-        //Store every title of tutorial in the list and display them within the spinner
+        // Store every title of tutorial in the list and display them within the spinner
         List<String> tutorialNames = new ArrayList<String>();
         for (final Tutorial tutorial : tutorials){
             tutorialNames.add(tutorial.getTitle());
@@ -538,20 +541,32 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
      * @param tutorial the Tutorial instance for the user to complete in this TutorialActivity.
      */
     private void setTutorial(Tutorial tutorial) {
+        if (tutorial == null) {
+            // Reset tutorial and return
+
+            // We're no longer in tutorial mode...
+            this.tutorial = null;
+            instructionIndex = -1;
+
+            // Reset composition to free-to-play mode
+            resetComposition();
+
+            // Blank out any existing tutorial text...
+            instructionalTextView.setText(R.string.blank);
+
+            // Re-draw grid UI
+            refreshGrid();
+
+            return;
+        }
+
         // Set tutorial placeholder
         this.tutorial = tutorial;
 
         // Instructions will need to start from the first (0)...
         instructionIndex = 0;
 
-        // Remove any existing notes and dynamics from the grid by re-setting the stave...
-        stave = new Stave();
-
-        // Reset time signatures
-        rightTimeSignatureNumeratorSpinner.setSelection(0);
-        rightTimeSignatureDenominatorSpinner.setSelection(0);
-        leftTimeSignatureNumeratorSpinner.setSelection(0);
-        leftTimeSignatureDenominatorSpinner.setSelection(0);
+        resetComposition();
 
         // Get upper and lower stave instances...
         List<Beat> upperBeats = stave.getUpperClef().getBeats();
@@ -609,6 +624,23 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
         }
 
+    }
+
+    /**
+     * A private convenience method to reduce code duplication; this method replaces the current
+     * composition's stave with a brand new blank stave (effectively 'clearing the grid'),
+     * and then resets the time signature selection UI back to the default values, to match the
+     * default values of a blank stave.
+     */
+    private void resetComposition() {
+        // Remove any existing notes and dynamics from the grid by re-setting the stave...
+        stave = new Stave();
+
+        // Reset time signatures
+        rightTimeSignatureNumeratorSpinner.setSelection(0);
+        rightTimeSignatureDenominatorSpinner.setSelection(0);
+        leftTimeSignatureNumeratorSpinner.setSelection(0);
+        leftTimeSignatureDenominatorSpinner.setSelection(0);
     }
 
     /**
