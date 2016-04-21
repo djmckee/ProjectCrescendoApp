@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
+import java.util.Locale;
+
 import uk.co.dolphin_com.seescoreandroid.Dispatcher;
 import uk.co.dolphin_com.seescoreandroid.Player;
 import uk.co.dolphin_com.seescoreandroid.SeeScoreView;
@@ -43,6 +45,7 @@ import uk.co.dolphin_com.sscore.ex.ScoreException;
  * link to the hosted file being shared on Twitter/Facebook/other social channels by the user.
  * <p>
  * Created by Dylan McKee on 22/02/2016.
+ * Modified by Alex.
  */
 public class PlaybackActivity extends AppCompatActivity {
 
@@ -50,14 +53,6 @@ public class PlaybackActivity extends AppCompatActivity {
      * A key for the String containing the MusicXML encoded score as it is passed between activities.
      */
     public static final String SCORE_STRING_KEY = "projectcrescendo.MusicXMLScoreString";
-    /**
-     * A music player instance so that our composition can be played back.
-     */
-    private Player player;
-    /**
-     * The SeeScore view instance which displays the score.
-     */
-    private SeeScoreView seeScoreView;
     /**
      * A String representation of the MusicXML encoded score, to be set via the Intent that
      * transitions into this activity.
@@ -68,6 +63,14 @@ public class PlaybackActivity extends AppCompatActivity {
     private static final double kMinTempoScaling = 0.5;
     private static final double kMaxTempoScaling = 2.0;
     private static final double kDefaultTempoScaling = 1.0;
+    /**
+     * A music player instance so that our composition can be played back.
+     */
+    private Player player;
+    /**
+     * The SeeScore view instance which displays the score.
+     */
+    private SeeScoreView seeScoreView;
     private String musicXmlScore;
     /**
      * An SScore instance of the current musical score on display.
@@ -346,76 +349,127 @@ public class PlaybackActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Sets the tempo label text to whatever tempo is passed into this method.
+     *
+     * @param tempoVal the BPM of the tempo currently, as an integer (this method formats it to a
+     *                 string correctly and adds units internally).
+     */
     private void setTempoText(int tempoVal) {
         TextView tempoText = (TextView) findViewById(R.id.tempoText);
-        tempoText.setText("" + tempoVal + " BPM");
+
+        // Create string via String.format
+        String tempoString = String.format(Locale.UK, "%d", tempoVal);
+
+        // Add units...
+        tempoString = tempoString + getString(R.string.bpm_unit);
+
+        tempoText.setText(tempoString);
     }
 
-    private void setTempoSliderValPercent(int percent) {
-        SeekBar tempoSlider = (SeekBar) findViewById(R.id.tempoSlider);
-        tempoSlider.setProgress(percent);
-    }
-
+    /**
+     * Returns the percentage of the tempo on the slider.
+     *
+     * @return the percentage of the tempo selected on the tempo slider.
+     */
     private int getTempoSliderValPercent() {
         SeekBar tempoSlider = (SeekBar) findViewById(R.id.tempoSlider);
         return tempoSlider.getProgress();
     }
 
+    /**
+     * Sets the tempo slider UI to whatever percentage value is passed into this method.
+     * @param percent the percentage value for the tempo slider.
+     */
+    private void setTempoSliderValPercent(int percent) {
+        SeekBar tempoSlider = (SeekBar) findViewById(R.id.tempoSlider);
+        tempoSlider.setProgress(percent);
+    }
+
+    /**
+     * Converts the scaled down value from the slider to an actual BPM and returns the BPM.
+     * @param scaling the scale factor of the BPM slider.
+     * @param nominalBPM the value of the BPM slider to convert into actual BPM.
+     * @return the value of BPM selected on the slider, in actual true BPM.
+     */
     private int scalingToBPM(double scaling, int nominalBPM) {
         return  (int)(nominalBPM * scaling);
     }
 
+    /**
+     * Scales down a value in true BPM to a percentage for the slider value.
+     * @param scaling the scaling of the current BPM slider instance.
+     * @return the percentage value to set the BPM slider instance to.
+     */
     private int scalingToSliderPercent(double scaling) {
         return (int)(0.5+(100 * ((scaling - kMinTempoScaling) / (kMaxTempoScaling - kMinTempoScaling))));
     }
 
+    /**
+     * Calculates scale factor from slider percentage value and returns the scale factor as a double.
+     * @param percent the percentage of the slider to calculate the scale factor for.
+     * @return the scale factor for the slider, as a double value.
+     */
     private double sliderPercentToScaling(int percent) {
         return kMinTempoScaling + (percent/100.0) * (kMaxTempoScaling - kMinTempoScaling);
     }
 
+    /**
+     * Returns BPM calculated from the slider percentage.
+     *
+     * @param percent the slider percentage to calculate the current BPM from.
+     * @return current BPM, as an integer.
+     */
     private int sliderPercentToBPM(int percent) {
         return kMinTempoBPM + (int)((percent/100.0) * (kMaxTempoBPM - kMinTempoBPM));
     }
 
+    /**
+     * Converts a BPM value to a scaled slider percentage.
+     * @param bpm the BPM value to convert to a scaled slider percentage.
+     * @return the BPM Slider percentage value.
+     */
     private int bpmToSliderPercent(int bpm) {
         return (int)(100.0 * (bpm - kMinTempoBPM) / (double)(kMaxTempoBPM - kMinTempoBPM));
     }
 
+    /**
+     * Sets the label containing the scaling of the tempo, and scales the tempo to the specified
+     * scale factor.
+     * @param tempoScaling the scale factor for the score, as a decimal (1.0 = full scale).
+     * @param nominalBPM the BPM to scale the score around.
+     */
     private void setTempoScaling(double tempoScaling, int nominalBPM) {
         setTempoSliderValPercent(scalingToSliderPercent(tempoScaling ));
         setTempoText(scalingToBPM(tempoScaling, nominalBPM));
     }
 
+    /**
+     * Sets the tempo value to whatever value is passed into this method,
+     * and updates the tempo label and tempo slider UI as such to reflect the new tempo value.
+     *
+     * @param bpm the new tempo value, in BPM.
+     */
     private void setTempo(int bpm) {
+        // TODO: Set Crescendo User Tempo in here.
         setTempoSliderValPercent(bpmToSliderPercent(bpm));
         setTempoText(bpm);
     }
+
     /**
-     * This method is fired whenever the back button is pressed.
-     * It stops all playback
+     * This method is fired when the PlaybackActivity disappears from the screen.
      */
     @Override
-    protected void onDestroy(){
-        Log.d("PlaybackActivity", "Playback stopped");
+    protected void onDestroy() {
+        // Stop playback...
+        stopButtonPressed();
 
-        // Stop playing.
-        playerIsPlaying = false;
-
-        // Reset player to start
-        currentBar = 0;
-        seeScoreView.setCursorAtBar(currentBar, SeeScoreView.CursorType.line, 0);
-        player.startAt(currentBar, true);
-
-        if (player != null) {
-            player.reset();
-        }
-
-        updatePlayButtonUI();
         super.onDestroy();
     }
 
     /**
-     * This method is fired whenever this screen is loaded.
+     * This method is fired whenever the PlaybackActivity appears.
      * It refreshes the SeeScore view.
      */
     @Override
