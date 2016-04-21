@@ -75,6 +75,7 @@
     <string name="reset_stave_confirm_message">Are you sure you want to clear your current stave?</string>
     <string name="tutorial_spinner_title">Tutorials</string>
     <string name="free_to_play_title">Free play</string>
+    <string name="bpm_unit">" BPM"</string>
 
     <!-- <string-array name="time_signature">
         <item>2/2</item>
