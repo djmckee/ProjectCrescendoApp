@@ -37,6 +37,7 @@
     <string name="enter_note_name_title">Enter note name</string>
     <string name="select_note_length">Select note length</string>
     <string name="invalid_note_error_title">Invalid note!</string>
+
     <string name="invalid_note_error_message">Not a valid note name - please try again with a valid note name…</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
