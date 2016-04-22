@@ -11,19 +11,35 @@ import uk.co.dolphin_com.sscore.playdata.UserTempo;
  */
 class CrescendoUserTempo implements UserTempo {
 
+    // TODO: Document.
     /**
-     * Returns the current tempo in beats per minute. We could make user tempo variable in future,
-     * but for now just keeping it at a mid piano tempo; I looked up tempo values at
-     * http://www.enjoy-your-piano.com/how-to-read-music-tempo-dynamics.html
+     *
+     */
+    private int userTempo = 120;
+
+    // TODO: Document.
+    /**
+     *
+     */
+    private float userTempoScaling = 1.0f;
+
+    /**
+     * Returns the current tempo in beats per minute. Returns the tempo the user has set, or
+     * defaults to 120BPM (a mid piano tempo, looked up at
+     * http://www.enjoy-your-piano.com/how-to-read-music-tempo-dynamics.html)
      *
      * @return the current tempo for playback, in beats per minute.
      */
     @Override
     public int getUserTempo() {
-        /* We could make user tempo variable in future, but for now just keeping it at a
-         mid piano tempo; I looked up tempo values at
+        /* Default tempo is a mid piano tempo; I looked up tempo values at
          http://www.enjoy-your-piano.com/how-to-read-music-tempo-dynamics.html */
-        return 120;
+        return userTempo;
+    }
+
+    // TODO: Document
+    public void setUserTempo(int userTempo) {
+        this.userTempo = userTempo;
     }
 
     /**
@@ -34,7 +50,13 @@ class CrescendoUserTempo implements UserTempo {
     @Override
     public float getUserTempoScaling() {
         // 1.0 = use standard tempo scaling.
-        return 1.0f;
+        return userTempoScaling;
     }
+
+    // TODO: Document
+    public void setUserTempoScaling(float userTempoScaling) {
+        this.userTempoScaling = userTempoScaling;
+    }
+
 
 }

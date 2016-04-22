@@ -90,6 +90,9 @@ public class PlaybackActivity extends AppCompatActivity {
      */
     private int currentBar = 0;
 
+    // TODO: Document
+    private CrescendoUserTempo userTempo = new CrescendoUserTempo();
+
     /**
      * This method is ran on view creation and sets up the current score from the MusicXML
      * passed to this activity through the Intent pushing it, and instantiates the SeeScore
@@ -217,7 +220,7 @@ public class PlaybackActivity extends AppCompatActivity {
         // (The player creation code is based off of the SeeScore examples provide to us by
         //  Dolphin Computing (Cambridge) Ltd.)
         try {
-            player = new Player(score, new CrescendoUserTempo(), this, true);
+            player = new Player(score, userTempo, this, true);
 
 
             // When the player stops playing, we need to be notified
@@ -320,20 +323,29 @@ public class PlaybackActivity extends AppCompatActivity {
                         try {
                             double scaling = sliderPercentToScaling(sliderValCents);
                             Tempo tempo = score.tempoAtStart();
+
+                            userTempo.setUserTempo(tempo.bpm);
+
                             setTempoText((int) (scaling * tempo.bpm + 0.5));
-                            if (player != null) {
-                                try {
-                                    player.updateTempo();
-                                } catch (Player.PlayerException ex) {
-                                    System.out.println("Failed to set player tempo " + ex);
-                                }
-                            }
+                            updateTempo();
                         } catch (ScoreException ex) {
                         }
                     } else {
+                        int percent = getTempoSliderValPercent();
+                        int bpm = sliderPercentToBPM(percent);
+
+                        userTempo.setUserTempo(bpm);
+                        updateTempo();
+
                         setTempoText(sliderPercentToBPM(sliderValCents));
                     }
                 } else {
+                    int percent = getTempoSliderValPercent();
+                    int bpm = sliderPercentToBPM(percent);
+
+                    userTempo.setUserTempo(bpm);
+                    updateTempo();
+
                     setTempoText(sliderPercentToBPM(sliderValCents));
                 }
             }
@@ -348,6 +360,17 @@ public class PlaybackActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    // TODO: Document
+    private void updateTempo() {
+        if (player != null) {
+            try {
+                player.updateTempo();
+            } catch (Player.PlayerException ex) {
+                System.out.println("Failed to set player tempo " + ex);
+            }
+        }
     }
 
     /**
