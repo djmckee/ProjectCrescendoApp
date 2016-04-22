@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.projectcrescendo.projectcrescendo.models.Beat;
 import com.projectcrescendo.projectcrescendo.models.Intonation;
 import com.projectcrescendo.projectcrescendo.models.Note;
@@ -294,7 +295,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         /**
          * Add a floating action button to display the composition Open and Save UI.
          */
-        FloatingActionButton saveOpenButton = (FloatingActionButton) findViewById(R.id.save_and_open);
+        /*FloatingActionButton saveOpenButton = (FloatingActionButton) findViewById(R.id.save_and_open);
         saveOpenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -302,7 +303,156 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
                 saveOrOpenButtonTapped();
             }
+        });*/
+
+        FloatingActionsMenu saveLoadButton = (FloatingActionsMenu) findViewById(R.id.save_and_load);
+
+        FloatingActionButton saveButton = new FloatingActionButton(this);
+        saveButton.setColorNormalResId(R.color.yellow);
+        saveButton.setColorPressed(R.color.bright_yellow);
+        saveButton.setIcon(R.drawable.save);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Save the current composition to the SQLite Database.
+                Log.d("TutorialActivity", "save button tapped");
+
+                // Show loading UI...
+                ProgressDialog loadingDialog = ProgressDialog.show(TutorialActivity.this, getString(R.string.save_composition_loading_title), getString(R.string.save_composition_loading_message));
+                loadingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+                loadingDialog.setCancelable(false);
+
+                // Create stave database manager instance to do the save
+                StaveManager staveManager = new StaveManager(TutorialActivity.this);
+
+                // Do save...
+                boolean saved = staveManager.writeStaveToDatabase(stave);
+
+                // Synchronous save complete; hide loading dialog
+                loadingDialog.hide();
+
+                // Did the save work?
+                if (saved) {
+                    // Save success - show success message
+                    new AlertDialog.Builder(TutorialActivity.this)
+                            .setTitle(R.string.composition_save_success_title)
+                            .setMessage(R.string.composition_save_success_message)
+                            .setPositiveButton(R.string.okay, null)
+                            .setIcon(android.R.drawable.ic_dialog_info)
+                            .show();
+                } else {
+                    // Save failed miserably; show error.
+                    new AlertDialog.Builder(TutorialActivity.this)
+                            .setTitle(R.string.composition_save_fail_title)
+                            .setMessage(R.string.composition_save_fail_message)
+                            .setPositiveButton(R.string.okay, null)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                }
+            }
         });
+        saveLoadButton.addButton(saveButton);
+        FloatingActionButton loadButton = new FloatingActionButton(this);
+        loadButton.setColorNormalResId(R.color.yellow);
+        loadButton.setColorPressed(R.color.bright_yellow);
+        loadButton.setIcon(R.drawable.load);
+        loadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Show saved compositions and allow the user to open one.
+                Log.d("TutorialActivity", "load button tapped");
+
+                // Show loading UI...
+                ProgressDialog loadingDialog = ProgressDialog.show(TutorialActivity.this, getString(R.string.open_dialog_title), getString(R.string.open_dialog_message));
+                loadingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+                loadingDialog.setCancelable(false);
+
+                // Create stave database manager instance to do the opening...
+                final StaveManager staveManager = new StaveManager(TutorialActivity.this);
+
+                // Get a list of staves...
+                List<Stave> savedCompositions = staveManager.getSavedStaves();
+
+                // Synchronous save complete; hide loading dialog
+                loadingDialog.hide();
+
+                // Did they load properly?
+                if (savedCompositions == null) {
+                    // Opening failed, display error...
+                    new AlertDialog.Builder(TutorialActivity.this)
+                            .setTitle(R.string.compostions_opening_error_title)
+                            .setMessage(R.string.compostions_opening_error_message)
+                            .setPositiveButton(R.string.okay, null)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+
+                    // Don't bother continuing trying to open nothing, there's likely a null pointer exception waiting to happen here.
+                    return;
+                }
+
+                // Present a modal that allows the user to select a composition to open from the saved compositions list...
+
+                OpenCompositionFragment openCompositionFragment = new OpenCompositionFragment();
+
+                openCompositionFragment.setCompositions(savedCompositions);
+
+                openCompositionFragment.setListener(new OpenCompositionFragmentCallbackListener() {
+                    @Override
+                    public void compositionSelectedFromFragment(OpenCompositionFragment fragment, Stave newComposition) {
+                        // Stave selected!!! Load it in and reload UI...
+                        stave = newComposition;
+
+                        // Set time signature spinners for newly loaded stave...
+                        int numeratorIndex = timeSignatureNumerators.indexOf(stave.getTimeSignatureNumerator());
+                        int denominatorIndex = timeSignatureDenominators.indexOf(stave.getTimeSignatureDenominator());
+
+                        leftTimeSignatureNumeratorSpinner.setSelection(numeratorIndex);
+                        rightTimeSignatureNumeratorSpinner.setSelection(numeratorIndex);
+                        leftTimeSignatureDenominatorSpinner.setSelection(denominatorIndex);
+                        rightTimeSignatureDenominatorSpinner.setSelection(denominatorIndex);
+
+                        // Cancel tutorial mode too...
+                        tutorial = null;
+                        instructionIndex = -1;
+                        instructionalTextView.setText(R.string.save_loaded_text);
+
+                        refreshGrid();
+
+                    }
+
+                    @Override
+                    public void compositionMarkedForDeletionFromFragment(OpenCompositionFragment fragment, Stave compositionToDelete) {
+                        // Delete the composition...
+                        boolean deleted = staveManager.deleteStaveFromDatabase(compositionToDelete);
+
+                        // Did it delete?
+                        if (deleted) {
+                            // Show success message
+                            new AlertDialog.Builder(TutorialActivity.this)
+                                    .setTitle(R.string.composition_delete_success_title)
+                                    .setMessage(R.string.composition_delete_success_message)
+                                    .setPositiveButton(R.string.okay, null)
+                                    .setIcon(android.R.drawable.ic_dialog_info)
+                                    .show();
+                        } else {
+                            // Show error
+                            new AlertDialog.Builder(TutorialActivity.this)
+                                    .setTitle(R.string.composition_deletion_error_title)
+                                    .setMessage(R.string.composition_deletion_error_message)
+                                    .setPositiveButton(R.string.okay, null)
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .show();
+                        }
+
+                    }
+                });
+
+                openCompositionFragment.show(getFragmentManager(), getString(R.string.open_fragment_title));
+            }
+        });
+        saveLoadButton.addButton(loadButton);
 
         /**
          * Add a floating action button to do verification once the user follow the tutorial steps for inputting predefined values to the grid
@@ -365,23 +515,17 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
                             public void onClick(DialogInterface dialog, int buttonId) {
                                 // Reset stave...
                                 setTutorial(null);
-
                             }
                         });
 
                         resetStaveChoiceDialog.setNegativeButton(R.string.cancel, null);
 
                         resetStaveChoiceDialog.show();
-
                     }
-
                     return;
                 }
-
-
                 setTutorial(tutorials.get(position));
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 Log.d("tutorialSpinner", "no item selected!!!");
@@ -842,7 +986,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
      * A method called when the save/open button is tapped. Displays an alert asking the user
      * whether they want to save or open a composition (i.e. a Stave).
      */
-    private void saveOrOpenButtonTapped() {
+    /*private void saveOrOpenButtonTapped() {
         // I looked up the AlertDialog Builder at http://rajeshvijayakumar.blogspot.co.uk/2013/04/alert-dialog-dialog-with-item-list.html
         CharSequence[] alertChoiceTitles = {
                 getString(R.string.save_choice_save),
@@ -999,6 +1143,6 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
 
-    }
+    }*/
 
 }
