@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.util.Log;
 
 import com.projectcrescendo.projectcrescendo.models.Bar;
 import com.projectcrescendo.projectcrescendo.models.Beat;
@@ -33,7 +34,7 @@ class StaveManager {
     /**
      * The theoretical maximum number of beats on a bar.
      */
-    private final static int MAX_NOTES_PER_BEAT = 8;
+    private final static int MAX_NOTES_PER_BEAT = 1000;
     /**
      * The default Dynamic for a bar being saved.
      */
@@ -58,10 +59,11 @@ class StaveManager {
      * Saves the stave that it has been passed to the database, and returns the save status as a
      * boolean.
      *
+     * @param name the name to save the composition as.
      * @param stave the Stave instance to write to the SQLite database.
      * @return a boolean indicating whether or not the save succeeded.
      */
-    public boolean writeStaveToDatabase(Stave stave) {
+    public boolean writeStaveToDatabase(Stave stave, String name) {
         /*
         Writing order:
         0. Look up time signature ID
@@ -103,13 +105,16 @@ class StaveManager {
             ContentValues staveValues = new ContentValues();
             staveValues.put(SQLQueries.STAVE_TIME_SIGNATURE_ID_COLUMN, timeSignatureId);
 
-            // I looked up SimpleDateFormat at https://stackoverflow.com/questions/2942857/how-to-convert-current-date-into-string-in-java
-            Date today = new Date();
-            SimpleDateFormat dateFormatter = new SimpleDateFormat(TITLE_DATE_STRING_FORMAT, Locale.UK);
-            String currentDateString = dateFormatter.format(today);
+            // If name is null, or is of 0 length, then save the composition as the current date/time instead...
+            if (name == null || name.length() < 1) {
+                // I looked up SimpleDateFormat at https://stackoverflow.com/questions/2942857/how-to-convert-current-date-into-string-in-java
+                Date today = new Date();
+                SimpleDateFormat dateFormatter = new SimpleDateFormat(TITLE_DATE_STRING_FORMAT, Locale.UK);
+                String currentDateString = dateFormatter.format(today);
+                name = currentDateString;
+            }
 
-
-            staveValues.put(SQLQueries.STAVE_NAME_COLUMN, currentDateString);
+            staveValues.put(SQLQueries.STAVE_NAME_COLUMN, name);
 
             long staveId = database.insertOrThrow(SQLQueries.STAVE_TABLE_NAME, null, staveValues);
 
@@ -297,14 +302,24 @@ class StaveManager {
                                 // Create a bar...
                                 Bar currentBar = new Bar();
 
+                                Log.d("StaveManager", "opening bar number " + barNumber);
+
+
+                                int numberOfBarsOnOneClef = (numberOfBeatsOnOneClef / timeSignatureNumerator);
+
                                 // Is it on the upper bar?
-                                if (barNumber < numberOfBeatsOnOneClef - 1) {
+                                if (barNumber < numberOfBarsOnOneClef) {
                                     // Upper bar...
                                     upperClefContent[barNumber] = currentBar;
                                 } else {
                                     // Lower bar...
                                     // Subtract length of clef to get index...
-                                    int index = barNumber - numberOfBeatsOnOneClef;
+                                    int index = barNumber - (numberOfBarsOnOneClef);
+
+                                    if (index < 0) {
+                                        index = 0;
+                                    }
+
                                     lowerClefContent[index] = currentBar;
 
                                 }
