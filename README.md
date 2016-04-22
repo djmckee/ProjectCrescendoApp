@@ -3,7 +3,7 @@
 
 This repository holds the Android app for 'Project Cresecendo' _(a 2nd year CSC1022 Team Project, made by Team 13 at Newcastle University)_.
 
-The app is called Sonata, and is inteded to teach a new skill; namely the skill of writing Sheet Music using a grid-based music programming approach.
+The app is called Sonata, and is intended to teach a new skill; namely the skill of writing Sheet Music using a grid-based music programming approach.
 
 Credits
 ----
@@ -22,7 +22,7 @@ It makes use of the following libraries:
 - [Android Asynchronous Http Client (LoopJ)](http://loopj.com/android-async-http/)
 - [FloatingActionButton](https://github.com/futuresimple/android-floating-action-button)
 
-Along with numerous tutorials and examples; which are credited with a source URl in the code comments.
+Along with numerous tutorials and examples; which are credited with a source URL in the code comments.
 
 Code Style
 ----
@@ -35,4 +35,5 @@ Requirements
 ----
 - Android Studio 2.0
 - Android SDK API Level 23
-- Internet connection to donwload Gradle dependencies
+- An Android phone running Android 5.0 onward _(we've tested the app thoroughly on an HTC One M8, so we recommend that specific device)_.
+- Internet connection to download Gradle dependencies
