@@ -15,7 +15,7 @@
     <string name="title_activity_playback">PlaybackActivity</string>
 
     <string name="title_activity_instructions">Instructions</string>
-    <string name="initialInstructionText">Welcome to Sonata! Press the \'+\' button on the left to select a tutorial…</string>
+    <string name="initialInstructionText">Welcome to Sonata! Tap the \'Tutorials\' dropdown on the left to select a tutorial…</string>
     <string name="expression">"Expression: "</string>
     <string name="invalid_tutorial_error_title">That\'s not quite right!</string>
     <string name="invalid_tutorial_error_message">Looks like your tutorial isn\'t quite right - please check against the last step and try again!</string>

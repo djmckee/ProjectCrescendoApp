@@ -474,8 +474,12 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         // prefixing the list with a 'Select Tutorial' heading, and a 'Free to play' mode option...
         List<String> tutorialNames = new ArrayList<String>();
 
-        tutorialNames.add(getString(R.string.tutorial_spinner_title));
-        tutorialNames.add(getString(R.string.free_to_play_title));
+
+        final String[] staticMenuItems = {getString(R.string.tutorial_spinner_title), getString(R.string.free_to_play_title)};
+
+        for (String menuItem : staticMenuItems) {
+            tutorialNames.add(menuItem);
+        }
 
         for (final Tutorial tutorial : tutorials){
             tutorialNames.add(tutorial.getTitle());
@@ -524,7 +528,12 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
                     }
                     return;
                 }
-                setTutorial(tutorials.get(position));
+
+
+                // Calculate offset position by subtracting the number of static menu items...
+                int offsetPosition = position - staticMenuItems.length;
+
+                setTutorial(tutorials.get(offsetPosition));
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
