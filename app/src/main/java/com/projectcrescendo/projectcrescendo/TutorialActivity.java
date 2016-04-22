@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -109,6 +110,9 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
      * A label to hold a piece of instructional text from the Tutorial.
      */
     private TextView instructionalTextView;
+
+    // TODO: Document
+    private String compositionName;
 
     /**
      * Sets up the initial grid view and the time signature selection spinner UI on initial load of
@@ -295,164 +299,42 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
         /**
          * Add a floating action button to display the composition Open and Save UI.
          */
-        /*FloatingActionButton saveOpenButton = (FloatingActionButton) findViewById(R.id.save_and_open);
-        saveOpenButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("TutorialActivity", "save/open button tapped");
-
-                saveOrOpenButtonTapped();
-            }
-        });*/
-
-        FloatingActionsMenu saveLoadButton = (FloatingActionsMenu) findViewById(R.id.save_and_load);
+        FloatingActionsMenu saveLoadMenu = (FloatingActionsMenu) findViewById(R.id.save_and_load);
 
         FloatingActionButton saveButton = new FloatingActionButton(this);
         saveButton.setColorNormalResId(R.color.yellow);
         saveButton.setColorPressed(R.color.bright_yellow);
         saveButton.setIcon(R.drawable.save);
+        saveButton.setTitle("Save composition");
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Save the current composition to the SQLite Database.
                 Log.d("TutorialActivity", "save button tapped");
 
-                // Show loading UI...
-                ProgressDialog loadingDialog = ProgressDialog.show(TutorialActivity.this, getString(R.string.save_composition_loading_title), getString(R.string.save_composition_loading_message));
-                loadingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-
-                loadingDialog.setCancelable(false);
-
-                // Create stave database manager instance to do the save
-                StaveManager staveManager = new StaveManager(TutorialActivity.this);
-
-                // Do save...
-                boolean saved = staveManager.writeStaveToDatabase(stave);
-
-                // Synchronous save complete; hide loading dialog
-                loadingDialog.hide();
-
-                // Did the save work?
-                if (saved) {
-                    // Save success - show success message
-                    new AlertDialog.Builder(TutorialActivity.this)
-                            .setTitle(R.string.composition_save_success_title)
-                            .setMessage(R.string.composition_save_success_message)
-                            .setPositiveButton(R.string.okay, null)
-                            .setIcon(android.R.drawable.ic_dialog_info)
-                            .show();
-                } else {
-                    // Save failed miserably; show error.
-                    new AlertDialog.Builder(TutorialActivity.this)
-                            .setTitle(R.string.composition_save_fail_title)
-                            .setMessage(R.string.composition_save_fail_message)
-                            .setPositiveButton(R.string.okay, null)
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .show();
-                }
+                // Perform save...
+                saveComposition();
             }
         });
-        saveLoadButton.addButton(saveButton);
+        saveLoadMenu.addButton(saveButton);
+
+
         FloatingActionButton loadButton = new FloatingActionButton(this);
         loadButton.setColorNormalResId(R.color.yellow);
         loadButton.setColorPressed(R.color.bright_yellow);
         loadButton.setIcon(R.drawable.load);
+        saveButton.setTitle("Open composition");
         loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Show saved compositions and allow the user to open one.
                 Log.d("TutorialActivity", "load button tapped");
 
-                // Show loading UI...
-                ProgressDialog loadingDialog = ProgressDialog.show(TutorialActivity.this, getString(R.string.open_dialog_title), getString(R.string.open_dialog_message));
-                loadingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                openComposition();
 
-                loadingDialog.setCancelable(false);
-
-                // Create stave database manager instance to do the opening...
-                final StaveManager staveManager = new StaveManager(TutorialActivity.this);
-
-                // Get a list of staves...
-                List<Stave> savedCompositions = staveManager.getSavedStaves();
-
-                // Synchronous save complete; hide loading dialog
-                loadingDialog.hide();
-
-                // Did they load properly?
-                if (savedCompositions == null) {
-                    // Opening failed, display error...
-                    new AlertDialog.Builder(TutorialActivity.this)
-                            .setTitle(R.string.compostions_opening_error_title)
-                            .setMessage(R.string.compostions_opening_error_message)
-                            .setPositiveButton(R.string.okay, null)
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .show();
-
-                    // Don't bother continuing trying to open nothing, there's likely a null pointer exception waiting to happen here.
-                    return;
-                }
-
-                // Present a modal that allows the user to select a composition to open from the saved compositions list...
-
-                OpenCompositionFragment openCompositionFragment = new OpenCompositionFragment();
-
-                openCompositionFragment.setCompositions(savedCompositions);
-
-                openCompositionFragment.setListener(new OpenCompositionFragmentCallbackListener() {
-                    @Override
-                    public void compositionSelectedFromFragment(OpenCompositionFragment fragment, Stave newComposition) {
-                        // Stave selected!!! Load it in and reload UI...
-                        stave = newComposition;
-
-                        // Set time signature spinners for newly loaded stave...
-                        int numeratorIndex = timeSignatureNumerators.indexOf(stave.getTimeSignatureNumerator());
-                        int denominatorIndex = timeSignatureDenominators.indexOf(stave.getTimeSignatureDenominator());
-
-                        leftTimeSignatureNumeratorSpinner.setSelection(numeratorIndex);
-                        rightTimeSignatureNumeratorSpinner.setSelection(numeratorIndex);
-                        leftTimeSignatureDenominatorSpinner.setSelection(denominatorIndex);
-                        rightTimeSignatureDenominatorSpinner.setSelection(denominatorIndex);
-
-                        // Cancel tutorial mode too...
-                        tutorial = null;
-                        instructionIndex = -1;
-                        instructionalTextView.setText(R.string.save_loaded_text);
-
-                        refreshGrid();
-
-                    }
-
-                    @Override
-                    public void compositionMarkedForDeletionFromFragment(OpenCompositionFragment fragment, Stave compositionToDelete) {
-                        // Delete the composition...
-                        boolean deleted = staveManager.deleteStaveFromDatabase(compositionToDelete);
-
-                        // Did it delete?
-                        if (deleted) {
-                            // Show success message
-                            new AlertDialog.Builder(TutorialActivity.this)
-                                    .setTitle(R.string.composition_delete_success_title)
-                                    .setMessage(R.string.composition_delete_success_message)
-                                    .setPositiveButton(R.string.okay, null)
-                                    .setIcon(android.R.drawable.ic_dialog_info)
-                                    .show();
-                        } else {
-                            // Show error
-                            new AlertDialog.Builder(TutorialActivity.this)
-                                    .setTitle(R.string.composition_deletion_error_title)
-                                    .setMessage(R.string.composition_deletion_error_message)
-                                    .setPositiveButton(R.string.okay, null)
-                                    .setIcon(android.R.drawable.ic_dialog_alert)
-                                    .show();
-                        }
-
-                    }
-                });
-
-                openCompositionFragment.show(getFragmentManager(), getString(R.string.open_fragment_title));
             }
         });
-        saveLoadButton.addButton(loadButton);
+        saveLoadMenu.addButton(loadButton);
 
         /**
          * Add a floating action button to do verification once the user follow the tutorial steps for inputting predefined values to the grid
@@ -991,167 +873,169 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
     }
 
-    /**
-     * A method called when the save/open button is tapped. Displays an alert asking the user
-     * whether they want to save or open a composition (i.e. a Stave).
-     */
-    /*private void saveOrOpenButtonTapped() {
-        // I looked up the AlertDialog Builder at http://rajeshvijayakumar.blogspot.co.uk/2013/04/alert-dialog-dialog-with-item-list.html
-        CharSequence[] alertChoiceTitles = {
-                getString(R.string.save_choice_save),
-                getString(R.string.save_choice_open),
-                getString(R.string.cancel)
-        };
 
-        // Create alert dialog with choices
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle(R.string.save_choice_title);
-        alertDialogBuilder.setItems(alertChoiceTitles, new DialogInterface.OnClickListener() {
+    // TODO: Document.
+    private void saveComposition() {
+        // Save to SQL Database...
 
-            public void onClick(DialogInterface dialog, int item) {
+        // Ask user for a composition name...
+        compositionName = null;
 
+        AlertDialog.Builder inputDialog = new AlertDialog.Builder(this);
 
-                if (item == 0) {
-                    // Save the current composition to the SQLite Database.
+        inputDialog.setTitle("Enter composition name");
+        final EditText inputTextView = new EditText(this);
 
-                    // Show loading UI...
-                    ProgressDialog loadingDialog = ProgressDialog.show(TutorialActivity.this, getString(R.string.save_composition_loading_title), getString(R.string.save_composition_loading_message));
-                    loadingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        inputDialog.setView(inputTextView);
 
-                    loadingDialog.setCancelable(false);
+        inputDialog.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int buttonId) {
+                // Get user input string
+                String textInput = inputTextView.getText().toString();
 
-                    // Create stave database manager instance to do the save
-                    StaveManager staveManager = new StaveManager(TutorialActivity.this);
+                // Composition name
+                compositionName = textInput;
 
-                    // Do save...
-                    boolean saved = staveManager.writeStaveToDatabase(stave);
+                // Show loading UI...
+                ProgressDialog loadingDialog = ProgressDialog.show(TutorialActivity.this, getString(R.string.save_composition_loading_title), getString(R.string.save_composition_loading_message));
+                loadingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
-                    // Synchronous save complete; hide loading dialog
-                    loadingDialog.hide();
+                loadingDialog.setCancelable(false);
 
-                    // Did the save work?
-                    if (saved) {
-                        // Save success - show success message
-                        new AlertDialog.Builder(TutorialActivity.this)
-                                .setTitle(R.string.composition_save_success_title)
-                                .setMessage(R.string.composition_save_success_message)
-                                .setPositiveButton(R.string.okay, null)
-                                .setIcon(android.R.drawable.ic_dialog_info)
-                                .show();
-                    } else {
-                        // Save failed miserably; show error.
-                        new AlertDialog.Builder(TutorialActivity.this)
-                                .setTitle(R.string.composition_save_fail_title)
-                                .setMessage(R.string.composition_save_fail_message)
-                                .setPositiveButton(R.string.okay, null)
-                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                .show();
-                    }
+                loadingDialog.show();
 
+                // Create stave database manager instance to do the save
+                StaveManager staveManager = new StaveManager(TutorialActivity.this);
 
-                } else if (item == 1) {
-                    // Show saved compositions and allow the user to open one.
+                // Do save...
+                boolean saved = staveManager.writeStaveToDatabase(stave, compositionName);
 
-                    // Show loading UI...
-                    ProgressDialog loadingDialog = ProgressDialog.show(TutorialActivity.this, getString(R.string.open_dialog_title), getString(R.string.open_dialog_message));
-                    loadingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                // Synchronous save complete; hide loading dialog
+                loadingDialog.hide();
 
-                    loadingDialog.setCancelable(false);
-
-
-                    // Create stave database manager instance to do the opening...
-                    final StaveManager staveManager = new StaveManager(TutorialActivity.this);
-
-                    // Get a list of staves...
-                    List<Stave> savedCompositions = staveManager.getSavedStaves();
-
-                    // Synchronous save complete; hide loading dialog
-                    loadingDialog.hide();
-
-                    // Did they load properly?
-                    if (savedCompositions == null) {
-                        // Opening failed, display error...
-                        new AlertDialog.Builder(TutorialActivity.this)
-                                .setTitle(R.string.compostions_opening_error_title)
-                                .setMessage(R.string.compostions_opening_error_message)
-                                .setPositiveButton(R.string.okay, null)
-                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                .show();
-
-                        // Don't bother continuing trying to open nothing, there's likely a null pointer exception waiting to happen here.
-                        return;
-                    }
-
-                    // Present a modal that allows the user to select a composition to open from the saved compositions list...
-
-                    OpenCompositionFragment openCompositionFragment = new OpenCompositionFragment();
-
-                    openCompositionFragment.setCompositions(savedCompositions);
-
-                    openCompositionFragment.setListener(new OpenCompositionFragmentCallbackListener() {
-                        @Override
-                        public void compositionSelectedFromFragment(OpenCompositionFragment fragment, Stave newComposition) {
-                            // Stave selected!!! Load it in and reload UI...
-                            stave = newComposition;
-
-                            // Set time signature spinners for newly loaded stave...
-                            int numeratorIndex = timeSignatureNumerators.indexOf(stave.getTimeSignatureNumerator());
-                            int denominatorIndex = timeSignatureDenominators.indexOf(stave.getTimeSignatureDenominator());
-
-                            leftTimeSignatureNumeratorSpinner.setSelection(numeratorIndex);
-                            rightTimeSignatureNumeratorSpinner.setSelection(numeratorIndex);
-                            leftTimeSignatureDenominatorSpinner.setSelection(denominatorIndex);
-                            rightTimeSignatureDenominatorSpinner.setSelection(denominatorIndex);
-
-                            // Cancel tutorial mode too...
-                            tutorial = null;
-                            instructionIndex = -1;
-                            instructionalTextView.setText(R.string.save_loaded_text);
-
-                            refreshGrid();
-
-                        }
-
-                        @Override
-                        public void compositionMarkedForDeletionFromFragment(OpenCompositionFragment fragment, Stave compositionToDelete) {
-                            // Delete the composition...
-                            boolean deleted = staveManager.deleteStaveFromDatabase(compositionToDelete);
-
-                            // Did it delete?
-                            if (deleted) {
-                                // Show success message
-                                new AlertDialog.Builder(TutorialActivity.this)
-                                        .setTitle(R.string.composition_delete_success_title)
-                                        .setMessage(R.string.composition_delete_success_message)
-                                        .setPositiveButton(R.string.okay, null)
-                                        .setIcon(android.R.drawable.ic_dialog_info)
-                                        .show();
-                            } else {
-                                // Show error
-                                new AlertDialog.Builder(TutorialActivity.this)
-                                        .setTitle(R.string.composition_deletion_error_title)
-                                        .setMessage(R.string.composition_deletion_error_message)
-                                        .setPositiveButton(R.string.okay, null)
-                                        .setIcon(android.R.drawable.ic_dialog_alert)
-                                        .show();
-                            }
-
-                        }
-                    });
-
-                    openCompositionFragment.show(getFragmentManager(), getString(R.string.open_fragment_title));
-
-
+                // Did the save work?
+                if (saved) {
+                    // Save success - show success message
+                    new AlertDialog.Builder(TutorialActivity.this)
+                            .setTitle(R.string.composition_save_success_title)
+                            .setMessage(R.string.composition_save_success_message)
+                            .setPositiveButton(R.string.okay, null)
+                            .setIcon(android.R.drawable.ic_dialog_info)
+                            .show();
+                } else {
+                    // Save failed miserably; show error.
+                    new AlertDialog.Builder(TutorialActivity.this)
+                            .setTitle(R.string.composition_save_fail_title)
+                            .setMessage(R.string.composition_save_fail_message)
+                            .setPositiveButton(R.string.okay, null)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
                 }
 
             }
-
         });
 
-        // Add choices to an alert and show it...
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
+        inputDialog.setNegativeButton(R.string.cancel, null);
 
-    }*/
+        inputDialog.create().show();
+
+    }
+
+    // TODO: Document
+    private void openComposition() {
+
+        // Show loading UI...
+        ProgressDialog loadingDialog = ProgressDialog.show(TutorialActivity.this, getString(R.string.open_dialog_title), getString(R.string.open_dialog_message));
+        loadingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        loadingDialog.setCancelable(false);
+
+        loadingDialog.show();
+
+        // Create stave database manager instance to do the opening...
+        final StaveManager staveManager = new StaveManager(TutorialActivity.this);
+
+        // Get a list of staves...
+        List<Stave> savedCompositions = staveManager.getSavedStaves();
+
+        // Synchronous save complete; hide loading dialog
+        loadingDialog.hide();
+
+        // Did they load properly?
+        if (savedCompositions == null) {
+            // Opening failed, display error...
+            new AlertDialog.Builder(TutorialActivity.this)
+                    .setTitle(R.string.compostions_opening_error_title)
+                    .setMessage(R.string.compostions_opening_error_message)
+                    .setPositiveButton(R.string.okay, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+
+            // Don't bother continuing trying to open nothing, there's likely a null pointer exception waiting to happen here.
+            return;
+        }
+
+        // Present a modal that allows the user to select a composition to open from the saved compositions list...
+
+        OpenCompositionFragment openCompositionFragment = new OpenCompositionFragment();
+
+        openCompositionFragment.setCompositions(savedCompositions);
+
+        openCompositionFragment.setListener(new OpenCompositionFragmentCallbackListener() {
+            @Override
+            public void compositionSelectedFromFragment(OpenCompositionFragment fragment, Stave newComposition) {
+                // Stave selected!!! Load it in and reload UI...
+                stave = newComposition;
+
+                // Set time signature spinners for newly loaded stave...
+                int numeratorIndex = timeSignatureNumerators.indexOf(stave.getTimeSignatureNumerator());
+                int denominatorIndex = timeSignatureDenominators.indexOf(stave.getTimeSignatureDenominator());
+
+                leftTimeSignatureNumeratorSpinner.setSelection(numeratorIndex);
+                rightTimeSignatureNumeratorSpinner.setSelection(numeratorIndex);
+                leftTimeSignatureDenominatorSpinner.setSelection(denominatorIndex);
+                rightTimeSignatureDenominatorSpinner.setSelection(denominatorIndex);
+
+                // Cancel tutorial mode too...
+                tutorial = null;
+                instructionIndex = -1;
+                instructionalTextView.setText(R.string.save_loaded_text);
+
+                refreshGrid();
+
+            }
+
+            @Override
+            public void compositionMarkedForDeletionFromFragment(OpenCompositionFragment fragment, Stave compositionToDelete) {
+                // Delete the composition...
+                boolean deleted = staveManager.deleteStaveFromDatabase(compositionToDelete);
+
+                // Did it delete?
+                if (deleted) {
+                    // Show success message
+                    new AlertDialog.Builder(TutorialActivity.this)
+                            .setTitle(R.string.composition_delete_success_title)
+                            .setMessage(R.string.composition_delete_success_message)
+                            .setPositiveButton(R.string.okay, null)
+                            .setIcon(android.R.drawable.ic_dialog_info)
+                            .show();
+                } else {
+                    // Show error
+                    new AlertDialog.Builder(TutorialActivity.this)
+                            .setTitle(R.string.composition_deletion_error_title)
+                            .setMessage(R.string.composition_deletion_error_message)
+                            .setPositiveButton(R.string.okay, null)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                }
+
+            }
+        });
+
+        openCompositionFragment.show(getFragmentManager(), getString(R.string.open_fragment_title));
+
+    }
 
 }
+
