@@ -59,7 +59,8 @@ public class TutorialTest {
         // Passes if returned string is equal to the string we set as a parameter
         List<String> array = new ArrayList<String>();
         array.add("test_instruction");
-        Assert.assertEquals("test_instruction", testTutorial.getInstructions());
+        String instruction = testTutorial.getInstructions().get(0);
+        Assert.assertEquals("test_instruction", instruction);
     }
 
     /**

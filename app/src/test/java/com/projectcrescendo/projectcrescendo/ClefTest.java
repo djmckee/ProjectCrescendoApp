@@ -11,7 +11,7 @@ import org.junit.Test;
 
 /**
  * A JUnit test class to test the Clef model class.
- *
+ * <p/>
  * Created by Craig Hirst on 02/03/2016
  */
 public class ClefTest {
@@ -39,6 +39,7 @@ public class ClefTest {
 
     /**
      * Reassembles test environment before test
+     *
      * @throws Exception
      */
     @Before
@@ -48,6 +49,7 @@ public class ClefTest {
 
     /**
      * Disassembles test environment after test
+     *
      * @throws Exception
      */
     @After
@@ -57,6 +59,7 @@ public class ClefTest {
 
     /**
      * Tests changeBarLength() method. Passes if Bar Length is changed successfully.
+     *
      * @throws Exception
      */
     @Test
@@ -67,6 +70,7 @@ public class ClefTest {
 
     /**
      * Tests getBars() method. Passes if correct Bars are returned.
+     *
      * @throws Exception
      */
     @Test
@@ -77,6 +81,7 @@ public class ClefTest {
 
     /**
      * Tests getBeats() method. Passes if correct Beats are returned.
+     *
      * @throws Exception
      */
     @Test
