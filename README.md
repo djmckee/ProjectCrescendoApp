@@ -35,5 +35,5 @@ Requirements
 ----
 - Android Studio 2.0
 - Android SDK API Level 23
-- An Android phone running Android 5.0 onward _(we've tested the app thoroughly on an HTC One M8, so we recommend that specific device)_.
+- An Android phone running Android 5.0 onward _(we've tested the app thoroughly on an HTC One M7 running Android 5.0.2, so we recommend that specific device and OS version)_.
 - Internet connection to download Gradle dependencies
