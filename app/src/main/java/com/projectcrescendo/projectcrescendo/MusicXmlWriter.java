@@ -41,7 +41,7 @@ class MusicXmlWriter {
 
         int noOfDivisions = timeSigBeat * 2;
 
-        Clef[] parts = {stave.getLowerClef(), stave.getUpperClef()};
+        Clef[] parts = {stave.getUpperClef(), stave.getLowerClef()};
 
         for (int i = 0; i < parts.length; i++) {
             Clef currentClef = parts[i];
