@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * A class to instantiate intonation names from the SQL Database.
- * <p>
+ * <p/>
  * Created by Dylan McKee on 23/02/16.
  */
 class IntonationManager {
@@ -54,7 +54,7 @@ class IntonationManager {
             }
 
             intonationQueryCursor.close();
-            
+
         }
 
         databaseInstance.close();

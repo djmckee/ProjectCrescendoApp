@@ -5,23 +5,37 @@ import uk.co.dolphin_com.sscore.playdata.UserTempo;
 /**
  * A concrete implementation of the SeeScore SDK's UserTemp interface.
  * As per the SeeScore SDK implementation example code, provided to use by Dolphin Computing (Cambridge) Ltd.
- * <p>
- * <p>
+ * <p/>
+ * <p/>
  * Created by Dylan McKee on 01/03/16.
  */
 class CrescendoUserTempo implements UserTempo {
 
-    // TODO: Document.
     /**
-     *
+     * The default tempo - a moderate piano tempo value of 120BPM, looked up at
+     * http://www.enjoy-your-piano.com/how-to-read-music-tempo-dynamics.html
      */
-    private int userTempo = 120;
+    public static final int DEFAULT_TEMPO_BPM = 120;
 
-    // TODO: Document.
     /**
-     *
+     * The default tempo scale - defaults to a scale of 1.0 meaning the tempo is not multiplied by
+     * default.
      */
-    private float userTempoScaling = 1.0f;
+    public static final float DEFAULT_TEMPO_SCALE = 1.0f;
+
+    /**
+     * The current value for user tempo. This can be set by the user using the slider UI within the
+     * PlaybackActivity, but defaults to a moderate piano tempo value of 120BPM, looked up at
+     * http://www.enjoy-your-piano.com/how-to-read-music-tempo-dynamics.html
+     */
+    private int userTempo = DEFAULT_TEMPO_BPM;
+
+    /**
+     * The current tempo scaling. This can be set by the user using the slider UI within the
+     * PlaybackActivity, but defaults to a scale of 1.0 meaning the tempo is not multiplied by
+     * default.
+     */
+    private float userTempoScaling = DEFAULT_TEMPO_SCALE;
 
     /**
      * Returns the current tempo in beats per minute. Returns the tempo the user has set, or
@@ -37,7 +51,12 @@ class CrescendoUserTempo implements UserTempo {
         return userTempo;
     }
 
-    // TODO: Document
+    /**
+     * Sets the tempo stored within the current CrescendoUserTempo instance to whatever value has
+     * been passed to this method as a parameter.
+     *
+     * @param userTempo the new tempo value, in BPM.
+     */
     public void setUserTempo(int userTempo) {
         this.userTempo = userTempo;
     }
@@ -53,7 +72,11 @@ class CrescendoUserTempo implements UserTempo {
         return userTempoScaling;
     }
 
-    // TODO: Document
+    /**
+     * Sets the scale of the tempo (i.e. a tempo multiplier)
+     *
+     * @param userTempoScaling a float containing the tempo multiplier.
+     */
     public void setUserTempoScaling(float userTempoScaling) {
         this.userTempoScaling = userTempoScaling;
     }

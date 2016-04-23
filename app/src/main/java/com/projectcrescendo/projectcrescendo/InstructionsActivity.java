@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 /**
  * An activity to show some instructions on how to use the app, displayed in a full size
  * scrollable image view.
- *
+ * <p/>
  * Created by Ambrose Suen on 26/3/2016.
  * Documented by Dylan.
  */

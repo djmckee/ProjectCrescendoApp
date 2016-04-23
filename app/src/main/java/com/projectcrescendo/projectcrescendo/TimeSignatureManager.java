@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * The TimeSignatureManager is a model manager that instantiates lists of Time Signature choices from the
  * database.
- * <p>
+ * <p/>
  * Created by Dylan McKee on 10/12/15.
  */
 class TimeSignatureManager {

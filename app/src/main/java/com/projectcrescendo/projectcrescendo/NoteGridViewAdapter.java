@@ -14,10 +14,10 @@ import android.widget.TextView;
 /**
  * A callback interface so that the activity presenting the note grid view (i.e. the TutorialActivity)
  * can receive callbacks when a
- * <p>
+ * <p/>
  * This interface allows us to maintain a good level of abstraction, and adhere to the
  * Model-View-Controller design pattern.
- * <p>
+ * <p/>
  * Created by Dylan McKee on 24/02/2016.
  */
 interface NoteGridViewAdapterListener {
@@ -33,7 +33,7 @@ interface NoteGridViewAdapterListener {
 /**
  * A Grid View Adapter to allow us to use the GridView in the TutorialActivity to display a list
  * of notes.
- * <p>
+ * <p/>
  * Created by Jordan on 23/02/2016.
  * Modified by Dylan and Alex.
  */

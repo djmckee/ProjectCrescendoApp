@@ -3,11 +3,11 @@ package com.projectcrescendo.projectcrescendo;
 /**
  * A class to hold the field names of the data within our JSON encoded objects (such as JSON encoded
  * tutorials, sets of instructions, and arrays of valid notes for beats).
- * <p>
+ * <p/>
  * This class helps to create a better level of abstraction and improves the use of constants.
- * <p>
+ * <p/>
  * The constants in this file MUST match up to the JSON within the database's 'tutorials' table.
- * <p>
+ * <p/>
  * Created by Dylan McKee on 12/04/16.
  */
 final class JSONSchema {

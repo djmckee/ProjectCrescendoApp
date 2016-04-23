@@ -25,9 +25,8 @@ import java.util.List;
  * An interface to allow the AddNoteFragment to communicate changes from its UI (such as note
  * additions/removals and intonation changes) back to the TutorialActivity instance that presented
  * the fragment UI.
- * <p>
+ * <p/>
  * Created by Dylan McKee on 22/02/2016.
- *
  */
 interface AddNoteFragmentListener {
     /**
@@ -64,9 +63,9 @@ interface AddNoteFragmentListener {
  * intonation of the current beat. Presented from the TutorialActivity, this class uses the
  * AddNoteFragmentListener interface (defined above) to give callbacks to the TutorialActivity, so
  * that the activity can update the Stave model.
- * <p>
+ * <p/>
  * This design pattern allows us to adhere to the Model-View-Controller (MVC) design pattern.
- * <p>
+ * <p/>
  * Created by Dylan McKee on 22/02/2016.
  */
 public class AddNoteFragment extends DialogFragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, SelectIntonationFragmentCallbackListener {
@@ -321,8 +320,8 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
     /**
      * Ensures that the correct layout is used for this fragment.
      *
-     * @param inflater the LayoutInflater for this fragment.
-     * @param container the View containing this fragment.
+     * @param inflater           the LayoutInflater for this fragment.
+     * @param container          the View containing this fragment.
      * @param savedInstanceState saved state about this fragment.
      * @return a View containing this fragment, from the XML representation.
      */
@@ -336,10 +335,10 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
     /**
      * This method is called when an item in the list view of notes is tapped.
      *
-     * @param parent the ListView containing the notes.
-     * @param view the cell containing the selected note.
+     * @param parent   the ListView containing the notes.
+     * @param view     the cell containing the selected note.
      * @param position the position of the selected note in the list.
-     * @param id the id of the cell containing the selected note in the list.
+     * @param id       the id of the cell containing the selected note in the list.
      */
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // If it's the Add New Note button, add new note
@@ -356,10 +355,10 @@ public class AddNoteFragment extends DialogFragment implements AdapterView.OnIte
      * This method is called when an item in the notes list is long pressed. If it's a valid note,
      * the user is then asked if they'd like to delete it from the composition.
      *
-     * @param parent the ListView containing the notes.
-     * @param view the cell containing the selected note.
+     * @param parent   the ListView containing the notes.
+     * @param view     the cell containing the selected note.
      * @param position the position of the selected note in the list.
-     * @param id the ID of the cell containing the selected note in the list.
+     * @param id       the ID of the cell containing the selected note in the list.
      * @return a boolean indicating whether the currently selected note can be long pressed
      * and marked for deletion, or not.
      */

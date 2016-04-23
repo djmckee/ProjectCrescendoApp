@@ -81,6 +81,10 @@
     <string name="open_comp">Open Composition</string>
     <string name="note_length">Select note length</string>
     <string name="notes_in_cell">TextView</string>
+    <string name="enter_composition_title">Enter composition name</string>
+    <string name="enter_composition_save">Save</string>
+    <string name="tempo_error_title">Could not change tempo</string>
+    <string name="tempo_error_message">Your tempo change could not be applied right now, sorry.</string>
 
     <!-- <string-array name="time_signature">
         <item>2/2</item>

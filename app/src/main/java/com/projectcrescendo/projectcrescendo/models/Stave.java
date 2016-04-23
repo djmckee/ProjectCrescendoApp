@@ -2,7 +2,7 @@ package com.projectcrescendo.projectcrescendo.models;
 
 /**
  * A stave is a model object made up of a Time Signature and Bar objects.
- * <p>
+ * <p/>
  * Created by Dylan McKee on 25/02/16.
  */
 public class Stave {
@@ -137,6 +137,7 @@ public class Stave {
     /**
      * Returns an integer that contains a hash of the fields of the current Stave instance,
      * allowing for a simple check for equality.
+     *
      * @return an integer representing the field values of the current Stave instance.
      */
     @Override
@@ -150,6 +151,7 @@ public class Stave {
 
     /**
      * Returns a human readable string representation of the current Stave.
+     *
      * @return a human readable string representation of the current Stave for debug purposes.
      */
     @Override

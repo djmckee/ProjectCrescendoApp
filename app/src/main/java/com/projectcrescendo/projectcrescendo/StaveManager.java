@@ -59,7 +59,7 @@ class StaveManager {
      * Saves the stave that it has been passed to the database, and returns the save status as a
      * boolean.
      *
-     * @param name the name to save the composition as.
+     * @param name  the name to save the composition as.
      * @param stave the Stave instance to write to the SQLite database.
      * @return a boolean indicating whether or not the save succeeded.
      */
@@ -110,8 +110,8 @@ class StaveManager {
                 // I looked up SimpleDateFormat at https://stackoverflow.com/questions/2942857/how-to-convert-current-date-into-string-in-java
                 Date today = new Date();
                 SimpleDateFormat dateFormatter = new SimpleDateFormat(TITLE_DATE_STRING_FORMAT, Locale.UK);
-                String currentDateString = dateFormatter.format(today);
-                name = currentDateString;
+                name = dateFormatter.format(today);
+
             }
 
             staveValues.put(SQLQueries.STAVE_NAME_COLUMN, name);

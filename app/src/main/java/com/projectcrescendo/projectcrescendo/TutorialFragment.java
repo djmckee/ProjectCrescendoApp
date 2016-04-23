@@ -35,7 +35,7 @@ public class TutorialFragment extends DialogFragment {
     private TextView tutorialTextView;
 
     /**
-     * The Textview which contains header for tutorial Text
+     * The TextView instance which contains header text (i.e. a title) for tutorial fragment.
      */
     private TextView tutorialHeaderTextView;
 
@@ -58,7 +58,7 @@ public class TutorialFragment extends DialogFragment {
      * When the fragment is created, this method ensures that the UI elements are instantiated from
      * the XML and refreshes the notes list and intonation initially.
      *
-     * @param savedInstanceState
+     * @param savedInstanceState a saved state for this tutorial fragment (optional).
      */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
