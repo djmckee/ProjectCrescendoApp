@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:text="Add notes to this beat"
+        android:text="@string/add_notes"
         android:id="@+id/textView"
         android:textStyle="bold"
         android:textIsSelectable="false"
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Notes"
+        android:text="@string/notes_tittle"
         android:id="@+id/textView2"
         android:layout_below="@+id/intonationSelectionButton"
         android:layout_alignParentStart="true"
