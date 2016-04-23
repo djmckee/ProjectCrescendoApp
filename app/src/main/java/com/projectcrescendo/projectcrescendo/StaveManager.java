@@ -305,22 +305,24 @@ class StaveManager {
                                 Log.d("StaveManager", "opening bar number " + barNumber);
 
 
-                                int numberOfBarsOnOneClef = (numberOfBeatsOnOneClef / timeSignatureNumerator);
+                                int upperBarsSize = stave.getUpperClef().getBars().size();
 
-                                // Is it on the upper bar?
-                                if (barNumber < numberOfBarsOnOneClef) {
-                                    // Upper bar...
-                                    upperClefContent[barNumber] = currentBar;
-                                } else {
-                                    // Lower bar...
-                                    // Subtract length of clef to get index...
-                                    int index = barNumber - (numberOfBarsOnOneClef);
+                                // Is it on the upper clef?
+                                if (barNumber > upperBarsSize) {
+                                    // Lower clef...
+                                    // Subtract length of upper clef to get index...
+                                    int index = barNumber - (upperBarsSize);
 
                                     if (index < 0) {
                                         index = 0;
                                     }
 
                                     lowerClefContent[index] = currentBar;
+
+                                } else {
+                                    // Upper clef...
+                                    upperClefContent[barNumber] = currentBar;
+
 
                                 }
 
