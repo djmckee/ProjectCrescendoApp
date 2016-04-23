@@ -8,7 +8,7 @@
         android:id="@+id/openTitleLabel"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:text="Open Composition"
+        android:text="@string/open_comp"
         android:textIsSelectable="false"
         android:textSize="25dp"
         android:textStyle="bold" />

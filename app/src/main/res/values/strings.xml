@@ -76,6 +76,11 @@
     <string name="tutorial_spinner_title">Tutorials</string>
     <string name="free_to_play_title">Free play</string>
     <string name="bpm_unit">" BPM"</string>
+    <string name="add_notes">Add notes to this beat</string>
+    <string name="notes_tittle">Notes</string>
+    <string name="open_comp">Open Composition</string>
+    <string name="note_length">Select note length</string>
+    <string name="notes_in_cell">TextView</string>
 
     <!-- <string-array name="time_signature">
         <item>2/2</item>
