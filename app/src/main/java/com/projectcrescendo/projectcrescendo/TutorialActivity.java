@@ -24,13 +24,14 @@ import com.projectcrescendo.projectcrescendo.models.Stave;
 import com.projectcrescendo.projectcrescendo.models.Tutorial;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
 /**
  * The tutorial activity contains the grid and is where the user completes the tutorial by adding
  * notes.
- * <p>
+ * <p/>
  * Created by Dylan on 26/02/16.
  * Modified by Alex, Ambrose and Jordan.
  */
@@ -95,7 +96,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
     /**
      * The index of the current instruction on display to the user from the instructions array
      * attached to the current Tutorial instance; assuming that the app is in tutorial mode.
-     * <p>
+     * <p/>
      * Defaults to -1 to mark an invalid setup if the app isn't in tutorial mode.
      */
     private int instructionIndex = -1;
@@ -111,7 +112,10 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
      */
     private TextView instructionalTextView;
 
-    // TODO: Document
+    /**
+     * A placeholder String field to hold the user's desired composition during the composition
+     * saving process.
+     */
     private String compositionName;
 
     /**
@@ -359,11 +363,10 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
         final String[] staticMenuItems = {getString(R.string.tutorial_spinner_title), getString(R.string.free_to_play_title)};
 
-        for (String menuItem : staticMenuItems) {
-            tutorialNames.add(menuItem);
-        }
+        // Add static string items from array above into the ArrayList
+        Collections.addAll(tutorialNames, staticMenuItems);
 
-        for (final Tutorial tutorial : tutorials){
+        for (final Tutorial tutorial : tutorials) {
             tutorialNames.add(tutorial.getTitle());
         }
 
@@ -417,6 +420,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
                 setTutorial(tutorials.get(offsetPosition));
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 Log.d("tutorialSpinner", "no item selected!!!");
@@ -676,7 +680,7 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
     /**
      * Returns true if the user is currently completing a Tutorial in this TutorialActivity.
-     * <p>
+     * <p/>
      * Warning suppressed here because 'is in tutorial mode' is the natural language way of
      * answering the question that this method answers, so I do not want to invert it for the sake
      * of clarity.
@@ -874,7 +878,12 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
     }
 
 
-    // TODO: Document.
+    /**
+     * This method asks the user for a composition name via a modal AlertDialog dialog box, and then
+     * once a name has been entered (or if the user chooses not to enter one but does tap the confirm
+     * button), uses the StaveManager model class manager to save the current stave to the in-app
+     * SQLite database locally, for opening at a later date.
+     */
     private void saveComposition() {
         // Save to SQL Database...
 
@@ -883,19 +892,16 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
         AlertDialog.Builder inputDialog = new AlertDialog.Builder(this);
 
-        inputDialog.setTitle("Enter composition name");
+        inputDialog.setTitle(R.string.enter_composition_title);
         final EditText inputTextView = new EditText(this);
 
         inputDialog.setView(inputTextView);
 
-        inputDialog.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+        inputDialog.setPositiveButton(R.string.enter_composition_save, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int buttonId) {
                 // Get user input string
-                String textInput = inputTextView.getText().toString();
-
-                // Composition name
-                compositionName = textInput;
+                compositionName = inputTextView.getText().toString();
 
                 // Show loading UI...
                 ProgressDialog loadingDialog = ProgressDialog.show(TutorialActivity.this, getString(R.string.save_composition_loading_title), getString(R.string.save_composition_loading_message));
@@ -942,7 +948,13 @@ public class TutorialActivity extends AppCompatActivity implements NoteGridViewA
 
     }
 
-    // TODO: Document
+    /**
+     * This method presents the user with a list of saved compositions from the local in-app SQLite
+     * database, and then allows them to select a composition save to be loaded in.
+     * The composition entries are loaded via the StaveManager model manager class, from the SQLite
+     * database, and are displayed for user selection within UI provided by the
+     * OpenCompositionFragment class.
+     */
     private void openComposition() {
 
         // Show loading UI...

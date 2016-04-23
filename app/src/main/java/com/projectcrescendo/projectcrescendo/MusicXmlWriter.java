@@ -11,7 +11,7 @@ import com.projectcrescendo.projectcrescendo.models.Stave;
 /**
  * A class to convert the Project Crescendo Stave, Bar, Beat and Note model classes into valid
  * MusicXML for playback with the SeeScore engine.
- * <p>
+ * <p/>
  * Created by Dylan McKee on 25/02/16.
  * Based on Pseudocode by Charlie Marcus.
  */

@@ -15,7 +15,7 @@ import android.widget.TextView;
  * The main activity provides a main menu interface, it is the first screen that users see as they
  * enter the app and it allows them to select from the various options/modes and begin using the
  * app.
- * <p>
+ * <p/>
  * Created by Dylan McKee on 16/11/2015.
  * Modified by Ambrose and Alex.
  */

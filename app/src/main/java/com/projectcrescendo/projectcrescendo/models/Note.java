@@ -4,17 +4,16 @@ package com.projectcrescendo.projectcrescendo.models;
 /**
  * The note class is a class to model a musical note. It contains all the data about the note -
  * and the data held by this class can be changed by the user in the app.
- * <p>
+ * <p/>
  * Pitch of the note in the form A0, F4 etc...
  * Could be represented as int (only three option) or enum?
  * How loud the note is (again could be enum or int)
  * Accent, Staccato or not (again could enum or int);
  * How long the note should last (relative to the bar?) - (1.0 = a bar)
  * Pitch should be passed in constructor, if no dynamic is given one should be assumed (mf).
- * <p>
+ * <p/>
  * Originally created by Charlie Marcus.
  * Modified by Dylan McKee.
- *
  */
 public interface Note {
 

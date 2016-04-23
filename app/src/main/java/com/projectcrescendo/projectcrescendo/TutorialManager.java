@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * The TutorialManager is a model manager that instantiates Tutorial instances from an SQLite database
  * located in the app's assets bundle, and has an array of Tutorial objects.
- * <p>
+ * <p/>
  * Created by Dylan McKee on 10/12/15.
  */
 class TutorialManager {

@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * An interface to handle callbacks from the SelectIntonationFragment.
- * <p>
+ * <p/>
  * Created by Dylan McKee on 23/02/2016
  */
 interface SelectIntonationFragmentCallbackListener {
@@ -36,10 +36,10 @@ interface SelectIntonationFragmentCallbackListener {
  * A fragment that contains a list of possible intonations so that the user can select an intonation
  * for the current Beat. Once selected, the Intonation is relayed via a callback to the fragment that
  * presented it via the SelectIntonationFragmentCallbackListener.
- * <p>
+ * <p/>
  * I looked at the tutorial at http://www.tutorialsbuzz.com/2014/06/android-dialogfragment-listview.html
  * and used their examples in the creation of this fragment.
- * <p>
+ * <p/>
  * Created by Dylan McKee on 23/02/2016
  */
 public class SelectIntonationFragment extends DialogFragment implements
@@ -60,8 +60,8 @@ public class SelectIntonationFragment extends DialogFragment implements
     /**
      * On load, this method inflates the fragment from XML.
      *
-     * @param inflater the layout inflater that inflates this fragment.
-     * @param container the view that contains this fragment.
+     * @param inflater           the layout inflater that inflates this fragment.
+     * @param container          the view that contains this fragment.
      * @param savedInstanceState a saved state of an existing instance of this fragment.
      * @return the view containing this fragment, inflated from XML.
      */
@@ -109,10 +109,10 @@ public class SelectIntonationFragment extends DialogFragment implements
      * to let it know of the new selection, and then once this callback has been carried out it
      * dismisses the intonation selection fragment from the screen.
      *
-     * @param parent the ListView containing the intonations.
-     * @param view the cell containing the selected intonation.
+     * @param parent   the ListView containing the intonations.
+     * @param view     the cell containing the selected intonation.
      * @param position the position of the cell/intonation that has been selected.
-     * @param id the id of the cell containing the selected intonation
+     * @param id       the id of the cell containing the selected intonation
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,

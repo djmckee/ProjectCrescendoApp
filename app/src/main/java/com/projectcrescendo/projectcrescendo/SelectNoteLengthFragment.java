@@ -19,7 +19,7 @@ import java.util.Locale;
 
 /**
  * An interface to handle callbacks from the SelectNoteLengthFragment.
- * <p>
+ * <p/>
  * Created by Dylan McKee on 27/02/2016
  */
 interface SelectNoteLengthFragmentCallbackListener {
@@ -37,13 +37,13 @@ interface SelectNoteLengthFragmentCallbackListener {
 /**
  * A fragment that contains a list of possible note lengths so that the user can select an note length
  * for the new note begin added in hte AddNoteFragment.
- * <p>
+ * <p/>
  * Once selected, the Intonation is relayed via a callback to the fragment that
  * presented it via the SelectNoteLengthFragmentCallbackListener.
- * <p>
+ * <p/>
  * I looked at the tutorial at http://www.tutorialsbuzz.com/2014/06/android-dialogfragment-listview.html
  * and used their examples in the creation of this fragment.
- * <p>
+ * <p/>
  * Created by Dylan McKee on 27/02/2016
  */
 public class SelectNoteLengthFragment extends DialogFragment implements
@@ -64,8 +64,8 @@ public class SelectNoteLengthFragment extends DialogFragment implements
     /**
      * On load, this method inflates the fragment from XML.
      *
-     * @param inflater the layout inflater instance.
-     * @param container the view containing this fragment.
+     * @param inflater           the layout inflater instance.
+     * @param container          the view containing this fragment.
      * @param savedInstanceState the state of any saved instance being inflated.
      * @return the View inflated from the XML representation of this fragment.
      */
@@ -120,10 +120,10 @@ public class SelectNoteLengthFragment extends DialogFragment implements
      * to let it know of the new selection, and then once this callback has been carried out it
      * dismisses the length selection fragment from the screen.
      *
-     * @param parent the ListView that the length is being selected from.
-     * @param view the ListView cell containing the length being selected by the user.
+     * @param parent   the ListView that the length is being selected from.
+     * @param view     the ListView cell containing the length being selected by the user.
      * @param position the position of the selection in the ListView.
-     * @param id the id of the row being selected.
+     * @param id       the id of the row being selected.
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,

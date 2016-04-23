@@ -178,6 +178,7 @@ public class ConcreteNote implements Note, Cloneable {
     /**
      * Returns true if the object being compared to this ConcreteNote instance is exactly equal in
      * terms of field values, and false if not.
+     *
      * @param o the object to compare this concrete note instance to.
      * @return a boolean - true if the objects are equal, false if not.
      */
@@ -195,6 +196,7 @@ public class ConcreteNote implements Note, Cloneable {
     /**
      * Returns an integer that contains a hash of the fields of the current ConcreteNote instance,
      * allowing for a simple check for equality.
+     *
      * @return an integer representing the field values of the current ConcreteNote instance.
      */
     @Override
@@ -218,6 +220,8 @@ public class ConcreteNote implements Note, Cloneable {
      */
     @Override
     public Note clone() throws CloneNotSupportedException {
+        super.clone();
+
         Note clonedNote = new ConcreteNote(this.getPitch());
         clonedNote.setLength(this.getLength());
         clonedNote.addAccidental(this.getAccidental());

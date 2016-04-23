@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * A model class, made up of a list of beat objects, to represent one bar of a variable length based
  * on the time signature.
- * <p>
+ * <p/>
  * Created by Dylan McKee on 25/02/16.
  */
 public class Bar {
@@ -98,6 +98,7 @@ public class Bar {
 
     /**
      * Returns a human readable string representation of the current bar.
+     *
      * @return a human readable string representation of the current bar; detailing beats.
      */
     @Override

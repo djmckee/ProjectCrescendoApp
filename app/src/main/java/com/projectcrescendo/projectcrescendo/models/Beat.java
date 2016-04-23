@@ -107,7 +107,8 @@ public class Beat implements Cloneable {
 
     /**
      * Returns a human readable string representation of the current beat.
-     * @return a human readable string representation of the current beat; detailing intonation 
+     *
+     * @return a human readable string representation of the current beat; detailing intonation
      * and notes.
      */
     @Override
@@ -139,6 +140,8 @@ public class Beat implements Cloneable {
      */
     @Override
     public Beat clone() throws CloneNotSupportedException {
+        super.clone();
+
         Beat clonedBeat = new Beat();
         clonedBeat.setIntonation(this.getIntonation());
 
@@ -153,8 +156,6 @@ public class Beat implements Cloneable {
         return clonedBeat;
 
     }
-
-
 
 
 }

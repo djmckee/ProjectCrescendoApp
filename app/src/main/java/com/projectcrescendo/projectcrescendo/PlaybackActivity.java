@@ -43,7 +43,7 @@ import uk.co.dolphin_com.sscore.ex.ScoreException;
  * education license) to display the MusicXML string passed to this activity, and to allow for
  * audio playback and sharing of the MusicXML file through our hosted API hosting the file, and the
  * link to the hosted file being shared on Twitter/Facebook/other social channels by the user.
- * <p>
+ * <p/>
  * Created by Dylan McKee on 22/02/2016.
  * Modified by Alex.
  */
@@ -53,16 +53,45 @@ public class PlaybackActivity extends AppCompatActivity {
      * A key for the String containing the MusicXML encoded score as it is passed between activities.
      */
     public static final String SCORE_STRING_KEY = "projectcrescendo.MusicXMLScoreString";
+
     /**
-     * A String representation of the MusicXML encoded score, to be set via the Intent that
-     * transitions into this activity.
+     * A placeholder for the default value of the player's tempo. Defaults to our user tempo
+     * implementation's hardcoded default.
      */
-    private static final int kMinTempoBPM = 30;
-    private static final int kMaxTempoBPM = 240;
-    private static final int kDefaultTempoBPM = 120;
-    private static final double kMinTempoScaling = 0.5;
-    private static final double kMaxTempoScaling = 2.0;
-    private static final double kDefaultTempoScaling = 1.0;
+    private static final int DEFAULT_TEMPO_BPM = CrescendoUserTempo.DEFAULT_TEMPO_BPM;
+
+    /**
+     * Minimum tempo value is a half the default.
+     */
+    private static final int MINIMUM_TEMPO_BPM = DEFAULT_TEMPO_BPM / 2;
+
+    /**
+     * Maximum tempo value is twice the default.
+     */
+    private static final int MAXIMUM_TEMPO_BPM = DEFAULT_TEMPO_BPM * 2;
+
+    /**
+     * A placeholder for the default value of the player's tempo scale. Defaults to our user tempo
+     * implementation's hardcoded default.
+     */
+    private static final double DEFAULT_TEMPO_SCALE = CrescendoUserTempo.DEFAULT_TEMPO_SCALE;
+
+    /**
+     * Minimum scale tempo value is a half the default.
+     */
+    private static final double MINIMUM_TEMPO_SCALE = DEFAULT_TEMPO_SCALE / 2;
+
+    /**
+     * Maximum scale tempo value is a half the default.
+     */
+    private static final double MAXIMUM_TEMPO_SCALE = DEFAULT_TEMPO_SCALE * 2;
+    /**
+     * A class wide user tempo instance that implements the SeeScore UserTemp interface and allows
+     * current tempo to be set by the user, and retrieved by the player instance in this class.
+     * This provides a good level of abstraction and allows tempo to be easily varied, as well as
+     * providing sensible (good sounding) default values.
+     */
+    private final CrescendoUserTempo userTempo = new CrescendoUserTempo();
     /**
      * A music player instance so that our composition can be played back.
      */
@@ -71,6 +100,10 @@ public class PlaybackActivity extends AppCompatActivity {
      * The SeeScore view instance which displays the score.
      */
     private SeeScoreView seeScoreView;
+    /**
+     * A String representation of the MusicXML encoded score, to be set via the Intent that
+     * transitions into this activity.
+     */
     private String musicXmlScore;
     /**
      * An SScore instance of the current musical score on display.
@@ -84,14 +117,10 @@ public class PlaybackActivity extends AppCompatActivity {
      * Is the music player playing?
      */
     private boolean playerIsPlaying = false;
-
     /**
      * A placeholder in which to store the player's current playback bar, initialised to 0.
      */
     private int currentBar = 0;
-
-    // TODO: Document
-    private CrescendoUserTempo userTempo = new CrescendoUserTempo();
 
     /**
      * This method is ran on view creation and sets up the current score from the MusicXML
@@ -310,7 +339,10 @@ public class PlaybackActivity extends AppCompatActivity {
 
         // Ensure SeeScore displays the score that's been passed into this activity.
         setupScore();
-        setTempo(kDefaultTempoBPM);
+
+        // Default to default tempo value...
+        setTempo(DEFAULT_TEMPO_BPM);
+
         SeekBar tempoSlider = (SeekBar) findViewById(R.id.tempoSlider);
         tempoSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -329,6 +361,14 @@ public class PlaybackActivity extends AppCompatActivity {
                             setTempoText((int) (scaling * tempo.bpm + 0.5));
                             updateTempo();
                         } catch (ScoreException ex) {
+                            // Could not change tempo, notify the user.
+                            new AlertDialog.Builder(PlaybackActivity.this)
+                                    .setTitle(R.string.tempo_error_title)
+                                    .setMessage(R.string.tempo_error_message)
+                                    .setPositiveButton(R.string.okay, null)
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .show();
+
                         }
                     } else {
                         int percent = getTempoSliderValPercent();
@@ -362,7 +402,11 @@ public class PlaybackActivity extends AppCompatActivity {
         });
     }
 
-    // TODO: Document
+    /**
+     * A private convenience method to reduce code duplication. When called, this method checks that
+     * a player instance exists for this PlaybackActivity instance, and if so, calls updateTempo()
+     * to force the player instance to refresh its tempo value from the CrescendoUserTempo class.
+     */
     private void updateTempo() {
         if (player != null) {
             try {
@@ -403,6 +447,7 @@ public class PlaybackActivity extends AppCompatActivity {
 
     /**
      * Sets the tempo slider UI to whatever percentage value is passed into this method.
+     *
      * @param percent the percentage value for the tempo slider.
      */
     private void setTempoSliderValPercent(int percent) {
@@ -412,30 +457,33 @@ public class PlaybackActivity extends AppCompatActivity {
 
     /**
      * Converts the scaled down value from the slider to an actual BPM and returns the BPM.
-     * @param scaling the scale factor of the BPM slider.
+     *
+     * @param scaling    the scale factor of the BPM slider.
      * @param nominalBPM the value of the BPM slider to convert into actual BPM.
      * @return the value of BPM selected on the slider, in actual true BPM.
      */
     private int scalingToBPM(double scaling, int nominalBPM) {
-        return  (int)(nominalBPM * scaling);
+        return (int) (nominalBPM * scaling);
     }
 
     /**
      * Scales down a value in true BPM to a percentage for the slider value.
+     *
      * @param scaling the scaling of the current BPM slider instance.
      * @return the percentage value to set the BPM slider instance to.
      */
     private int scalingToSliderPercent(double scaling) {
-        return (int)(0.5+(100 * ((scaling - kMinTempoScaling) / (kMaxTempoScaling - kMinTempoScaling))));
+        return (int) (0.5 + (100 * ((scaling - MINIMUM_TEMPO_SCALE) / (MAXIMUM_TEMPO_SCALE - MINIMUM_TEMPO_SCALE))));
     }
 
     /**
      * Calculates scale factor from slider percentage value and returns the scale factor as a double.
+     *
      * @param percent the percentage of the slider to calculate the scale factor for.
      * @return the scale factor for the slider, as a double value.
      */
     private double sliderPercentToScaling(int percent) {
-        return kMinTempoScaling + (percent/100.0) * (kMaxTempoScaling - kMinTempoScaling);
+        return MINIMUM_TEMPO_SCALE + (percent / 100.0) * (MAXIMUM_TEMPO_SCALE - MINIMUM_TEMPO_SCALE);
     }
 
     /**
@@ -445,26 +493,28 @@ public class PlaybackActivity extends AppCompatActivity {
      * @return current BPM, as an integer.
      */
     private int sliderPercentToBPM(int percent) {
-        return kMinTempoBPM + (int)((percent/100.0) * (kMaxTempoBPM - kMinTempoBPM));
+        return MINIMUM_TEMPO_BPM + (int) ((percent / 100.0) * (MAXIMUM_TEMPO_BPM - MINIMUM_TEMPO_BPM));
     }
 
     /**
      * Converts a BPM value to a scaled slider percentage.
+     *
      * @param bpm the BPM value to convert to a scaled slider percentage.
      * @return the BPM Slider percentage value.
      */
     private int bpmToSliderPercent(int bpm) {
-        return (int)(100.0 * (bpm - kMinTempoBPM) / (double)(kMaxTempoBPM - kMinTempoBPM));
+        return (int) (100.0 * (bpm - MINIMUM_TEMPO_BPM) / (double) (MAXIMUM_TEMPO_BPM - MINIMUM_TEMPO_BPM));
     }
 
     /**
      * Sets the label containing the scaling of the tempo, and scales the tempo to the specified
      * scale factor.
+     *
      * @param tempoScaling the scale factor for the score, as a decimal (1.0 = full scale).
-     * @param nominalBPM the BPM to scale the score around.
+     * @param nominalBPM   the BPM to scale the score around.
      */
     private void setTempoScaling(double tempoScaling, int nominalBPM) {
-        setTempoSliderValPercent(scalingToSliderPercent(tempoScaling ));
+        setTempoSliderValPercent(scalingToSliderPercent(tempoScaling));
         setTempoText(scalingToBPM(tempoScaling, nominalBPM));
     }
 
@@ -475,7 +525,6 @@ public class PlaybackActivity extends AppCompatActivity {
      * @param bpm the new tempo value, in BPM.
      */
     private void setTempo(int bpm) {
-        // TODO: Set Crescendo User Tempo in here.
         setTempoSliderValPercent(bpmToSliderPercent(bpm));
         setTempoText(bpm);
     }
@@ -507,7 +556,7 @@ public class PlaybackActivity extends AppCompatActivity {
      * This method sets up the SeeScore score viewer to display the current score.
      */
     private void setupScore() {
-        seeScoreView.setScore(score, 1.0f);
+        seeScoreView.setScore(score, CrescendoUserTempo.DEFAULT_TEMPO_SCALE);
 
     }
 

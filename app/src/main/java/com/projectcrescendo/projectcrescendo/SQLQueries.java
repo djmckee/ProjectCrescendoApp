@@ -4,9 +4,9 @@ package com.projectcrescendo.projectcrescendo;
  * A class to hold the SQL Queries used within the model manager classes to retrieve data from the
  * SQLite Database, as constant Strings. This helps to create a better level of abstraction and
  * improves the use of constants.
- * <p>
+ * <p/>
  * The constants in this file MUST match up to the SQLite database's current schema.
- * <p>
+ * <p/>
  * Created by Dylan McKee on 12/04/16.
  */
 final class SQLQueries {

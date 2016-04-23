@@ -8,10 +8,10 @@ import java.util.List;
 /**
  * A class to model a Clef, which contains a list of Bars of a variable length, which themselves
  * contain a finite number of beats (passed into this class in the constructor method).
- * <p>
+ * <p/>
  * The Clef class handles dynamic resizing of the Bars, moving Beats around between bars as required
  * depending upon the length of their time signature.
- * <p>
+ * <p/>
  * Created by Dylan McKee on 01/03/16.
  */
 public class Clef {
@@ -114,6 +114,7 @@ public class Clef {
 
     /**
      * Set the bars List to a new list of bars for the current Clef.
+     *
      * @param bars the new list of Bar objects for this clef.
      */
     public void setBars(List<Bar> bars) {
@@ -171,6 +172,7 @@ public class Clef {
 
     /**
      * Returns a human readable string representation of the current clef.
+     *
      * @return a human readable string representation of the current clef.
      */
     @Override

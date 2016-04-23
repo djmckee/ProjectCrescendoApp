@@ -6,8 +6,8 @@ import java.util.List;
 /**
  * The Tutorial class is a model class intended to hold a title string, and a List of
  * TutorialSelectionMenuActivity (in the order that they need to be displayed in).
- * <p>
- * <p>
+ * <p/>
+ * <p/>
  * Created by Dylan McKee on 16/11/15.
  */
 public class Tutorial implements Cloneable {
@@ -197,15 +197,14 @@ public class Tutorial implements Cloneable {
 
         Tutorial tutorial = (Tutorial) o;
 
-        if (getTitle() != null ? !getTitle().equals(tutorial.getTitle()) : tutorial.getTitle() != null)
-            return false;
-        return getInstructions() != null ? getInstructions().equals(tutorial.getInstructions()) : tutorial.getInstructions() == null && (getPrePopulatedBeats() != null ? getPrePopulatedBeats().equals(tutorial.getPrePopulatedBeats()) : tutorial.getPrePopulatedBeats() == null && (getValidBeats() != null ? getValidBeats().equals(tutorial.getValidBeats()) : tutorial.getValidBeats() == null && (getTutorialPatternMatchIndex() != null ? getTutorialPatternMatchIndex().equals(tutorial.getTutorialPatternMatchIndex()) : tutorial.getTutorialPatternMatchIndex() == null)));
+        return getTitle() != null ? getTitle().equals(tutorial.getTitle()) : tutorial.getTitle() == null && (getInstructions() != null ? getInstructions().equals(tutorial.getInstructions()) : tutorial.getInstructions() == null && (getPrePopulatedBeats() != null ? getPrePopulatedBeats().equals(tutorial.getPrePopulatedBeats()) : tutorial.getPrePopulatedBeats() == null && (getValidBeats() != null ? getValidBeats().equals(tutorial.getValidBeats()) : tutorial.getValidBeats() == null && (getTutorialPatternMatchIndex() != null ? getTutorialPatternMatchIndex().equals(tutorial.getTutorialPatternMatchIndex()) : tutorial.getTutorialPatternMatchIndex() == null))));
 
     }
 
     /**
      * Returns an integer that contains a hash of the fields of the current Tutorial instance,
      * allowing for a simple check for equality.
+     *
      * @return an integer representing the field values of the current Tutorial instance.
      */
     @Override
@@ -226,6 +225,8 @@ public class Tutorial implements Cloneable {
      */
     @Override
     public Tutorial clone() throws CloneNotSupportedException {
+        super.clone();
+
         List<String> clonedInstructions = new ArrayList<String>();
 
         for (String string : getInstructions()) {
@@ -269,7 +270,6 @@ public class Tutorial implements Cloneable {
         return clonedTutorial;
 
     }
-
 
 
 }

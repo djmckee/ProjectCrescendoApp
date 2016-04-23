@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * An interface to handle callbacks from the OpenCompositionFragment.
- * <p>
+ * <p/>
  * Created by Dylan McKee on 23/03/2016
  */
 interface OpenCompositionFragmentCallbackListener {
@@ -51,10 +51,10 @@ interface OpenCompositionFragmentCallbackListener {
  * A fragment that contains a list of possible compositions to open so that the user can select a composition
  * from the database. Once selected, the composition, in the form of a Stave instance, is relayed via a callback to the fragment that
  * presented it via the OpenCompositionFragmentCallbackListener.
- * <p>
+ * <p/>
  * I looked at the tutorial at http://www.tutorialsbuzz.com/2014/06/android-dialogfragment-listview.html
  * and used their examples in the creation of this fragment.
- * <p>
+ * <p/>
  * Created by Dylan McKee on 23/03/2016
  */
 public class OpenCompositionFragment extends DialogFragment implements
